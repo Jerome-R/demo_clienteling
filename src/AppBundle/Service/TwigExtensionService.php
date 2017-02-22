@@ -9,12 +9,10 @@ use Application\Sonata\UserBundle\Entity\User;
 class TwigExtensionService extends \Twig_Extension
 {	
     private $em;
-    private $service;
 
-	public function __construct(EntityManager $entityManager, GetUserModulesService $getUserModules)
+	public function __construct(EntityManager $entityManager)
 	{
 		$this->em 		= $entityManager;
-		$this->service 	= $getUserModules;
 	}
 
     public function getName()
@@ -25,7 +23,6 @@ class TwigExtensionService extends \Twig_Extension
     public function getFunctions()
     {   
         return array(
-          'getModules'      => new \Twig_Function_Method($this, 'GetModules'),
           'getMonthWording' => new \Twig_Function_Method($this, 'getMonthWording'),
           'roundLetter'     => new \Twig_Function_Method($this, 'roundLetter'),
           'deleteFirstCharacters' => new \Twig_Function_Method($this, 'deleteFirstCharacters'),
@@ -35,12 +32,6 @@ class TwigExtensionService extends \Twig_Extension
           'unsuscribeLink'  => new \Twig_Function_Method($this, 'unsuscribeLink'),
         );
     }
-
-	//Get modules Campaigns/Kpis/TopClients for Menu
-	public function GetModules(User $user)
-	{
-        return $this->service->GetUserModules($user);
-	}
 
     public function roundLetter($value){
         if ($value > 999 && $value <= 999999) {
@@ -1653,26 +1644,4 @@ class TwigExtensionService extends \Twig_Extension
         return $country;
     }
 
-
-    //Gestion des URLs
-
-    public function redirectUrl($trackingId, $linkId){
-        //trackingId devient transparent
-        $link = $this->em->getRepository('AppBundle:Link')->findOneBy(array('id' => $linkId));
-
-        if($link != null){
-            $url            = $link->getUrl();
-            $privateLinkId  = $link->getId();
-        }
-        else{
-            $url = "#";
-        }
-
-        return "http://lancel.actions-pdv-l.fr/c/".$trackingId."/".$privateLinkId;
-    }
-
-    public function unsuscribeLink($trackingId){
-        $desaboId = 100;
-        return "http://lancel.actions-pdv-l.fr/c/".$trackingId."/".$desaboId;
-    }
 }

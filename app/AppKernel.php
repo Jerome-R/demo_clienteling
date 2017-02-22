@@ -43,9 +43,6 @@ class AppKernel extends Kernel
             new Application\Sonata\HelperBundle\ApplicationSonataHelperBundle(),
 
             new AppBundle\AppBundle(),
-
-            //new Ijanki\Bundle\FtpBundle\IjankiFtpBundle(),
-            //new AppTrackingBundle\AppTrackingBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'), true)) {

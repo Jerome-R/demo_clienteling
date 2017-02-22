@@ -42,9 +42,6 @@ class TopClientController extends Controller
 {
     public function indexAction(Request $request)
     {
-        $userModules = $this->container->get('app.get_user_modules');
-        $modules = $userModules->GetUserModules( $this->get('security.context')->getToken()->getUser()  );
-
         $date = new \DateTime();
         $date = $date->format('Ymd');
 

@@ -102,34 +102,6 @@ class Client
     /**
      * @var string
      *
-     * @ORM\Column(name="telephone3", type="string", length=70, nullable=true)
-     */
-    private $telephone3;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="portable1", type="string", length=70, nullable=true)
-     */
-    private $portable1;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="portable2", type="string", length=70, nullable=true)
-     */
-    private $portable2;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="portable3", type="string", length=70, nullable=true)
-     */
-    private $portable3;
-
-    /**
-     * @var string
-     *
      * @ORM\Column(name="local", type="string", length=20, nullable=true)
      */
     private $local;
@@ -315,34 +287,6 @@ class Client
     private $isContactableEmail;
 
     /**
-     * @var boolean
-     *
-     * @ORM\Column(name="optout_email", type="boolean", nullable=true)
-     */
-    private $optoutEmail;
-
-    /**
-     * @var boolean
-     *
-     * @ORM\Column(name="optout_mail", type="boolean", nullable=true)
-     */
-    private $optoutMail;
-
-    /**
-     * @var boolean
-     *
-     * @ORM\Column(name="optout_telephone", type="boolean", nullable=true)
-     */
-    private $optoutTelephone;
-
-    /**
-     * @var boolean
-     *
-     * @ORM\Column(name="optout_sms", type="boolean", nullable=true)
-     */
-    private $optoutSms;
-
-    /**
      * @var string
      *
      * @ORM\Column(name="optin", type="string", length=20, nullable=true)
@@ -364,28 +308,6 @@ class Client
      * @Gedmo\Timestampable(on="update")
      */
     private $modifiedAt;
-
-    /**
-     * @var \DateTime
-     *
-     * @ORM\Column(name="last_contact", type="datetime", nullable=true)
-     */
-    private $lastContact;
-
-    /**
-     * @var boolean
-     *
-     * @ORM\Column(name="is_hard_bounce", type="boolean", nullable=true)
-     */
-    private $isHardBounce;
-
-    /**
-     * @var boolean
-     *
-     * @ORM\Column(name="is_soft_bounce", type="boolean", nullable=true)
-     */
-    private $isSoftBounce;
-
     /**
      * @var boolean
      *
@@ -406,24 +328,6 @@ class Client
      * @ORM\Column(name="is_topclient_sortant", type="boolean", nullable=true)
      */
     private $isTopclientSortant;
-
-
-    /* Gestion des doublons suspect */
-
-
-    /**
-     * @var boolean
-     *
-     * @ORM\Column(name="is_suspect_doublon", type="boolean", nullable=true)
-     */
-    private $isSuspectDoublon;
-
-    /**
-     * @var boolean
-     *
-     * @ORM\Column(name="is_doublon", type="boolean", nullable=true)
-     */
-    private $isDoublon;
 
 
     /* Jointures */
@@ -455,11 +359,6 @@ class Client
     protected $clientSortants;
 
     /**
-     * @ORM\OneToMany(targetEntity="AppBundle\Entity\ClientSuspectDoublon", mappedBy="client")
-     */
-    protected $clientSuspectDoublons;
-
-    /**
      * @ORM\ManyToOne(targetEntity="Application\Sonata\UserBundle\Entity\User", inversedBy="clientsTriggers")
      * @ORM\JoinColumn(name="user_id_trigger", nullable=true)
      */
@@ -471,17 +370,10 @@ class Client
      */
     private $userTopclient;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="Application\Sonata\UserBundle\Entity\User", inversedBy="doublonSuspects")
-     * @ORM\JoinColumn(name="user_id_doublon_suspect", nullable=true)
-     */
-    private $userDoublonSuspect;
-
     public function __construct()
     {
         $this->userTrigger              = null;
         $this->userTopclient            = null;
-        $this->userDoublonSuspect       =null;
         $this->createdAt                = new \DateTime();
         $this->isTelValide              = 0;
         $this->isAdresseValide          = 0;
@@ -504,7 +396,6 @@ class Client
         $this->tickets                  = new ArrayCollection();
         $this->clientComments           = new ArrayCollection();
         $this->clientSortants           = new ArrayCollection();
-        $this->clientSuspectDoublons    = new ArrayCollection();
     }
 
     /**
@@ -538,19 +429,12 @@ class Client
         return $this->id;
     }
 
-    /**
-     * Get idClient
-     *
-     * @return string
-     */
-    public function getIdClient()
-    {
-        return $this->idClient;
-    }
+    
 
     /**
      * Set idClient
      *
+     * @param string $idClient
      * @return Client
      */
     public function setIdClient($idClient)
@@ -561,78 +445,19 @@ class Client
     }
 
     /**
-     * Get userTrigger
+     * Get idClient
      *
-     * @return Client
+     * @return string 
      */
-    public function getUserTrigger()
+    public function getIdClient()
     {
-        return $this->userTrigger;
-    }
-
-    /**
-     * Set userTrigger
-     *
-     * @return User
-     */
-    public function setUserTrigger(User $userTrigger)
-    {
-        $this->userTrigger = $userTrigger;
-
-        return $this;
-    }
-
-    /**
-     * Get userTopclient
-     *
-     * @return Client
-     */
-    public function getUserTopclient()
-    {
-        return $this->userTopclient;
-    }
-
-    /**
-     * Set userTopclient
-     *
-     * @return User
-     */
-    public function setUserTopclient(User $userTopclient)
-    {
-        $this->userTopclient = $userTopclient;
-
-        return $this;
-    }
-
-    /**
-     * Set civilite
-     *
-     * @param string $civilite
-     *
-     * @return Client
-     */
-    public function setCivilite($civilite)
-    {
-        $this->civilite = $civilite;
-
-        return $this;
-    }
-
-    /**
-     * Get civilite
-     *
-     * @return string
-     */
-    public function getCivilite()
-    {
-        return $this->civilite;
+        return $this->idClient;
     }
 
     /**
      * Set nom
      *
      * @param string $nom
-     *
      * @return Client
      */
     public function setNom($nom)
@@ -645,7 +470,7 @@ class Client
     /**
      * Get nom
      *
-     * @return string
+     * @return string 
      */
     public function getNom()
     {
@@ -656,7 +481,6 @@ class Client
      * Set prenom
      *
      * @param string $prenom
-     *
      * @return Client
      */
     public function setPrenom($prenom)
@@ -669,7 +493,7 @@ class Client
     /**
      * Get prenom
      *
-     * @return string
+     * @return string 
      */
     public function getPrenom()
     {
@@ -677,677 +501,26 @@ class Client
     }
 
     /**
-     * Set email
+     * Set civilite
      *
-     * @param string $email
-     *
+     * @param string $civilite
      * @return Client
      */
-    public function setEmail($email)
+    public function setCivilite($civilite)
     {
-        $this->email = $email;
+        $this->civilite = $civilite;
 
         return $this;
     }
 
     /**
-     * Get email
-     *
-     * @return string
-     */
-    public function getEmail()
-    {
-        return $this->email;
-    }
-
-    /**
-     * Set telephone1
-     *
-     * @param string $telephone1
-     *
-     * @return Client
-     */
-    public function setTelephone1($telephone1)
-    {
-        $this->telephone1 = $telephone1;
-
-        return $this;
-    }
-
-    /**
-     * Get telephone1
-     *
-     * @return string
-     */
-    public function getTelephone1()
-    {
-        return $this->telephone1;
-    }
-
-    /**
-     * Set telephone2
-     *
-     * @param string $telephone2
-     *
-     * @return Client
-     */
-    public function setTelephone2($telephone2)
-    {
-        $this->telephone2 = $telephone2;
-
-        return $this;
-    }
-
-    /**
-     * Get telephone2
-     *
-     * @return string
-     */
-    public function getTelephone2()
-    {
-        return $this->telephone2;
-    }
-      
-
-    /**
-     * Set telephone3
-     *
-     * @param string $telephone3
-     *
-     * @return Client
-     */
-    public function setTelephone3($telephone3)
-    {
-        $this->telephone3 = $telephone3;
-
-        return $this;
-    }
-
-    /**
-     * Get telephone3
-     *
-     * @return string
-     */
-    public function getTelephone3()
-    {
-        return $this->telephone3;
-    }
-
-    /**
-     * Set portable1
-     *
-     * @param string $portable1
-     *
-     * @return Client
-     */
-    public function setPortable1($portable1)
-    {
-        $this->portable1 = $portable1;
-
-        return $this;
-    }
-
-    /**
-     * Get portable1
-     *
-     * @return string
-     */
-    public function getPortable1()
-    {
-        return $this->portable1;
-    }
-
-    /**
-     * Set portable2
-     *
-     * @param string $portable2
-     *
-     * @return Client
-     */
-    public function setPortable2($portable2)
-    {
-        $this->portable1 = $portable2;
-
-        return $this;
-    }
-
-    /**
-     * Get portable2
-     *
-     * @return string
-     */
-    public function getPortable2()
-    {
-        return $this->portable2;
-    }
-
-    /**
-     * Set portable3
-     *
-     * @param string $portable3
-     *
-     * @return Client
-     */
-    public function setPortable3($portable3)
-    {
-        $this->portable3 = $portable3;
-
-        return $this;
-    }
-
-    /**
-     * Get portable3
-     *
-     * @return string
-     */
-    public function getPortable3()
-    {
-        return $this->portable3;
-    }
-
-    /**
-     * Set adresse1
-     *
-     * @param string $adresse1
-     *
-     * @return Client
-     */
-    public function setAdresse1($adresse1)
-    {
-        $this->adresse1 = $adresse1;
-
-        return $this;
-    }
-
-    /**
-     * Get adresse1
-     *
-     * @return string
-     */
-    public function getAdresse1()
-    {
-        return $this->adresse1;
-    }
-
-    /**
-     * Set adresse2
-     *
-     * @param string $adresse2
-     *
-     * @return Client
-     */
-    public function setAdresse2($adresse2)
-    {
-        $this->adresse2 = $adresse2;
-
-        return $this;
-    }
-
-    /**
-     * Get adresse2
-     *
-     * @return string
-     */
-    public function getAdresse2()
-    {
-        return $this->adresse2;
-    }
-
-    /**
-     * Set adresse3
-     *
-     * @param string $adresse3
-     * @return Client
-     */
-    public function setAdresse3($adresse3)
-    {
-        $this->adresse3 = $adresse3;
-
-        return $this;
-    }
-
-    /**
-     * Get adresse3
+     * Get civilite
      *
      * @return string 
      */
-    public function getAdresse3()
+    public function getCivilite()
     {
-        return $this->adresse3;
-    }
-
-    /**
-     * Set local
-     *
-     * @param string $local
-     *
-     * @return Client
-     */
-    public function setLocal($local)
-    {
-        $this->local = $local;
-
-        return $this;
-    }
-
-    /**
-     * Get local
-     *
-     * @return string
-     */
-    public function getLocal()
-    {
-        return $this->local;
-    }
-
-    /**
-     * Set ville
-     *
-     * @param string $ville
-     *
-     * @return Client
-     */
-    public function setVille($ville)
-    {
-        $this->ville = $ville;
-
-        return $this;
-    }
-
-    /**
-     * Get ville
-     *
-     * @return string
-     */
-    public function getVille()
-    {
-        return $this->ville;
-    }
-
-    /**
-     * Set codepostal
-     *
-     * @param string $codepostal
-     *
-     * @return Client
-     */
-    public function setCodepostal($codepostal)
-    {
-        $this->codepostal = $codepostal;
-
-        return $this;
-    }
-
-    /**
-     * Get codepostal
-     *
-     * @return string
-     */
-    public function getCodepostal()
-    {
-        return $this->codepostal;
-    }
-
-    /**
-     * Set pays
-     *
-     * @param string $pays
-     *
-     * @return Client
-     */
-    public function setPays($pays)
-    {
-        $this->pays = $pays;
-
-        return $this;
-    }
-
-    /**
-     * Get pays
-     *
-     * @return string
-     */
-    public function getPays()
-    {
-        return $this->pays;
-    }
-
-    /**
-     * Set lastContact
-     *
-     * @param \DateTime $lastContact
-     *
-     * @return Client
-     */
-    public function setLastContact($lastContact)
-    {
-        if( !($lastContact instanceof \DateTime) ) $lastContact = new \DateTime($lastContact);
-        $this->lastContact = $lastContact;
-
-        return $this;
-    }
-
-    /**
-     * Get lastContact
-     *
-     * @return \DateTime
-     */
-    public function getLastContact()
-    {
-        return $this->lastContact;
-    }
-
-    /**
-     * Set isTelValide
-     *
-     * @param boolean $isTelValide
-     *
-     * @return Client
-     */
-    public function setIsTelValide($isTelValide)
-    {
-        $this->isTelValide = $isTelValide;
-
-        return $this;
-    }
-
-    /**
-     * Get isTelValide
-     *
-     * @return boolean
-     */
-    public function getIsTelValide()
-    {
-        return $this->isTelValide;
-    }
-
-    /**
-     * Set isAdresseValide
-     *
-     * @param boolean $isAdresseValide
-     *
-     * @return Client
-     */
-    public function setIsAdresseValide($isAdresseValide)
-    {
-        $this->isAdresseValide = $isAdresseValide;
-
-        return $this;
-    }
-
-    /**
-     * Get isAdresseValide
-     *
-     * @return boolean
-     */
-    public function getIsAdresseValide()
-    {
-        return $this->isAdresseValide;
-    }
-
-    /**
-     * Set isEmailValide
-     *
-     * @param boolean $isEmailValide
-     *
-     * @return Client
-     */
-    public function setIsEmailValide($isEmailValide)
-    {
-        $this->isEmailValide = $isEmailValide;
-
-        return $this;
-    }
-
-    /**
-     * Get isEmailValide
-     *
-     * @return boolean
-     */
-    public function getIsEmailValide()
-    {
-        return $this->isEmailValide;
-    }
-
-    /**
-     * Set isContactableTel
-     *
-     * @param string $isContactableTel
-     *
-     * @return Client
-     */
-    public function setIsContactableTel($isContactableTel)
-    {
-        $this->isContactableTel = $isContactableTel;
-
-        return $this;
-    }
-
-    /**
-     * Get isContactableTel
-     *
-     * @return string
-     */
-    public function getIsContactableTel()
-    {
-        return $this->isContactableTel;
-    }
-
-    /**
-     * Set isContactableAdresse
-     *
-     * @param string $isContactableAdresse
-     *
-     * @return Client
-     */
-    public function setIsContactableAdresse($isContactableAdresse)
-    {
-        $this->isContactableAdresse = $isContactableAdresse;
-
-        return $this;
-    }
-
-    /**
-     * Get isContactableAdresse
-     *
-     * @return string
-     */
-    public function getIsContactableAdresse()
-    {
-        return $this->isContactableAdresse;
-    }
-
-    /**
-     * Set isContactableEmail
-     *
-     * @param string $isContactableEmail
-     *
-     * @return Client
-     */
-    public function setIsContactableEmail($isContactableEmail)
-    {
-        $this->isContactableEmail = $isContactableEmail;
-
-        return $this;
-    }
-
-    /**
-     * Get isContactableEmail
-     *
-     * @return string
-     */
-    public function getIsContactableEmail()
-    {
-        return $this->isContactableEmail;
-    }
-
-    /**
-     * Set optOutEmail
-     *
-     * @param boolean $optoutEmail
-     *
-     * @return Client
-     */
-    public function setOptoutEmail($optoutEmail)
-    {
-        $this->optoutEmail = $optoutEmail;
-
-        return $this;
-    }
-
-    /**
-     * Get optOutEmail
-     *
-     * @return boolean
-     */
-    public function getOptoutEmail()
-    {
-        return $this->optoutEmail;
-    }
-
-    /**
-     * Set optOutMail
-     *
-     * @param boolean $optoutMail
-     *
-     * @return Client
-     */
-    public function setOptoutMail($optoutMail)
-    {
-        $this->optoutMail = $optoutMail;
-
-        return $this;
-    }
-
-    /**
-     * Get optOutMail
-     *
-     * @return boolean
-     */
-    public function getOptoutMail()
-    {
-        return $this->optoutMail;
-    }
-
-    /**
-     * Set optOutTelephone
-     *
-     * @param boolean $optoutTelephone
-     *
-     * @return Client
-     */
-    public function setOptoutTelephone($optoutTelephone)
-    {
-        $this->optoutTelephone = $optoutTelephone;
-
-        return $this;
-    }
-
-    /**
-     * Get optOutTelephone
-     *
-     * @return boolean
-     */
-    public function getOptoutTelephone()
-    {
-        return $this->optoutTelephone;
-    }
-
-    /**
-     * Set optOutSms
-     *
-     * @param boolean $optoutSms
-     *
-     * @return Client
-     */
-    public function setOptoutSms($optoutSms)
-    {
-        $this->optoutSms = $optoutSms;
-
-        return $this;
-    }
-
-    /**
-     * Get optOutSms
-     *
-     * @return boolean
-     */
-    public function getOptoutSms()
-    {
-        return $this->optoutSms;
-    }
-
-    /**
-     * Set optin
-     *
-     * @param string $optin
-     * @return Client
-     */
-    public function setOptin($optin)
-    {
-        $this->optin = $optin;
-
-        return $this;
-    }
-
-    /**
-     * Get optin
-     *
-     * @return string 
-     */
-    public function getOptin()
-    {
-        return $this->optin;
-    }
-
-    /**
-     * Set createdAt
-     *
-     * @param \DateTime $createdAt
-     *
-     * @return Client
-     */
-    public function setCreatedAt($createdAt)
-    {
-        if( !($createdAt instanceof \DateTime) ) $createdAt = new \DateTime($createdAt);
-        $this->createdAt = $createdAt;
-
-        return $this;
-    }
-
-    /**
-     * Get createdAt
-     *
-     * @return \DateTime
-     */
-    public function getCreatedAt()
-    {
-        return $this->createdAt;
-    }
-
-    /**
-     * Set modifiedAt
-     *
-     * @param \DateTime $modifiedAt
-     *
-     * @return Client
-     */
-    public function setModifiedAt($modifiedAt)
-    {
-        if( !($modifiedAt instanceof \DateTime) ) $modifiedAt = new \DateTime($modifiedAt);
-        $this->modifiedAt = $modifiedAt;
-
-        return $this;
-    }
-
-    /**
-     * Get modifiedAt
-     *
-     * @return \DateTime
-     */
-    public function getModifiedAt()
-    {
-        return $this->modifiedAt;
+        return $this->civilite;
     }
 
     /**
@@ -1417,6 +590,236 @@ class Client
     public function getPaysBoutiqueRattachement()
     {
         return $this->paysBoutiqueRattachement;
+    }
+
+    /**
+     * Set email
+     *
+     * @param string $email
+     * @return Client
+     */
+    public function setEmail($email)
+    {
+        $this->email = $email;
+
+        return $this;
+    }
+
+    /**
+     * Get email
+     *
+     * @return string 
+     */
+    public function getEmail()
+    {
+        return $this->email;
+    }
+
+    /**
+     * Set telephone1
+     *
+     * @param string $telephone1
+     * @return Client
+     */
+    public function setTelephone1($telephone1)
+    {
+        $this->telephone1 = $telephone1;
+
+        return $this;
+    }
+
+    /**
+     * Get telephone1
+     *
+     * @return string 
+     */
+    public function getTelephone1()
+    {
+        return $this->telephone1;
+    }
+
+    /**
+     * Set telephone2
+     *
+     * @param string $telephone2
+     * @return Client
+     */
+    public function setTelephone2($telephone2)
+    {
+        $this->telephone2 = $telephone2;
+
+        return $this;
+    }
+
+    /**
+     * Get telephone2
+     *
+     * @return string 
+     */
+    public function getTelephone2()
+    {
+        return $this->telephone2;
+    }
+
+    /**
+     * Set local
+     *
+     * @param string $local
+     * @return Client
+     */
+    public function setLocal($local)
+    {
+        $this->local = $local;
+
+        return $this;
+    }
+
+    /**
+     * Get local
+     *
+     * @return string 
+     */
+    public function getLocal()
+    {
+        return $this->local;
+    }
+
+    /**
+     * Set pays
+     *
+     * @param string $pays
+     * @return Client
+     */
+    public function setPays($pays)
+    {
+        $this->pays = $pays;
+
+        return $this;
+    }
+
+    /**
+     * Get pays
+     *
+     * @return string 
+     */
+    public function getPays()
+    {
+        return $this->pays;
+    }
+
+    /**
+     * Set ville
+     *
+     * @param string $ville
+     * @return Client
+     */
+    public function setVille($ville)
+    {
+        $this->ville = $ville;
+
+        return $this;
+    }
+
+    /**
+     * Get ville
+     *
+     * @return string 
+     */
+    public function getVille()
+    {
+        return $this->ville;
+    }
+
+    /**
+     * Set codepostal
+     *
+     * @param string $codepostal
+     * @return Client
+     */
+    public function setCodepostal($codepostal)
+    {
+        $this->codepostal = $codepostal;
+
+        return $this;
+    }
+
+    /**
+     * Get codepostal
+     *
+     * @return string 
+     */
+    public function getCodepostal()
+    {
+        return $this->codepostal;
+    }
+
+    /**
+     * Set adresse1
+     *
+     * @param string $adresse1
+     * @return Client
+     */
+    public function setAdresse1($adresse1)
+    {
+        $this->adresse1 = $adresse1;
+
+        return $this;
+    }
+
+    /**
+     * Get adresse1
+     *
+     * @return string 
+     */
+    public function getAdresse1()
+    {
+        return $this->adresse1;
+    }
+
+    /**
+     * Set adresse2
+     *
+     * @param string $adresse2
+     * @return Client
+     */
+    public function setAdresse2($adresse2)
+    {
+        $this->adresse2 = $adresse2;
+
+        return $this;
+    }
+
+    /**
+     * Get adresse2
+     *
+     * @return string 
+     */
+    public function getAdresse2()
+    {
+        return $this->adresse2;
+    }
+
+    /**
+     * Set adresse3
+     *
+     * @param string $adresse3
+     * @return Client
+     */
+    public function setAdresse3($adresse3)
+    {
+        $this->adresse3 = $adresse3;
+
+        return $this;
+    }
+
+    /**
+     * Get adresse3
+     *
+     * @return string 
+     */
+    public function getAdresse3()
+    {
+        return $this->adresse3;
     }
 
     /**
@@ -1627,6 +1030,75 @@ class Client
     }
 
     /**
+     * Set pmhisto
+     *
+     * @param integer $pmhisto
+     * @return Client
+     */
+    public function setPmhisto($pmhisto)
+    {
+        $this->pmhisto = $pmhisto;
+
+        return $this;
+    }
+
+    /**
+     * Get pmhisto
+     *
+     * @return integer 
+     */
+    public function getPmhisto()
+    {
+        return $this->pmhisto;
+    }
+
+    /**
+     * Set date1erachat
+     *
+     * @param \DateTime $date1erachat
+     * @return Client
+     */
+    public function setDate1erachat($date1erachat)
+    {
+        $this->date1erachat = $date1erachat;
+
+        return $this;
+    }
+
+    /**
+     * Get date1erachat
+     *
+     * @return \DateTime 
+     */
+    public function getDate1erachat()
+    {
+        return $this->date1erachat;
+    }
+
+    /**
+     * Set datedernachat
+     *
+     * @param \DateTime $datedernachat
+     * @return Client
+     */
+    public function setDatedernachat($datedernachat)
+    {
+        $this->datedernachat = $datedernachat;
+
+        return $this;
+    }
+
+    /**
+     * Get datedernachat
+     *
+     * @return \DateTime 
+     */
+    public function getDatedernachat()
+    {
+        return $this->datedernachat;
+    }
+
+    /**
      * Set segment
      *
      * @param string $segment
@@ -1673,49 +1145,210 @@ class Client
     }
 
     /**
-     * Set isHardBounce
+     * Set isTelValide
      *
-     * @param boolean $isHardBounce
+     * @param boolean $isTelValide
      * @return Client
      */
-    public function setIsHardBounce($isHardBounce)
+    public function setIsTelValide($isTelValide)
     {
-        $this->isHardBounce = $isHardBounce;
+        $this->isTelValide = $isTelValide;
 
         return $this;
     }
 
     /**
-     * Get isHardBounce
+     * Get isTelValide
      *
      * @return boolean 
      */
-    public function getIsHardBounce()
+    public function getIsTelValide()
     {
-        return $this->isHardBounce;
+        return $this->isTelValide;
     }
 
     /**
-     * Set isSoftBounce
+     * Set isAdresseValide
      *
-     * @param boolean $isSoftBounce
+     * @param boolean $isAdresseValide
      * @return Client
      */
-    public function setIsSoftBounce($isSoftBounce)
+    public function setIsAdresseValide($isAdresseValide)
     {
-        $this->isSoftBounce = $isSoftBounce;
+        $this->isAdresseValide = $isAdresseValide;
 
         return $this;
     }
 
     /**
-     * Get isSoftBounce
+     * Get isAdresseValide
      *
      * @return boolean 
      */
-    public function getIsSoftBounce()
+    public function getIsAdresseValide()
     {
-        return $this->isSoftBounce;
+        return $this->isAdresseValide;
+    }
+
+    /**
+     * Set isEmailValide
+     *
+     * @param boolean $isEmailValide
+     * @return Client
+     */
+    public function setIsEmailValide($isEmailValide)
+    {
+        $this->isEmailValide = $isEmailValide;
+
+        return $this;
+    }
+
+    /**
+     * Get isEmailValide
+     *
+     * @return boolean 
+     */
+    public function getIsEmailValide()
+    {
+        return $this->isEmailValide;
+    }
+
+    /**
+     * Set isContactableTel
+     *
+     * @param string $isContactableTel
+     * @return Client
+     */
+    public function setIsContactableTel($isContactableTel)
+    {
+        $this->isContactableTel = $isContactableTel;
+
+        return $this;
+    }
+
+    /**
+     * Get isContactableTel
+     *
+     * @return string 
+     */
+    public function getIsContactableTel()
+    {
+        return $this->isContactableTel;
+    }
+
+    /**
+     * Set isContactableAdresse
+     *
+     * @param string $isContactableAdresse
+     * @return Client
+     */
+    public function setIsContactableAdresse($isContactableAdresse)
+    {
+        $this->isContactableAdresse = $isContactableAdresse;
+
+        return $this;
+    }
+
+    /**
+     * Get isContactableAdresse
+     *
+     * @return string 
+     */
+    public function getIsContactableAdresse()
+    {
+        return $this->isContactableAdresse;
+    }
+
+    /**
+     * Set isContactableEmail
+     *
+     * @param string $isContactableEmail
+     * @return Client
+     */
+    public function setIsContactableEmail($isContactableEmail)
+    {
+        $this->isContactableEmail = $isContactableEmail;
+
+        return $this;
+    }
+
+    /**
+     * Get isContactableEmail
+     *
+     * @return string 
+     */
+    public function getIsContactableEmail()
+    {
+        return $this->isContactableEmail;
+    }
+
+    /**
+     * Set optin
+     *
+     * @param string $optin
+     * @return Client
+     */
+    public function setOptin($optin)
+    {
+        $this->optin = $optin;
+
+        return $this;
+    }
+
+    /**
+     * Get optin
+     *
+     * @return string 
+     */
+    public function getOptin()
+    {
+        return $this->optin;
+    }
+
+    /**
+     * Set createdAt
+     *
+     * @param \DateTime $createdAt
+     * @return Client
+     */
+    public function setCreatedAt($createdAt)
+    {
+        $this->createdAt = $createdAt;
+
+        return $this;
+    }
+
+    /**
+     * Get createdAt
+     *
+     * @return \DateTime 
+     */
+    public function getCreatedAt()
+    {
+        return $this->createdAt;
+    }
+
+    /**
+     * Set modifiedAt
+     *
+     * @param \DateTime $modifiedAt
+     * @return Client
+     */
+    public function setModifiedAt($modifiedAt)
+    {
+        $this->modifiedAt = $modifiedAt;
+
+        return $this;
+    }
+
+    /**
+     * Get modifiedAt
+     *
+     * @return \DateTime 
+     */
+    public function getModifiedAt()
+    {
+        return $this->modifiedAt;
     }
 
     /**
@@ -1747,7 +1380,7 @@ class Client
      * @param boolean $isNouveauTopclient
      * @return Client
      */
-    public function setIsNouveauTopClient($isNouveauTopclient)
+    public function setIsNouveauTopclient($isNouveauTopclient)
     {
         $this->isNouveauTopclient = $isNouveauTopclient;
 
@@ -1759,7 +1392,7 @@ class Client
      *
      * @return boolean 
      */
-    public function getIsNouveauTopClient()
+    public function getIsNouveauTopclient()
     {
         return $this->isNouveauTopclient;
     }
@@ -1788,100 +1421,30 @@ class Client
     }
 
     /**
-     * Set pmhisto
+     * Add recipients
      *
-     * @param integer $pmhisto
+     * @param \AppBundle\Entity\Recipient $recipients
      * @return Client
      */
-    public function setPmhisto($pmhisto)
+    public function addRecipient(\AppBundle\Entity\Recipient $recipients)
     {
-        $this->pmhisto = $pmhisto;
+        $this->recipients[] = $recipients;
 
         return $this;
     }
 
     /**
-     * Get pmhisto
+     * Remove recipients
      *
-     * @return integer 
+     * @param \AppBundle\Entity\Recipient $recipients
      */
-    public function getPmhisto()
+    public function removeRecipient(\AppBundle\Entity\Recipient $recipients)
     {
-        return $this->pmhisto;
+        $this->recipients->removeElement($recipients);
     }
 
     /**
-     * Set date1erachat
-     *
-     * @param \DateTime $date1erachat
-     * @return Client
-     */
-    public function setDate1erachat($date1erachat)
-    {
-        if( !($date1erachat instanceof \DateTime) ) $date1erachat = new \DateTime($date1erachat);
-        $this->date1erachat = $date1erachat;
-
-        return $this;
-    }
-
-    /**
-     * Get date1erachat
-     *
-     * @return \DateTime 
-     */
-    public function getDate1erachat()
-    {
-        return $this->date1erachat;
-    }
-
-    /**
-     * Set datedernachat
-     *
-     * @param \DateTime $datedernachat
-     * @return Client
-     */
-    public function setDatedernachat($datedernachat)
-    {
-        if( !($datedernachat instanceof \DateTime) ) $datedernachat = new \DateTime($datedernachat);
-        $this->datedernachat = $datedernachat;
-
-        return $this;
-    }
-
-    /**
-     * Get datedernachat
-     *
-     * @return \DateTime 
-     */
-    public function getDatedernachat()
-    {
-        return $this->datedernachat;
-    }
-
-    /**
-     * Add recipient
-     *
-     * @param Recipient $recipient
-     * @return Client
-     */
-    public function addRecipient(Recipient $recipient)
-    {
-        $this->recipients[] = $recipient;
-        return $this;
-    }
-
-    /**
-     * Remove recipient
-     *
-     * @param Recipient $recipient
-     */
-    public function removeRecipient(Recipient $recipient)
-    {
-        $this->recipients->removeElement($recipient);
-    }
-
-    /**
-     * Get recipient
+     * Get recipients
      *
      * @return \Doctrine\Common\Collections\Collection 
      */
@@ -1889,94 +1452,32 @@ class Client
     {
         return $this->recipients;
     }
+
     /**
-     * Add clientSortant
+     * Add dataRecipients
      *
-     * @param ClientSortant $clientSortant
+     * @param \AppBundle\Entity\DataRecipient $dataRecipients
      * @return Client
      */
-    public function addClientSortant(ClientSortant $clientSortant)
+    public function addDataRecipient(\AppBundle\Entity\DataRecipient $dataRecipients)
     {
-        $this->clientSortants[] = $clientSortant;
+        $this->dataRecipients[] = $dataRecipients;
+
         return $this;
     }
 
     /**
-     * Remove clientSortant
+     * Remove dataRecipients
      *
-     * @param ClientSortant $clientSortant
+     * @param \AppBundle\Entity\DataRecipient $dataRecipients
      */
-    public function removeClientSortant(ClientSortant $clientSortant)
+    public function removeDataRecipient(\AppBundle\Entity\DataRecipient $dataRecipients)
     {
-        $this->clientSortants->removeElement($clientSortant);
+        $this->dataRecipients->removeElement($dataRecipients);
     }
 
     /**
-     * Get clientSortant
-     *
-     * @return \Doctrine\Common\Collections\Collection 
-     */
-    public function getClientSortants()
-    {
-        return $this->clientSortants;
-    }
-
-    /**
-     * Add clientComment
-     *
-     * @param ClientComment $clientComment
-     * @return Client
-     */
-    public function addClientComment(ClientComment $clientComment)
-    {
-        $this->clientComments[] = $clientComment;
-        return $this;
-    }
-
-    /**
-     * Remove clientComment
-     *
-     * @param ClientComment $clientComment
-     */
-    public function removeClientComment(ClientComment $clientComment)
-    {
-        $this->clientComments->removeElement($clientComment);
-    }
-
-    /**
-     * Get clientComment
-     *
-     * @return \Doctrine\Common\Collections\Collection 
-     */
-    public function getClientComments()
-    {
-        return $this->clientComments;
-    }
-
-    /**
-     * Add dataRecipient
-     *
-     * @param DataRecipient $dataRecipient
-     * @return Client
-     */
-    public function addDataRecipient(DataRecipient $dataRecipient)
-    {
-        $this->dataRecipients[] = $dataRecipient;
-        return $this;
-    }
-
-    /**
-     * Remove dataRecipient
-     *
-     * @param Recipient $dataRecipient
-     */
-    public function removeDataRecipient(DataRecipient $dataRecipient)
-    {
-        $this->dataRecipients->removeElement($dataRecipient);
-    }
-
-    /**
-     * Get dataRecipient
+     * Get dataRecipients
      *
      * @return \Doctrine\Common\Collections\Collection 
      */
@@ -1985,37 +1486,27 @@ class Client
         return $this->dataRecipients;
     }
 
-    public function getCampaigns()
-    {
-        return array_map(
-            function ($recipient) {
-                return $recipient->getCampaign();
-            },
-            $this->recipients->toArray()
-        );
-    }
-
     /**
-     * Add ticket
+     * Add tickets
      *
-     * @param Ticket $ticket
+     * @param \AppBundle\Entity\Ticket $tickets
      * @return Client
      */
-    public function addTicket(Ticket $ticket)
+    public function addTicket(\AppBundle\Entity\Ticket $tickets)
     {
-        $this->tickets[] = $ticket;
+        $this->tickets[] = $tickets;
 
         return $this;
     }
 
     /**
-     * Remove ticket
+     * Remove tickets
      *
-     * @param Ticket $ticket
+     * @param \AppBundle\Entity\Ticket $tickets
      */
-    public function removeTicket(Ticket $ticket)
+    public function removeTicket(\AppBundle\Entity\Ticket $tickets)
     {
-        $this->tickets->removeElement($ticket);
+        $this->tickets->removeElement($tickets);
     }
 
     /**
@@ -2029,81 +1520,114 @@ class Client
     }
 
     /**
-     * Set isSuspectDoublon
+     * Add clientComments
      *
-     * @param boolean $isSuspectDoublon
+     * @param \AppBundle\Entity\ClientComment $clientComments
      * @return Client
      */
-    public function setIsSuspectDoublon($isSuspectDoublon)
+    public function addClientComment(\AppBundle\Entity\ClientComment $clientComments)
     {
-        $this->isSuspectDoublon = $isSuspectDoublon;
+        $this->clientComments[] = $clientComments;
 
         return $this;
     }
 
     /**
-     * Get isSuspectDoublon
+     * Remove clientComments
      *
-     * @return boolean 
+     * @param \AppBundle\Entity\ClientComment $clientComments
      */
-    public function getIsSuspectDoublon()
+    public function removeClientComment(\AppBundle\Entity\ClientComment $clientComments)
     {
-        return $this->isSuspectDoublon;
+        $this->clientComments->removeElement($clientComments);
     }
 
     /**
-     * Set isDoublon
-     *
-     * @param boolean $isDoublon
-     * @return Client
-     */
-    public function setIsDoublon($isDoublon)
-    {
-        $this->isDoublon = $isDoublon;
-
-        return $this;
-    }
-
-    /**
-     * Get isDoublon
-     *
-     * @return boolean 
-     */
-    public function getIsDoublon()
-    {
-        return $this->isDoublon;
-    }
-
-    /**
-     * Add clientSuspectDoublons
-     *
-     * @param \AppBundle\Entity\ClientSuspectDoublon $clientSuspectDoublons
-     * @return Client
-     */
-    public function addClientSuspectDoublon(\AppBundle\Entity\ClientSuspectDoublon $clientSuspectDoublons)
-    {
-        $this->clientSuspectDoublons[] = $clientSuspectDoublons;
-
-        return $this;
-    }
-
-    /**
-     * Remove clientSuspectDoublons
-     *
-     * @param \AppBundle\Entity\ClientSuspectDoublon $clientSuspectDoublons
-     */
-    public function removeClientSuspectDoublon(\AppBundle\Entity\ClientSuspectDoublon $clientSuspectDoublons)
-    {
-        $this->clientSuspectDoublons->removeElement($clientSuspectDoublons);
-    }
-
-    /**
-     * Get clientSuspectDoublons
+     * Get clientComments
      *
      * @return \Doctrine\Common\Collections\Collection 
      */
-    public function getClientSuspectDoublons()
+    public function getClientComments()
     {
-        return $this->clientSuspectDoublons;
+        return $this->clientComments;
+    }
+
+    /**
+     * Add clientSortants
+     *
+     * @param \AppBundle\Entity\ClientSortant $clientSortants
+     * @return Client
+     */
+    public function addClientSortant(\AppBundle\Entity\ClientSortant $clientSortants)
+    {
+        $this->clientSortants[] = $clientSortants;
+
+        return $this;
+    }
+
+    /**
+     * Remove clientSortants
+     *
+     * @param \AppBundle\Entity\ClientSortant $clientSortants
+     */
+    public function removeClientSortant(\AppBundle\Entity\ClientSortant $clientSortants)
+    {
+        $this->clientSortants->removeElement($clientSortants);
+    }
+
+    /**
+     * Get clientSortants
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getClientSortants()
+    {
+        return $this->clientSortants;
+    }
+
+    /**
+     * Set userTrigger
+     *
+     * @param \Application\Sonata\UserBundle\Entity\User $userTrigger
+     * @return Client
+     */
+    public function setUserTrigger(\Application\Sonata\UserBundle\Entity\User $userTrigger = null)
+    {
+        $this->userTrigger = $userTrigger;
+
+        return $this;
+    }
+
+    /**
+     * Get userTrigger
+     *
+     * @return \Application\Sonata\UserBundle\Entity\User 
+     */
+    public function getUserTrigger()
+    {
+        return $this->userTrigger;
+    }
+
+    /**
+     * Set userTopclient
+     *
+     * @param \Application\Sonata\UserBundle\Entity\User $userTopclient
+     * @return Client
+     */
+    public function setUserTopclient(\Application\Sonata\UserBundle\Entity\User $userTopclient = null)
+    {
+        $this->userTopclient = $userTopclient;
+
+        return $this;
+    }
+
+    /**
+     * Get userTopclient
+     *
+     * @return \Application\Sonata\UserBundle\Entity\User 
+     */
+    public function getUserTopclient()
+    {
+        return $this->userTopclient;
     }
 }

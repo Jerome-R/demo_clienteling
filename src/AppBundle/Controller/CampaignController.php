@@ -9,7 +9,6 @@ use Symfony\Component\HttpFoundation\Session\Session;
 use AppBundle\Entity\Campaign;
 use AppBundle\Entity\Client;
 use AppBundle\Entity\Recipient;
-use AppBundle\Entity\Tracking as campaingTracking;
 
 use ApplicationSonataUserBundle\Entity\User;
 
@@ -43,8 +42,6 @@ class CampaignController extends Controller
 {
     public function indexAction(Request $request)
     {
-        $userModules = $this->container->get('app.get_user_modules');
-        $modules = $userModules->GetUserModules( $this->get('security.context')->getToken()->getUser()  );
         $user = $this->get('security.context')->getToken()->getUser();
         
         /*if( !in_array("campaign", $modules) ){
@@ -456,30 +453,6 @@ class CampaignController extends Controller
             $recipient->setContactedAt(new \DateTime());
             $client->setLastContact(new \DateTime());
 
-            $campaingTracking = $em->getRepository('AppBundle:Tracking')->findOneBy( array( "campaign" => $recipient->getCampaign() ) );
-            
-            if($campaingTracking == null){
-                $campaingTracking = new campaingTracking();
-                $campaingTracking->setCampaign( $recipient->getCampaign() );
-
-                $em->persist($campaingTracking);
-            }
-
-            switch($recipient->getCanal()){
-                case "Email":
-                    $campaingTracking->increaseEmailsSent();
-                break;
-                case "Mail":
-                    $campaingTracking->increaseMailsSent();
-                break;
-                case "Phone":
-                    $campaingTracking->increasePhoneCalls();
-                break;
-                case "SMS":
-                    $campaingTracking->increaseSmsSent();
-                break;
-            }
-
             //persist inutile, Doctrine connait l'entité
             $em->flush();
 
@@ -714,30 +687,10 @@ class CampaignController extends Controller
 
 
         if ( $request->getMethod() == 'POST' ) {
-
-            $campaingTracking = $em->getRepository('AppBundle:Tracking')->findOneBy( array( "campaign" => $recipient->getCampaign() ) );
-
-            if($campaingTracking == null){
-                $campaingTracking = new campaingTracking();
-                $campaingTracking->setCampaign( $recipient->getCampaign() );
-
-                $em->persist($campaingTracking);
-            }
-
-            $campaingTracking->increaseEmailsSent();
             
             $now = new \DateTime();
             $dest = $recipient->getClient()->getEmail();
 
-            //persist and flush tracking
-            $tracking = new Tracking();
-            $tracking->setIdCampaignName($recipient->getCampaign()->getIdCampaignName());
-            $tracking->setIdClientInterne($recipient->getClient()->getId());
-            $tracking->setContactedAt($now);
-            $tracking->setEmail($dest);
-
-            /*$em2->persist($tracking);
-            $em2->flush();*/
             $em->flush();
 
             $form->handleRequest($request);
@@ -804,7 +757,6 @@ class CampaignController extends Controller
                             //'now'               => $now,
                             //'campaignId'        => $recipient->getCampaign()->getIdCampaignName(),
                             //'clientId'          => $recipient->getClient()->getId(),
-                            //'trackingId'        => $tracking->getId()
                         )
                     ),
                     'text/html'
@@ -827,7 +779,6 @@ class CampaignController extends Controller
             var_dump($headers->get('Return-Path'));
             */
             $headers->addTextHeader('X-CampaignId', $recipient->getCampaign()->getIdCampaignName());
-            $headers->addTextHeader('X-TrackingId', $tracking->getId());
             
             $success = 1;
 
@@ -868,11 +819,6 @@ class CampaignController extends Controller
 
                 $request->getSession()->getFlashBag()->add('success', 'Email envoyé à '.$recipient->getClient()->getFullName().' avec succès.');
                 return $this->redirect($this->generateUrl('app_campaign_clients_list', array('campaign_id' => $recipient->getCampaign()->getId())));
-            }
-            else{
-                //delete last entry for tracking because fail to send email
-                //$em2->remove($tracking);
-                //$em2->flush();
             }
         }
 

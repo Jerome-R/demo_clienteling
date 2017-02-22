@@ -164,23 +164,12 @@ class Campaign
      */
     protected $image;
 
-    /**
-     * @ORM\OneToOne(targetEntity="AppBundle\Entity\Tracking", cascade={"persist", "remove"}, orphanRemoval=TRUE)
-     */
-    protected $tracking;
-
-    /**
-     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Link", mappedBy="campaign", cascade={"persist", "remove"}, orphanRemoval=TRUE)
-     */
-    protected $links;
-
     public function __construct()
     {   
         $this->createdAt            = new \DateTime();
         $this->startDate            = new \DateTime();
         $this->endDate              = new \DateTime();
         $this->recipients           = new ArrayCollection();
-        $this->links                = new ArrayCollection();
         $this->activeCampaign       = false;
         $this->activeKpi            = false;
         $this->visible              = true;
@@ -430,22 +419,6 @@ class Campaign
         return $this->recipients;
     }
 
-    public function addLink(Link $link)
-    {
-        $this->links[] = $link;
-        return $this;
-    }
-
-    public function removeLink(Link $link)
-    {
-        $this->links->removeElement($link);
-    }
-
-    public function getLinks()
-    {
-        return $this->links;
-    }
-
     public function setImage(Image $image = null)
     {
         $this->image = $image;
@@ -455,17 +428,6 @@ class Campaign
     public function getImage()
     {
         return $this->image;
-    }
-
-    public function setTracking(Tracking $tracking = null)
-    {
-        $this->tracking = $tracking;
-        return $this;
-    }
-
-    public function getTracking()
-    {
-        return $this->tracking;
     }
 
     public function getClients()

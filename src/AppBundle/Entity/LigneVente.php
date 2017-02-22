@@ -14,9 +14,7 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 /**
  * LigneVente
  *
- * @ORM\Table(name="app_ligne_vente", uniqueConstraints={
- *      @ORM\UniqueConstraint(name="UNIQUE_LV_ticket", columns={"ticket_uniq_id", "codeuvc", "quantite","code_vendeur", "type_vente"})
- * })
+ * @ORM\Table(name="app_ligne_vente")
  * @ORM\Entity(repositoryClass="AppBundle\Entity\LigneVenteRepository")
  * @ORM\HasLifecycleCallbacks()
  */
@@ -32,13 +30,6 @@ class LigneVente
     private $id;
 
     /**
-     * @var string
-     *
-     * @ORM\Column(name="codeuvc", type="string", length=255, nullable=true)
-     */
-    private $codeuvc;
-
-    /**
      * @var integer
      *
      * @ORM\Column(name="quantite", type="integer", nullable=true)
@@ -48,30 +39,22 @@ class LigneVente
     /**
      * @var integer
      *
-     * @ORM\Column(name="cattc", type="integer", length=255, nullable=true)
+     * @ORM\Column(name="prix", type="integer", length=255, nullable=true)
      */
-    private $cattc;
-
+    private $prix;
     /**
-     * @var integer
+     * @var string
      *
-     * @ORM\Column(name="remise_ttc", type="integer", length=255, nullable=true)
+     * @ORM\Column(name="categorie", type="string", length=255, nullable=true)
      */
-    private $remiseTtc;
+    private $categorie;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="super_ligne_desc", type="string", length=255, nullable=true)
+     * @ORM\Column(name="sous_categorie", type="string", length=255, nullable=true)
      */
-    private $superLigneDesc;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="sku_desc", type="string", length=255, nullable=true)
-     */
-    private $skuDesc;
+    private $sous_categorie;
 
     /**
      * @var string
@@ -100,13 +83,6 @@ class LigneVente
      * @ORM\Column(name="point_vente_id", type="string", length=255, nullable=true)
      */
     private $pointVenteId;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="type_vente", type="string", length=255, nullable=true)
-     */
-    private $typeVente;
 
     /**
      * @var \DateTime
@@ -158,122 +134,6 @@ class LigneVente
     }
 
 
-    /**
-     * Set codeuvc
-     *
-     * @param string $codeuvc
-     * @return LigneVente
-     */
-    public function setCodeuvc($codeuvc)
-    {
-        $this->codeuvc = $codeuvc;
-
-        return $this;
-    }
-
-    /**
-     * Get codeuvc
-     *
-     * @return string 
-     */
-    public function getCodeuvc()
-    {
-        return $this->codeuvc;
-    }
-
-
-    /**
-     * Set pointVenteId
-     *
-     * @param string $pointVenteId
-     * @return LigneVente
-     */
-    public function setPointVenteId($pointVenteId)
-    {
-        $this->pointVenteId = $pointVenteId;
-
-        return $this;
-    }
-
-    /**
-     * Get pointVenteId
-     *
-     * @return string 
-     */
-    public function getPointVenteId()
-    {
-        return $this->pointVenteId;
-    }
-
-
-    /**
-     * Set ticketUniqId
-     *
-     * @param string $ticketUniqId
-     * @return LigneVente
-     */
-    public function setTicketUniqId($ticketUniqId)
-    {
-        $this->ticketUniqId = $ticketUniqId;
-
-        return $this;
-    }
-
-    /**
-     * Get ticketUniqId
-     *
-     * @return string 
-     */
-    public function getTicketUniqId()
-    {
-        return $this->ticketUniqId;
-    }
-
-
-    /**
-     * Set clientId
-     * @param string $clientId
-     * @return LigneVente
-     */
-    public function setClientId($clientId)
-    {
-        $this->clientId = $clientId;
-
-        return $this;
-    }
-
-    /**
-     * Get clientId
-     *
-     * @return string 
-     */
-    public function getClientId()
-    {
-        return $this->clientId;
-    }
-
-
-    /**
-     * Set codeVendeur
-     * @param string $codeVendeur
-     * @return LigneVente
-     */
-    public function setCodeVendeur($codeVendeur)
-    {
-        $this->codeVendeur = $codeVendeur;
-
-        return $this;
-    }
-
-    /**
-     * Get codeVendeur
-     *
-     * @return string 
-     */
-    public function getCodeVendeur()
-    {
-        return $this->codeVendeur;
-    }
 
     /**
      * Set quantite
@@ -299,95 +159,164 @@ class LigneVente
     }
 
     /**
-     * Set cattc
+     * Set prix
      *
-     * @param integer $cattc
+     * @param integer $prix
      * @return LigneVente
      */
-    public function setCattc($cattc)
+    public function setPrix($prix)
     {
-        $this->cattc = $cattc;
+        $this->prix = $prix;
 
         return $this;
     }
 
     /**
-     * Get remiseTtc
+     * Get prix
      *
      * @return integer 
      */
-    public function getRemiseTtc()
+    public function getPrix()
     {
-        return $this->remiseTtc;
+        return $this->prix;
     }
 
     /**
-     * Set remiseTtc
+     * Set categorie
      *
-     * @param integer $remiseTtc
+     * @param string $categorie
      * @return LigneVente
      */
-    public function setRemiseTtc($remiseTtc)
+    public function setCategorie($categorie)
     {
-        $this->remiseTtc = $remiseTtc;
+        $this->categorie = $categorie;
 
         return $this;
     }
 
     /**
-     * Get cattc
-     *
-     * @return integer 
-     */
-    public function getCattc()
-    {
-        return $this->cattc;
-    }
-
-    /**
-     * Set superLigneDesc
-     *
-     * @param string $superLigneDesc
-     * @return LigneVente
-     */
-    public function setSuperLigneDesc($superLigneDesc)
-    {
-        $this->superLigneDesc = $superLigneDesc;
-
-        return $this;
-    }
-
-    /**
-     * Get superLigneDesc
+     * Get categorie
      *
      * @return string 
      */
-    public function getSuperLigneDesc()
+    public function getCategorie()
     {
-        return $this->superLigneDesc;
+        return $this->categorie;
     }
 
     /**
-     * Set skuDesc
+     * Set sous_categorie
      *
-     * @param string $skuDesc
+     * @param string $sousCategorie
      * @return LigneVente
      */
-    public function setSkuDesc($skuDesc)
+    public function setSousCategorie($sousCategorie)
     {
-        $this->skuDesc = $skuDesc;
+        $this->sous_categorie = $sousCategorie;
 
         return $this;
     }
 
     /**
-     * Get skuDesc
+     * Get sous_categorie
      *
      * @return string 
      */
-    public function getSkuDesc()
+    public function getSousCategorie()
     {
-        return $this->skuDesc;
+        return $this->sous_categorie;
+    }
+
+    /**
+     * Set ticketUniqId
+     *
+     * @param string $ticketUniqId
+     * @return LigneVente
+     */
+    public function setTicketUniqId($ticketUniqId)
+    {
+        $this->ticketUniqId = $ticketUniqId;
+
+        return $this;
+    }
+
+    /**
+     * Get ticketUniqId
+     *
+     * @return string 
+     */
+    public function getTicketUniqId()
+    {
+        return $this->ticketUniqId;
+    }
+
+    /**
+     * Set clientId
+     *
+     * @param string $clientId
+     * @return LigneVente
+     */
+    public function setClientId($clientId)
+    {
+        $this->clientId = $clientId;
+
+        return $this;
+    }
+
+    /**
+     * Get clientId
+     *
+     * @return string 
+     */
+    public function getClientId()
+    {
+        return $this->clientId;
+    }
+
+    /**
+     * Set codeVendeur
+     *
+     * @param string $codeVendeur
+     * @return LigneVente
+     */
+    public function setCodeVendeur($codeVendeur)
+    {
+        $this->codeVendeur = $codeVendeur;
+
+        return $this;
+    }
+
+    /**
+     * Get codeVendeur
+     *
+     * @return string 
+     */
+    public function getCodeVendeur()
+    {
+        return $this->codeVendeur;
+    }
+
+    /**
+     * Set pointVenteId
+     *
+     * @param string $pointVenteId
+     * @return LigneVente
+     */
+    public function setPointVenteId($pointVenteId)
+    {
+        $this->pointVenteId = $pointVenteId;
+
+        return $this;
+    }
+
+    /**
+     * Get pointVenteId
+     *
+     * @return string 
+     */
+    public function getPointVenteId()
+    {
+        return $this->pointVenteId;
     }
 
     /**
@@ -398,7 +327,6 @@ class LigneVente
      */
     public function setDateFacture($dateFacture)
     {
-        if( !($dateFacture instanceof \DateTime) ) $dateFacture = new \DateTime($dateFacture);
         $this->dateFacture = $dateFacture;
 
         return $this;
@@ -422,7 +350,6 @@ class LigneVente
      */
     public function setDateModif($dateModif)
     {
-        if( !($dateModif instanceof \DateTime) ) $dateModif = new \DateTime($dateModif);
         $this->dateModif = $dateModif;
 
         return $this;

@@ -13,7 +13,6 @@ use AppBundle\Entity\Campaign;
 use AppBundle\Entity\Client;
 use AppBundle\Entity\Recipient;
 use AppBundle\Entity\CampaignClient;
-use AppBundle\Entity\Tracking as TrackingUpdate;
 use Application\Sonata\UserBundle\Entity\User;
 use AppBundle\Entity\ExportCsv;
 
@@ -56,161 +55,6 @@ class HomeController extends Controller
             'base_dir' => realpath($this->container->getParameter('kernel.root_dir').'/..'),
         ));*/
     }
-    
-    public function _testAction(Request $request)
-    {
-        //$em2 = $this->getDoctrine()->getManager('tracking');
-
-        $date1 = new \DateTime('2016-04-21');
-        $date2 = new \DateTime();
-
-        $dateDiff =  $date1->diff($date2);
-
-        return $this->render('AppBundle::_test.html.twig', array(
-            'date1' => $date1,
-            'date2' => $date2,
-            'dateDiff' => $dateDiff->days,
-        ));
-    }
-
-    public function _bounceAction(Request $request)
-    {
-        $mailer_host= "{mail.gandi.net:993/imap/ssl}bounces_checked";
-        $mailer_trash= "{mail.gandi.net:993/imap/ssl}TRASH";
-        $mailer_user=  "bounce@actions-pdv-l.fr";
-        $mailer_password=  "claravista123";
-
-        /* try to connect */
-        $mbox = imap_open($mailer_host,$mailer_user,$mailer_password) or die('Cannot connect to mailbox: ' . imap_last_error());
-
-        /*$list = imap_list($mbox, "$mailer_host", "*");
-        if (is_array($list)) {
-            foreach ($list as $val) {
-                echo imap_utf7_decode($val) . "\n";
-            }
-        } else {
-            echo "imap_list a échoué : " . imap_last_error() . "\n";
-        }*/
-
-        /* grab emails */
-        //$emails = imap_search($mbox,'ALL');
-        //$emails = imap_search($mbox,'FROM "MAILER-DAEMON@eu-west-1.amazonses.com"');
-        $emails = imap_search($mbox,'SINCE "1 January 2017"');
-
-        if($emails) {
-            /* begin output var */
-            $output = '';
-
-            /* put the newest emails on top */
-            rsort($emails);
-            $count = count($emails);
-
-            $i=1;
-
-            /* for every email... */
-            foreach($emails as $email_number) {
-
-                /* get information specific to this email */
-                $overview = imap_fetch_overview($mbox,$email_number,0);
-                /*
-                0 - Message header
-                1 - MULTIPART/ALTERNATIVE
-                1.1 - TEXT/PLAIN
-                1.2 - TEXT/HTML
-                2 - file.ext
-                */
-                $message = htmlspecialchars(imap_fetchbody($mbox,$email_number,2));
-                $original = htmlspecialchars(imap_fetchbody($mbox,$email_number,3));
-                //$header=imap_rfc822_parse_headers(imap_fetchheader($mbox,$i));
-                //$header=imap_headerinfo($mbox,$i);
-
-                //Parse message to get bounced adress.
-                preg_match("/Status:\s+?(.*)/i", $message, $status);
-                preg_match("/Action:\s+?(.*)/i", $message, $action);
-                preg_match("/Diagnostic-Code:\s+?smtp;\s+?(.*)/s", $message, $error);
-                if ($error == "" or $error == null){
-                    preg_match("/Diagnostic-Code:\s+?smtp;+?(.*)/s", $message, $error);
-                    if ($error == "" or $error == null){
-                        preg_match("/Diagnostic-Code:\s+?(.*)/s", $message, $error);
-                        if ($error == "" or $error == null){
-                            preg_match("/Status:\s+?(.*)/s", $message, $error);
-
-                            if ($error == "" or $error == null){
-                                $error[1] = "n/a";
-                            }
-                        }
-                    }
-                }
-                preg_match("/Final-Recipient:\s+?RFC822;\s+?(.*)/i", $message, $recipient);
-                if ($recipient == "" or $recipient == null){
-                    preg_match("/Final-Recipient:\s+?RFC822;+?(.*)/i", $message, $recipient);
-                    if ($recipient == "" or $recipient == null){
-                        $recipient[1] = "n/a";
-                    }
-                }
-
-                preg_match("/X-TrackingId:\s+?(.*)/i", $original, $trackingId);
-                if ($trackingId == "" or $trackingId == null){
-                    $trackingId[1] = "n/a";
-                }
-                preg_match("/X-CampaignId:\s+?(.*)/i", $original, $campaignId);
-                if ($campaignId == "" or $campaignId == null){
-                    $campaignId[1] = "n/a";
-                }
-                preg_match("/Feedback-ID:\s+?(.*)/i", $original, $feed);
-                if ($feed == "" or $feed == null){
-                    $feed[1] = "n/a";
-                }
-
-
-                $date = new \DateTime($overview[0]->date);
-                $date = $date->format("Y/m/d H:i");
-
-                /* output the email header information */
-                $output.="<tr>";
-                //$output.= '<td>'.imap_utf8($overview[0]->subject).'</td>';
-                //$output.= '<td>'.imap_utf8($overview[0]->from).'</td>';
-                //$output.= '<td>'.imap_utf8($overview[0]->to).'</td>';
-                if (isset($recipient[1]))
-                    $output.= '<td>'.imap_utf8($recipient[1]).'</td>';
-                else
-                    $output.= '<td></td>';                
-                $output.= '<td>'.imap_utf8($campaignId[1]).'</td>';
-                $output.= '<td>'.imap_utf8($trackingId[1]).'</td>';
-                $output.= '<td>'.imap_utf8($date).'</td>';
-                if (isset($error[1]))
-                    $output.= '<td>'.imap_utf8($error[1]).'</td>';
-                else
-                    $output.= '<td></td>';
-                if (isset($status[1]))
-                    $output.= '<td>'.imap_utf8($status[1]).'</td>';
-                else
-                    $output.= '<td></td>';
-                $output.= '<td>'.imap_utf8(number_format($overview[0]->size/1000)).'&nbsp;ko</td>';
-                if (isset($action[1]))
-                    $output.= '<td>'.imap_utf8($action[1]).'</td>';
-                else
-                    $output.= '<td></td>';                
-                if (isset($error[1]) &&  (imap_utf8($error[1])[0] == "5"))
-                    $output.= '<td>Hard</td>';
-                elseif (isset($error[1]) && (imap_utf8($error[1])[0] == "4" || imap_utf8($error[1])[0] == "X"))
-                    $output.= '<td>Soft</td>';
-                else
-                    $output.= '<td>n/a</td>';
-                //$output.= '<td>'.$overview[0]->recent.'</td>';
-                //$output.= '<td>'.$overview[0]->msgno.'</td>';
-                $output.= '</tr>';
-            }
-            $i++;
-        }
-
-        imap_close($mbox);
-
-        return $this->render('AppBundle::_bounce.html.twig', array(
-            'output' => $output,
-            'count'  => $count
-        ));
-    }
 
     public function _impersonateAction(Request $request)
     {
@@ -228,7 +72,6 @@ class HomeController extends Controller
         ));*/
     }
 
-    //Gestion du tracking email ici
     public function _openAction($idClient, Request $request)
     {
         $em = $this->getDoctrine()->getManager();
@@ -283,21 +126,7 @@ class HomeController extends Controller
             'exports' => $exports
         ));
     }
-
-    public function _trackingAction(Request $request)
-    {
-        $em     = $this->getDoctrine()->getManager();
-        $em2    = $this->getDoctrine()->getManager('tracking');
-
-        $session = $request->getSession();
-
-        $trackings = $em->getRepository('AppBundle:Tracking')->findAll();        
-
-        return $this->render('AppBundle:Home:tracking.html.twig', array(
-            'trackings' => $trackings
-        ));
-    }
-
+    
     public function notFoundAction(Request $request)
     {   
         return $this->render('AppBundle:Home:not_found.html.twig', array(

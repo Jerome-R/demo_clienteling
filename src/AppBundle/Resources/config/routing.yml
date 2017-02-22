@@ -4,18 +4,6 @@ app_home:
     path:      /home
     defaults:  { _controller: AppBundle:Home:index}
 
-app_test:
-    path:      /_test
-    defaults:  { _controller: AppBundle:Home:_test}
-
-app_bounce:
-    path:      /_bounce
-    defaults:  { _controller: AppBundle:Home:_bounce}
-
-#app_tracking:
-#    path:      /_tracking
-#    defaults:  { _controller: AppBundle:Home:_tracking}
-
 app_monitor:
     path:      /_monitor/{page}
     defaults:  { _controller: AppBundle:Home:_monitor, page: 1}

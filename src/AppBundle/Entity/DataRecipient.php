@@ -77,37 +77,23 @@ class DataRecipient
     /**
      * @var string
      *
-     * @ORM\Column(name="code_uvc", type="string", length=255, nullable=true)
+     * @ORM\Column(name="categorie", type="string", length=255, nullable=true)
      */
-    private $codeUvc;
+    private $categorie;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="sku_desc", type="string", length=255, nullable=true)
+     * @ORM\Column(name="sous_categorie", type="string", length=255, nullable=true)
      */
-    private $skuDesc;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="genre_desc", type="string", length=255, nullable=true)
-     */
-    private $genreDesc;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="ligne_desc", type="string", length=255, nullable=true)
-     */
-    private $ligneDesc;
+    private $sousCategorie;
     
     /**
      * @var integer
      *
-     * @ORM\Column(name="prix_paye", type="integer", nullable=true)
+     * @ORM\Column(name="prix", type="integer", nullable=true)
      */
-    private $prixPaye;
+    private $prix;
 
     /**
      * @var string
@@ -115,13 +101,6 @@ class DataRecipient
      * @ORM\Column(name="code_vendeur", type="string", length=255, nullable=true)
      */
     private $codevendeur;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="motif_achat", type="string", length=255, nullable=true)
-     */
-    private $motifAchat;
 
     /**
      * @var string
@@ -235,30 +214,12 @@ class DataRecipient
         return $this->id;
     }
 
-    public function getClient()
-    {
-        return $this->client;
-    }
-
-    public function setClient(Client $client = null)
-    {
-        $this->client = $client;
-        return $this;
-    }
-
-    /**
-     * Get idClient
-     *
-     * @return string
-     */
-    public function getIdClient()
-    {
-        return $this->idClient;
-    }
+    
 
     /**
      * Set idClient
      *
+     * @param string $idClient
      * @return DataRecipient
      */
     public function setIdClient($idClient)
@@ -269,18 +230,19 @@ class DataRecipient
     }
 
     /**
-     * Get idCampagneName
+     * Get idClient
      *
-     * @return string
+     * @return string 
      */
-    public function getIdCampagneName()
+    public function getIdClient()
     {
-        return $this->idCampagneName;
+        return $this->idClient;
     }
 
     /**
      * Set idCampagneName
      *
+     * @param string $idCampagneName
      * @return DataRecipient
      */
     public function setIdCampagneName($idCampagneName)
@@ -291,15 +253,23 @@ class DataRecipient
     }
 
     /**
+     * Get idCampagneName
+     *
+     * @return string 
+     */
+    public function getIdCampagneName()
+    {
+        return $this->idCampagneName;
+    }
+
+    /**
      * Set dateEntree
      *
      * @param \DateTime $dateEntree
-     *
      * @return DataRecipient
      */
     public function setDateEntree($dateEntree)
     {
-        if( !($dateEntree instanceof \DateTime) ) $dateEntree = new \DateTime($dateEntree);
         $this->dateEntree = $dateEntree;
 
         return $this;
@@ -308,19 +278,18 @@ class DataRecipient
     /**
      * Get dateEntree
      *
-     * @return \DateTime
+     * @return \DateTime 
      */
     public function getDateEntree()
     {
         return $this->dateEntree;
     }
-    
 
     /**
      * Set libelleBoutiqueAchat
      *
      * @param string $libelleBoutiqueAchat
-     * @return Recipient
+     * @return DataRecipient
      */
     public function setLibelleBoutiqueAchat($libelleBoutiqueAchat)
     {
@@ -343,7 +312,6 @@ class DataRecipient
      * Set canal
      *
      * @param string $canal
-     *
      * @return DataRecipient
      */
     public function setCanal($canal)
@@ -356,7 +324,7 @@ class DataRecipient
     /**
      * Get canal
      *
-     * @return string
+     * @return string 
      */
     public function getCanal()
     {
@@ -364,125 +332,79 @@ class DataRecipient
     }
 
     /**
-     * Set codeUvc
+     * Set categorie
      *
-     * @param string $codeUvc
+     * @param string $categorie
      * @return DataRecipient
      */
-    public function setCodeUvc($codeUvc)
+    public function setCategorie($categorie)
     {
-        $this->codeUvc = $codeUvc;
+        $this->categorie = $categorie;
 
         return $this;
     }
 
     /**
-     * Get codeUvc
+     * Get categorie
      *
      * @return string 
      */
-    public function getCodeUvc()
+    public function getCategorie()
     {
-        return $this->codeUvc;
+        return $this->categorie;
     }
 
     /**
-     * Set skuDesc
+     * Set sousCategorie
      *
-     * @param string $skuDesc
+     * @param string $sousCategorie
      * @return DataRecipient
      */
-    public function setSkuDesc($skuDesc)
+    public function setSousCategorie($sousCategorie)
     {
-        $this->skuDesc = $skuDesc;
+        $this->sousCategorie = $sousCategorie;
 
         return $this;
     }
 
     /**
-     * Get skuDesc
+     * Get sousCategorie
      *
      * @return string 
      */
-    public function getSkuDesc()
+    public function getSousCategorie()
     {
-        return $this->skuDesc;
+        return $this->sousCategorie;
     }
 
     /**
-     * Set genreDesc
+     * Set prix
      *
-     * @param string $genreDesc
+     * @param integer $prix
      * @return DataRecipient
      */
-    public function setGenreDesc($genreDesc)
+    public function setPrix($prix)
     {
-        $this->genreDesc = $genreDesc;
+        $this->prix = $prix;
 
         return $this;
     }
 
     /**
-     * Get genreDesc
-     *
-     * @return string 
-     */
-    public function getGenreDesc()
-    {
-        return $this->genreDesc;
-    }
-
-    /**
-     * Set ligneDesc
-     *
-     * @param string $ligneDesc
-     * @return DataRecipient
-     */
-    public function setLigneDesc($ligneDesc)
-    {
-        $this->ligneDesc = $ligneDesc;
-
-        return $this;
-    }
-
-    /**
-     * Get ligneDesc
-     *
-     * @return string 
-     */
-    public function getLigneDesc()
-    {
-        return $this->ligneDesc;
-    }
-
-    /**
-     * Set prixPaye
-     *
-     * @param integer $prixPaye
-     * @return DataRecipient
-     */
-    public function setPrixPaye($prixPaye)
-    {
-        $this->prixPaye = $prixPaye;
-
-        return $this;
-    }
-
-    /**
-     * Get prixPaye
+     * Get prix
      *
      * @return integer 
      */
-    public function getPrixPaye()
+    public function getPrix()
     {
-        return $this->prixPaye;
+        return $this->prix;
     }
 
     /**
      * Set codevendeur
      *
      * @param string $codevendeur
-     * @return Client
+     * @return DataRecipient
      */
     public function setCodevendeur($codevendeur)
     {
@@ -499,29 +421,6 @@ class DataRecipient
     public function getCodevendeur()
     {
         return $this->codevendeur;
-    }
-
-    /**
-     * Set motifAchat
-     *
-     * @param string $motifAchat
-     * @return Client
-     */
-    public function setMotifAchat($motifAchat)
-    {
-        $this->motifAchat = $motifAchat;
-
-        return $this;
-    }
-
-    /**
-     * Get motifAchat
-     *
-     * @return string 
-     */
-    public function getMotifAchat()
-    {
-        return $this->motifAchat;
     }
 
     /**
@@ -752,5 +651,51 @@ class DataRecipient
     public function getVide10()
     {
         return $this->vide10;
+    }
+
+    /**
+     * Set client
+     *
+     * @param \AppBundle\Entity\Client $client
+     * @return DataRecipient
+     */
+    public function setClient(\AppBundle\Entity\Client $client = null)
+    {
+        $this->client = $client;
+
+        return $this;
+    }
+
+    /**
+     * Get client
+     *
+     * @return \AppBundle\Entity\Client 
+     */
+    public function getClient()
+    {
+        return $this->client;
+    }
+
+    /**
+     * Set recipient
+     *
+     * @param \AppBundle\Entity\Recipient $recipient
+     * @return DataRecipient
+     */
+    public function setRecipient(\AppBundle\Entity\Recipient $recipient = null)
+    {
+        $this->recipient = $recipient;
+
+        return $this;
+    }
+
+    /**
+     * Get recipient
+     *
+     * @return \AppBundle\Entity\Recipient 
+     */
+    public function getRecipient()
+    {
+        return $this->recipient;
     }
 }

@@ -4,7 +4,6 @@
 
 {% if not is_granted("ROLE_USER") %}
     {# If not connected (LP) #}
-    {% set modules = "" %}
 {% elseif is_granted("ROLE_USER") %}
     {# If connected (LNCL) #}
     {% if user is not defined %}{% set user = app.user %}{% endif %}
@@ -18,22 +17,22 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="icon" href="https://www.lancel.com/skin/frontend/eplatform/lancel/favicon.ico" type="image/x-icon">
 
-    <title>{% block title %}Clienteling - LANCEL PARIS{% endblock %}</title>
+    <title>{% block title %}Clienteling - Claravista PARIS{% endblock %}</title>
 
     {% block stylesheets %}
         {# On charge le CSS de bootstrap depuis le site directement #}
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css?v=20170208" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
 
-        {#% stylesheets
+        {% stylesheets
             filter="cssrewrite,compass"
             output="css/all.css"
             "sass/main.scss"
-        %#}
-            <!--link rel="stylesheet" href="{{ asset_url }}"-->
+        %}
+            <link rel="stylesheet" href="{{ asset_url }}">
             <link rel="stylesheet" href="{{ asset('web/css/font-awesome.min.css') }}?v=20170208">
-            <link rel="stylesheet" href="{{ asset('web/css/all.css') }}?v=20170208">
+            <!--link rel="stylesheet" href="{{ asset('web/css/all.css') }}?v=20170208"-->
             <link rel="stylesheet" href="{{ asset('web/css/jquery.multiselect.css') }}?v=20170208">
-        {#% endstylesheets %#}
+        {% endstylesheets %}
 
         <script src="{{ asset('web/js/ckeditor/ckeditor.js') }}?v=20170208"></script>
         <script type="text/javascript">
@@ -83,8 +82,6 @@
                                         {% if is_granted("ROLE_SONATA_ADMIN") %}
                                             <li role="separator" class="divider"></li>
                                             <li><a href="{{ path('app_monitor') }}"><i class="fa fa-wrench" aria-hidden="true"></i> Monitoring</a></li>
-                                            <li role="separator" class="divider"></li>
-                                            <li><a href="{{ path('app_bounce') }}"><i class="fa fa-inbox" aria-hidden="true"></i> Bounces</a></li>
                                             <li role="separator" class="divider"></li>
                                             <li><a href="{{ path('sonata_admin_dashboard') }}"><i class="fa fa-database" aria-hidden="true"></i> Back office</a></li>
                                             <li role="separator" class="divider"></li>

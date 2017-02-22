@@ -83,8 +83,6 @@ security:
         - { path: ^/admin/logout$, role: IS_AUTHENTICATED_ANONYMOUSLY, requires_channel: http }
         - { path: ^/admin/login_check$, role: IS_AUTHENTICATED_ANONYMOUSLY, requires_channel: http }
         - { path: ^/admin/resetting, role: IS_AUTHENTICATED_ANONYMOUSLY, requires_channel: http }
-        - { path: ^/_test$, role: ROLE_ADMIN, requires_channel: http }
-        - { path: ^/_bounce$, role: ROLE_ADMIN, requires_channel: http }
         - { path: ^/_impersonate$, role: ROLE_ADMIN, requires_channel: http }
 
         # App URLs
@@ -97,8 +95,6 @@ security:
         - { path: ^/top_clients_remove_comment/, role: ROLE_USER, requires_channel: http }
         - { path: ^/kpi_ml/, role: ROLE_USER, requires_channel: http }
         - { path: ^/kpi_ytdl/, role: ROLE_USER, requires_channel: http }
-        - { path: ^/kpi_mnl/, role: ROLE_USER, requires_channel: http }
-        - { path: ^/kpi_ytdnl/, role: ROLE_USER, requires_channel: http }
         - { path: ^/kpi_trigger/, role: ROLE_USER, requires_channel: http }
         - { path: ^/kpi_top_boutique$, role: ROLE_SIEGE, requires_channel: http }
         - { path: ^/log_export$, role: ROLE_SIEGE, requires_channel: http }

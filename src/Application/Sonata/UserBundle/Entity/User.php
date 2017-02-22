@@ -22,9 +22,7 @@ use Sonata\UserBundle\Entity\BaseUser as BaseUser;
 
 use AppBundle\Entity\KpiCapture;
 use AppBundle\Entity\KpiTrigger;
-use AppBundle\Entity\Module;
 use AppBundle\Entity\Client;
-use AppBundle\Entity\UserModule;
 use AppBundle\Entity\Recipient;
 
 /**
@@ -87,17 +85,6 @@ class User extends BaseUser
      * @ORM\OneToMany(targetEntity="AppBundle\Entity\Client", mappedBy="userTopclient")
      */
     private $topclients;
-
-    /**
-     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Client", mappedBy="userDoublonSuspect")
-     */
-    private $doublonSuspects;
-
-    /**
-     * @ORM\OneToMany(targetEntity="AppBundle\Entity\UserModule", mappedBy="user")
-     * @ORM\JoinTable(name="app_user_module")
-     */
-    private $userModules;
 
     /**
      * @var string $signature
@@ -176,11 +163,9 @@ class User extends BaseUser
 
         $this->kpiCaptures              = new ArrayCollection();
         $this->kpiTriggers              = new ArrayCollection();
-        $this->userModules              = new ArrayCollection();
         $this->recipients               = new ArrayCollection();
         $this->clientsTrigger           = new ArrayCollection();
         $this->topclients               = new ArrayCollection();
-        $this->doublonSuspects          = new ArrayCollection();
         $this->store                    = "";
         $this->directeur                = "";
         $this->retailManager            = "";
@@ -518,31 +503,6 @@ class User extends BaseUser
         return $this->topclients;
     }
 
-    /**
-     * add doublonSuspect
-     * remove doublonSuspect
-     * get doublonSuspects
-     *
-     * @param Client $doublonSuspect
-     *
-     * @return User
-     */
-    public function addDoublonSuspect(Client $doublonSuspect)
-    {
-        $this->doublonSuspects[] = $doublonSuspect;
-
-        return $this;
-    }
-
-    public function removeDoublonSuspect(Client $doublonSuspect)
-    {
-        $this->doublonSuspects->removeElement($doublonSuspect);
-    }
-
-    public function getDoublonSuspects()
-    {
-        return $this->doublonSuspects;
-    }
 
     /**
      * add clientsTrigger
@@ -594,32 +554,6 @@ class User extends BaseUser
     public function getKpiTriggers()
     {
         return $this->kpiCaptures;
-    }
-
-    /**
-     * add userModule
-     * remove userModule
-     * get userModules
-     *
-     * @param UserModule $userModule
-     *
-     * @return User
-     */
-    public function addUserModule(UserModule $userModule)
-    {
-        $this->userModules[] = $userModule;
-
-        return $this;
-    }
-
-    public function removeUserModule(UserModule $userModule)
-    {
-        $this->userModules->removeElement($userModule);
-    }
-
-    public function getUserModules()
-    {
-        return $this->userModules;
     }
 
     /**
