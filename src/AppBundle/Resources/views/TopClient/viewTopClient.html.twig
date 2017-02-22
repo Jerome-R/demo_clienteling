@@ -1,0 +1,328 @@
+{% extends "AppBundle::layout.html.twig" %}
+
+{% block subheader %}
+	{% include 'AppBundle:Commons:subheader.html.twig' 
+	with { 'ariane': 
+	'<a href="' ~
+	path( 'app_top_client_index') ~
+	'"> Liste des top clients </a> | Fiche client'
+} 
+%}
+{% endblock %}
+
+{% block content %}
+
+	<div class="client-block-title col-xs-offset-1 col-xs-10">
+		<div class="channel col-xs-1">
+			<span class="glyphicon glyphicon-user orange" style="font-size:34px; color: #d35400 ;" aria-hidden="true"></span>
+		</div>
+		<div class="data col-xs-11">
+			<h2>{{ topClient.getFullName() }}
+				{% if topClient.istopClient == true %}
+					<a class='btn big-gray-btn pull-right hidden-print' style='width: 170px;' href="{{ path( 'app_top_client_index') }}">Retour</a>
+				{% else %}
+					<a class='btn big-gray-btn pull-right hidden-print' style='width: 170px;' href="{{ path( 'app_top_client_sortant') }}">Retour</a>
+				{% endif %}
+			</h2>	
+			<p class="small"><strong>Boutique : {{ topClient.libelleBoutiqueRattachementtopclient }}</strong>
+				{% if topClient.optin is defined %}
+					| Optin : {{topClient.optin}}
+				{% endif %}
+			</p>		
+		</div>
+	</div>
+
+		
+	<div class="client-block col-md-offset-1 col-md-10 col-xs-12">
+		<h3 class="orange">Coordonnées du client</h3>
+		<!--div class="col-xs-4 field">
+			<ul class="list-group">
+				<li class="list-group-item">Civilité</li>
+				<li class="list-group-item">{{"Firstname:"|trans}}</li>
+				<li class="list-group-item">{{"Lastname:"|trans}}</li>
+				<li class="list-group-item">{{"Email:"|trans}}</li>
+				<li class="list-group-item">{{"Phone 1:"|trans}}</li>
+				<li class="list-group-item">{{"Phone 2:"|trans}}</li>
+				<li class="list-group-item">{{"Adress:"|trans}}</li>
+				<li class="list-group-item">{{"Adress complement:"|trans}}</li>
+				<li class="list-group-item">{{"Postal code:"|trans}}</li>
+				<li class="list-group-item">{{"City:"|trans}}</li>
+				<li class="list-group-item">{{"Country:"|trans}}</li>
+			</ul>
+		</div-->
+		<div class="col-xs-8 data">
+			<ul class="list-group">
+				<li class="list-group-item">
+					<div class="col-xs-3 no-padding text-right">
+						<strong>Civilité : </strong>
+					</div>
+					<div class="col-xs-9">
+						{% if topClient.civilite == "MR" %}Monsieur{% elseif topClient.civilite == "MME" %}Madame{% elseif topClient.civilite == "MLE" %}Mademoiselle{% else %}n/a{% endif %}
+					</div>					
+				</li>
+				<li class="list-group-item">
+					<div class="col-xs-3 no-padding text-right">
+						<strong>Prénom : </strong>
+					</div>
+					<div class="col-xs-9">
+						{{ topClient.prenom }}
+					</div>
+				</li>
+				<li class="list-group-item">
+					<div class="col-xs-3 no-padding text-right">
+						<strong>Nom : </strong>
+					</div>
+					<div class="col-xs-9">
+						{{ topClient.nom }}
+					</div>
+				</li>
+				<li class="list-group-item">
+					<div class="col-xs-3 no-padding text-right">
+						<strong>Email : </strong>
+					</div>
+					<div class="col-xs-9">
+						{{ topClient.email }}
+						{% if ( not topClient.isEmailValide or topClient.isHardBounce ) and topClient.email is not null and topClient.email != "" %}
+							<span class="text-danger">
+								<i class="fa fa-warning fa-1" aria-hidden="true"></i>
+							</span>
+						{% endif %}
+						{% if not topClient.isEmailValide and topClient.email is not null and topClient.email != "" %}
+							<span class="text-danger">
+								invalide
+							</span>
+						{% endif %}
+						{% if topClient.isHardBounce and topClient.email is not null and topClient.email != "" %}
+							<span class="text-danger">
+							hard bounce
+							</span>
+						{% endif %}
+					</div>
+				</li>
+				<li class="list-group-item">
+					<div class="col-xs-3 no-padding text-right">
+						<strong>Telephone 1 : </strong>
+					</div>
+					<div class="col-xs-9">
+						{{ topClient.telephone1 }}
+						{% if not topClient.isTelValide and topClient.telephone1 is not null and topClient.telephone1 != "" %}
+							<span class="text-danger">
+							<i class="fa fa-warning fa-1" aria-hidden="true"></i>
+							invalide
+						{% endif %}
+					</div>
+				</li>
+				<li class="list-group-item">
+					<div class="col-xs-3 no-padding text-right">
+						<strong>Telephone 2 : </strong>
+					</div>
+					<div class="col-xs-9">
+						{{ topClient.telephone2 }}
+					</div>
+				</li>
+				<li class="list-group-item">
+					<div class="col-xs-3 no-padding text-right">
+						<strong>Adresse 1 : </strong>
+					</div>
+					<div class="col-xs-9">
+						{{ topClient.adresse1 }}
+						{% if topClient.isAdresseValide == 0 and topClient.adresse1 is not null and topClient.adresse1 != "" %}
+							<span class="text-danger">
+							<i class="fa fa-warning fa-1" aria-hidden="true"></i>
+							invalide
+						{% endif %}
+					</div>
+				</li>
+				<li class="list-group-item">
+					<div class="col-xs-3 no-padding text-right">
+						<strong>Adresse 2 : </strong>
+					</div>
+					<div class="col-xs-9">
+						{{ topClient.adresse2 }}
+					</div>
+				</li>
+				<li class="list-group-item">
+					<div class="col-xs-3 no-padding text-right">
+						<strong>Adresse 3 : </strong>
+					</div>
+					<div class="col-xs-9">
+						{{ topClient.adresse3 }}
+					</div>
+				</li>
+				<li class="list-group-item">
+					<div class="col-xs-3 no-padding text-right">
+						<strong>Code postal : </strong>
+					</div>
+					<div class="col-xs-9">
+						{% if topClient.codepostal|number_format(0,'',' ') == "0" %}
+							{{ topClient.codepostal }}
+						{% else %}
+							{{ topClient.codepostal|number_format(0,'',' ') }}
+						{% endif %}
+					</div>
+				</li>
+				<li class="list-group-item">
+					<div class="col-xs-3 no-padding text-right">
+						<strong>Ville : </strong>
+					</div>
+					<div class="col-xs-9">
+						{{ topClient.ville }}
+					</div>
+				</li>
+				<li class="list-group-item">
+					<div class="col-xs-3 no-padding text-right">
+						<strong>Pays : </strong>
+					</div>
+					<div class="col-xs-9">
+						{{ getCountry(topClient.pays) }}
+					</div>
+				</li>
+			</ul>
+		</div>
+		<div class="col-xs-4">
+			<h3 class=" text-left orange">Commentaires</h3>
+
+			<a data-toggle="collapse" href="#collapseExample" aria-expanded="false" aria-controls="collapseExample" class="hidden-print">
+			  <i class="fa fa-pencil" aria-hidden="true"></i> Laisser un commentaire
+			</a>
+
+			<div class="collapse hidden-print" id="collapseExample">
+				{{ form_start(form, {'attr' : {'class': 'text-left hidden-print'} } ) }}
+					{{ form_errors(form) }}
+					<div class="form-group">
+						{{ form_widget(form.comment, {'attr': {'class': 'form-control'}}) }}
+					</div>
+					{{ form_widget(form.submit, {'attr': {'class': 'btn btn-action-orange pull-right', 'style': 'margin-top:0; margin-bottom:0;'}, 'label': 'Valider'}) }}
+					{{ form_rest(form) }}
+				{{ form_end(form) }}
+			</div>
+
+			{% for comment in comments %}
+				<div class="text-left col-xs-12 comment">
+					<p class="small">
+						le {{ comment.createdAt|date('d/m/Y à H:m') }}, par <strong>{{ comment.author }}</strong><br />
+						<a data-toggle="collapse" href="#collapseExample_{{ loop.index0 }}" aria-expanded="false" aria-controls="collapseExample_{{ loop.index0 }}" class="hidden-print">Editer</a> {% if is_granted("ROLE_ADMIN") %}<span class="hidden-print">|</span> <a href="{{ path('app_top_client_remove_comment', {'client_comment_id': comment.id} ) }}" onclick="return(confirm('Etes-vous sûr de vouloir supprimer ce commentaire ?'));" class="hidden-print">Supprimer</a> {% endif %}
+					</p>
+					<p>{{ comment.comment }}</p>
+					<div class="collapse" id="collapseExample_{{loop.index0}}">
+						{{ form_start(form3[loop.index0], {'attr' : {'class': 'text-left hidden-print'} } ) }}
+							{{ form_errors(form3[loop.index0]) }}
+							<div class="form-group">
+								{{ form_widget(form3[loop.index0].comment, {'attr': { 'class': 'form-control', 'maxlength': 255 }}) }}
+							</div>
+							{{ form_widget(form3[loop.index0].edit, {'attr': {'class': 'btn btn-action-orange pull-right', 'style': 'margin-top:0; margin-bottom:0;'}, 'label': 'Editer'}) }}
+							{{ form_rest(form3[loop.index0]) }}
+						{{ form_end(form3[loop.index0]) }}
+					</div>
+				</div>				
+			{% endfor %}
+			<hr>
+			<a class="btn big-gray-btn hidden-print" data-toggle="modal" style="font-size:14px;" data-target="#myModalTwo">Ne souhaite pas être contacté</a>
+			<a class="btn big-orange-btn hidden-print" style="font-size:14px;" onclick="window.print();"><i class="fa fa-print" aria-hidden="true"></i> Imprimer la fiche</a>
+		</div> 
+
+
+		<div class="spacer"></div>
+		<hr>
+
+		<h3 class="orange">Profil du client</h3>
+		<div class="col-xs-12 data">
+			<ul class="list-group col-xs-6">
+				<li class="list-group-item"><strong>Segment : </strong>{% if topClient.segment %}{{ topClient.segment }}{% else %}<span class="small">n/a</span>{% endif %}</li>
+				<li class="list-group-item"><strong>CA 3 ans : </strong>{% if topClient.ca3ans %}{{ topClient.ca3ans|number_format(0,'',' ') }} €{% else %}<span class="small">n/a</span>{% endif %}</li>
+				<li class="list-group-item"><strong>CA 12 mois : </strong>{% if topClient.ca12mois %}{{ topClient.ca12mois|number_format(0,'',' ') }} €{% else %}<span class="small">n/a</span>{% endif %}</li>
+				<li class="list-group-item"><strong>Fréquence 3 ans : </strong>{% if topClient.freq3ans %}{{ topClient.freq3ans }}{% else %}<span class="small">n/a</span>{% endif %}</li>
+				<li class="list-group-item"><strong>Fréquence 12 mois : </strong>{% if topClient.freq12mois %}{{ topClient.freq12mois }}{% else %}<span class="small">n/a</span>{% endif %}</li>
+			</ul>
+			<ul class="list-group col-xs-6">
+				<li class="list-group-item"><strong>Prix max : </strong>{% if topClient.pmaxArticleHisto %}{{ topClient.pmaxArticleHisto|number_format(0,'',' ') }} €{% else %}<span class="small">n/a</span>{% endif %}</li>
+				<li class="list-group-item"><strong>Panier moyen : </strong>{% if topClient.pmHisto %}{{ topClient.pmHisto|number_format(0,'',' ') }} €{% else %}<span class="small">n/a</span>{% endif %}</li>
+				<li class="list-group-item"><strong>Date premier achat : </strong>{% if topClient.date1erachat %}{{ topClient.date1erachat|date('d/m/Y') }}{% else %}<span class="small">n/a</span>{% endif %}</li>
+				<li class="list-group-item"><strong>Date dernier achat : </strong>{% if topClient.dateDernachat %}{{ topClient.dateDernachat|date('d/m/Y') }}{% else %}<span class="small">n/a</span>{% endif %}</li>
+			</ul>
+		</div>
+
+		<div class="spacer"></div>
+
+		<hr>
+
+		<h3 class="orange page-break">Historique des ventes</h3>
+		
+		<div>
+
+			<!-- Nav tabs -->
+			<ul class="nav nav-tabs" role="tablist">
+				{% for tickets in panels %}
+					{% if tickets is not empty %}
+						<li role="presentation" class="{% if loop.first %}active{% endif %}"><a href="#{{years[loop.index0]}}" aria-controls="{{years[loop.index0]}}" role="tab" data-toggle="tab">{{years[loop.index0]}}</a></li>					
+					{% endif %}
+				{% endfor %}
+			</ul>
+
+			<!-- Tab panes -->
+			<div class="tab-content">
+				{% for tickets in panels %}
+					{% if tickets is not empty %}
+						<div role="tabpanel" class="tab-pane {% if loop.first %}active{% endif %}" id="{{years[loop.index0]}}">
+							{% for ticket in tickets %}
+								<h4>Ticket n°{{ ticket.ticketUniqId }}</h4>
+								<p class="small">
+									Date d’achat : {{ ticket.dateFacture|date('d/m/Y') }}
+								</p>
+								<table class="table">
+									<tr>
+										<th>#</th>
+										<th>Collection</th>
+										<th>Code UVC</th>
+										<th>SKU</th>
+										<th>Vendeur</th>
+										<th class="text-center">Quantité</th>
+										<th class="text-center">Montant dépensé</th>
+									</tr>
+								{% for ligneVente in ticket.ligneVentes %}
+									<tr>
+										<td>{{loop.index}}</td>
+										<td>{{ ligneVente.superLigneDesc }}</td>
+										<td>{{ ligneVente.codeuvc }}</td>
+										<td>{{ ligneVente.skuDesc }}</td>
+										<td>{{ ligneVente.codevendeur }}</td>
+										<td class="text-center">{{ ligneVente.quantite }}</td>
+										<td class="text-center">{{ ligneVente.cattc }} €</td>										
+									</tr>
+								{% endfor %}
+								</table>
+								<hr>
+							{% endfor %}
+						</div>
+					{% endif %}
+				{% endfor %}
+			</div>
+		</div>
+		<a class='btn big-gray-btn pull-right hidden-print' style='margin-right: 5px; width: 170px; margin-top: 30px;' href="{{ path( 'app_top_client_index') }}">Retour</a>
+	</div>
+
+
+
+	<div id="myModalTwo" class="modal fade" tabindex="-1" role="dialog">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+					<h4 class="modal-title">Le client ne souhaite pas être contacté</h4>
+				</div>
+				<div class="modal-body">
+					<p>
+						Pensez à renseigner dans votre outil de caisse que le client ne souhaite pas être contacté (optout).
+					</p>
+				</div>
+			</div><!-- /.modal-content -->
+		</div><!-- /.modal-dialog -->
+	</div><!-- /.modal -->
+
+
+
+	<div class="col-xs-12">
+
+		{#dump(recipient)#}
+	</div>
+{% endblock %}

@@ -1,0 +1,96 @@
+{# src/OC/PlatformBundle/Resources/views/layout.html.twig #}
+
+{% extends "::layout.html.twig" %}
+
+{% block title %}
+  Requêtes - {{ parent() }}
+{% endblock %}
+
+{% block subheader %}
+{% endblock %}
+
+{% block body %}	
+
+	{# On définit un nouveau bloc, que les vues du bundle pourront remplir #}
+	{% block content %}
+		<h3>Listes des cibles sans rattachement</h3>
+
+		<div class="col-md-offset-1 col-md-10  col-xs-12 hidden-print">
+			<div class="pull-right">
+		    	{{ knp_pagination_render(recipientsU) }}
+		    </div>
+		</div>
+
+		<table class="table table-striped">
+			<thead>
+				<tr>
+					<th>#</th>
+					<th>Campagne</th>
+					<th>Client</th>
+					<th>Id Client</th>
+					<th>Boutique</th>
+				</tr>
+			</thead>
+			<tbody>
+				{% for recipient in recipientsU %}
+					<tr>
+						<td>{{ loop.index }}</td>
+						<td>{{ recipient.campaign.name }}</td>
+						<td>{{ recipient.client.fullName }}</td>
+						<td>{{ recipient.client.idClient }}</td>
+						<td>{{ recipient.dataRecipient.libelleBoutiqueAchat }}</td>
+					</tr>
+				{% endfor %}
+				{% if recipientsU is empty %}
+					<tr>
+						<td colspan="5">n/a</td>
+					</tr>
+				{% endif %}
+			</tbody>
+		</table>
+		
+		<div class="col-md-offset-1 col-md-10  col-xs-12 hidden-print">
+			<div class="pull-right">
+		    	{{ knp_pagination_render(recipientsU) }}
+		    </div>
+		</div>
+		
+		<hr style="clear:both">
+
+		<h3>Listes des cibles sans informations produit</h3>
+
+		<table class="table table-striped">
+			<thead>
+				<tr>
+					<th>#</th>
+					<th>Id</th>
+					<th>Campagne</th>
+					<th>Client</th>
+					<th>Id Client</th>
+					<th>Boutique</th>
+				</tr>
+			</thead>
+			<tbody>
+				{% for recipient in recipientsDR %}
+					<tr>
+						<td>{{ loop.index }}</td>
+						<td>{{ recipient.id }}</td>
+						<td>{{ recipient.campaign.name }}</td>
+						<td>{{ recipient.client.fullName }}</td>
+						<td>{{ recipient.client.idClient }}</td>
+						<td>{{ recipient.client.store }}</td>
+					</tr>
+				{% endfor %}
+				{% if recipientsDR is empty %}
+					<tr>
+						<td colspan="5">n/a</td>
+					</tr>
+				{% endif %}
+			</tbody>
+		</table>
+		
+		<hr>
+
+	{% endblock %}
+
+{% endblock %}

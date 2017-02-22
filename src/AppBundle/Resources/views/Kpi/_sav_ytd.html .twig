@@ -1,0 +1,390 @@
+{% extends "AppBundle::layout.html.twig" %}
+
+{% block subheader %}
+	{% include 'AppBundle:Commons:kpiNav.html.twig' %}
+{% endblock %}
+
+{% block content %}	
+
+	{% block clientsFilter %}
+		{% include 'AppBundle:Commons:kpiFilter.html.twig' %}
+	{% endblock %}
+
+	<div class="col-xs-12 hidden-print">
+		<a href="{{ path('app_kpi_ytd_locaux', { 'year' : '2015' } ) }}" class="btn-kpi btn btn-xs {% if dateYear == "2015" %}active{% endif %}">2015</a>
+		<a href="{{ path('app_kpi_ytd_locaux', { 'year' : '2016' } ) }}" class="btn-kpi btn btn-xs {% if dateYear == "2016" %}active{% endif %}">2016</a>
+		<a href="{{ path('app_kpi_ytd_locaux', { 'year' : '2017' } ) }}" class="btn-kpi btn btn-xs {% if dateYear == "2017" %}active{% endif %}">2017</a>
+	</div>
+
+	<div class="col-xs-12">
+		<h3 class="text-uppercase text-center gris-bg">
+			{{ "Suivi de la capture"|trans }} : {% if kpiCurrentYear.niveau == 'TOT' %}Global{% else %}{{kpiCurrentYear.libelle}}{% endif %}
+		</h3>
+
+		<div class="col-xs-12 kpi-box">
+			<div class="inside col-xs-12">
+				<h3 class="text-uppercase black text-center">{{ kpiCurrentYear.nbTransYL|number_format(0, ',', ' ') }} {{ "Transactions enregistrées"|trans }}</h3>
+
+				{% if  kpiCurrentYear.nbTransYL > 0 %}
+					<p class="text-uppercase"><strong>Contactabilité :</strong></p>
+
+					<div class="col-xs-12 col-md-9">
+						<figure class="col-xs-3">
+							<h4 class="text-center bg-white black" style="height:55px;line-height:55px;">Taux de collecte</h4>
+							<div id="chartContainer1" style="height: 150px;"></div>
+						</figure>
+						<figure class="col-xs-3">
+							<h4 class="text-center bg-white black" style="height:55px;line-height:55px;">Email</h4>
+							<div id="chartContainer2" style="height: 150px;"></div>
+						</figure>
+						<figure class="col-xs-3">
+							<h4 class="text-center bg-white black" style="height:55px;line-height:55px;">Téléphone</h4>
+							<div id="chartContainer3" style="height: 150px;"></div>
+						</figure>
+						<figure class="col-xs-3">
+							<h4 class="text-center bg-white black" style="height:55px;line-height:55px;">Adresse</h4>
+							<div id="chartContainer4" style="height: 150px;"></div>
+						</figure>
+					</div>
+					<div class="col-xs-12 col-md-3">
+						<figure class="col-xs-12">
+							<h4 class="text-center bg-white black" style="height:55px;">Données non-valides sur le total des données collectées</h4>
+							<div id="chartContainer5" style="height: 150px; box-sizing: border-box;padding-top:35px;">
+								<p class="text-center" style="font-weight:bold; font-size:42px;color:#aaaaaa">
+									{{ ( (( kpiCurrentYear.nbEmailNonvalidYL + kpiCurrentYear.nbTelNonvalidYL + kpiCurrentYear.nbAdrNonvalidYL) / ( kpiCurrentYear.nbEmailYL + kpiCurrentYear.nbTelYL + kpiCurrentYear.nbAdrYL)) * 100 )|number_format('0','.','') }} %
+								</p>
+							</div>
+						</figure>
+					</div>
+
+					<div class="col-xs-12 text-center" style="padding:0;margin:0;">
+						<p class="">
+							<i style="color: #f0f0f0;" class="fa fa-square fa-1x gray1" aria-hidden="true"></i> Données non collectées
+							<i style="color: #aaaaaa;" class="fa fa-square fa-1x gray2" aria-hidden="true"></i> Données non-valides
+						</p>
+					</div>
+
+
+					<div class="spacer"></div>				
+
+					<div class="col-xs-12 text-center">
+						<h4><strong>Objectifs : <span style="color: #f36d35"n>80%</span> de collecte et moins de <span style="color: #f36d35">5%</span> de données non-valides</strong></h4>
+					</div>
+
+					<div class="spacer"></div>
+
+				{% else %}
+					<div class="col-xs-12" style="padding:0;margin:0;">
+						<p class="text-center">
+							&nbsp;<br>
+							Aucunes données à afficher.
+						</p>
+					</div>
+				{% endif %}
+			</div>
+		</div>
+	</div>
+
+	<div class="col-xs-12">
+		<h3 class="text-uppercase text-center gris-bg">
+			Nombre de contacts en base
+		</h3>
+
+		<div class="col-xs-12 kpi-box">
+			<div class="inside" style="min-height:0;">
+				<div class="inside top col-xs-4 text-center"  style="height:90px;min-height:0 !important;">
+					<div style="height:20px;" class="spacer"></div>
+					<div class="gray-box">
+						<h3>{{  kpiCurrentYear.nbEmailYL|number_format(0, ',', ' ') }} emails</h3>
+					</div>
+				</div>		
+				<div class="inside top col-xs-4 text-center"  style="height:90px;min-height:0 !important;">
+					<div style="height:20px;" class="spacer"></div>
+					<div class="gray-box">
+						<h3>{{  kpiCurrentYear.nbTelYL|number_format(0, ',', ' ') }} numéros de téléphone</h3>
+					</div>
+				</div>
+				<div class="inside top col-xs-4 text-center"  style="height:90px;min-height:0 !important;">
+					<div style="height:20px;" class="spacer"></div>
+					<div class="gray-box">
+						<h3>{{  kpiCurrentYear.nbAdrYL|number_format(0, ',', ' ') }} adresses courrier</h3>
+					</div>
+				</div>
+				<div style="height:0px;" class="spacer"></div>
+			</div>
+		</div>
+	</div>
+
+	<div class="col-xs-12">
+		<h3 class="text-uppercase text-center gris-bg">
+			Recrutement et fidélisation clients
+		</h3>
+
+		<div class="col-xs-12 kpi-box">
+			<div class="inside col-xs-12">
+				<h3 class="text-uppercase black text-center">{{ kpiCurrentYear.nbCliActifsYL|number_format(0, ',', ' ') }} Clients actifs sur l'année</h3>
+
+				{% if kpiCurrentYear.nbCliActifsYL > 0 %}
+
+					<figure class="col-xs-6">
+						<h4 class="text-center bg-white black">Nouveaux clients</h4>
+						<p class="small text-center">{% if getMonthWording(month) != " Janvier" %}de Janvier à {% endif %}{{ getMonthWording(month) }} {% if "now"|date("m") == 01 %}{{ "now"|date("Y") - 1 }}{% else %}{{ "now"|date("Y") }}{% endif %}</p>
+						<div class="circle greenCircle text-center">
+							<span class="bigNumber" style="font-size:42px;">{{ kpiCurrentYear.nbCliActifsNewYL|number_format(0, ',', ' ') }}</span><br />
+							<span style="font-size:22px;">Clients recrutés</span><br />
+							&nbsp;<br/>
+							<span>{% if  kpiCurrentYear.nbCliActifsYL > 0 %}
+								({{  ((kpiCurrentYear.nbCliActifsNewYL /  kpiCurrentYear.nbCliActifsYL ) * 100 )|number_format("2",",", "") }}%)
+							{% else %}0{% endif %}</span>
+						</div>
+					</figure>
+					<figure class="col-xs-6">
+						<h4class="text-center bg-white black">Clients existants</h4>
+						<p class="small text-center">{% if getMonthWording(month) != " Janvier" %}de Janvier à {% endif %}{{ getMonthWording(month) }} {% if "now"|date("m") == 01 %}{{ "now"|date("Y") - 1 }}{% else %}{{ "now"|date("Y") }}{% endif %}</p>
+						<div class="circle yellowCircle text-center">
+							<span class="bigNumber" style="font-size:42px;">{{ kpiCurrentYear.nbCliActifsExistYL|number_format(0, ',', ' ') }}</span><br />
+							<span style="font-size:22px;">Clients fidèles</span><br />
+							&nbsp;<br/>
+							<span>{% if kpiCurrentYear.nbCliActifsYL > 0 %}
+								({{  ((kpiCurrentYear.nbCliActifsExistYL /  kpiCurrentYear.nbCliActifsYL ) * 100 )|number_format("2",",", "") }}%)
+							{% else %}0{% endif %}</span>
+						</div>
+					</figure>
+					{% if kpiLastYear is not null %}
+						<figure class="col-xs-6">
+							<h4 class="text-center bg-white black">Evolution du nombre<br /> de nouveaux clients</h4>
+							<p class="small text-center">{% if getMonthWording(month) == " Décembre" %}{% if "now"|date("m") == 01 %}{{ "now"|date("Y") - 1 }}{% else %}{{ "now"|date("Y") }}{% endif %} VS {% if "now"|date("m") == 01 %}{{ "now"|date("Y") - 2 }}{% else %}{{ "now"|date("Y") }}{% endif %}{% else %}Janvier -{{getMonthWording(month)}} {% if "now"|date("m") == 01 %}{{ "now"|date("Y") - 1 }}{% else %}{{ "now"|date("Y") }}{% endif %} VS Janvier -{{getMonthWording(month)}} {% if "now"|date("m") == 01 %}{{ "now"|date("Y") - 2 }}{% else %}{{ "now"|date("Y") }}{% endif %}{% endif %}</p>
+							<div class="circle greenCircle text-center">
+								<span class="bigNumber" style="font-size:42px;">{% if kpiLastYear.nbCliActifsNewYL > 0 %}
+									{% if  kpiCurrentYear.nbCliActifsNewYL - kpiLastYear.nbCliActifsNewYL > 0 %}+{% endif %}{{ ((( kpiCurrentYear.nbCliActifsNewYL - kpiLastYear.nbCliActifsNewYL) / kpiLastYear.nbCliActifsNewYL) * 100)|number_format(0, ',', ' ') }}%
+								{% else %}0{% endif %}</span><br />
+								<span style="font-size:22px;">de nouveaux<br />
+								clients</span>
+							</div>
+						</figure>
+						<figure class="col-xs-6">
+							<h4 class="text-center bg-white black">Evolution du nombre<br /> de clients existants</h4>
+							<p class="small text-center">{% if getMonthWording(month) == " Décembre" %}{% if "now"|date("m") == 01 %}{{ "now"|date("Y") - 1 }}{% else %}{{ "now"|date("Y") }}{% endif %} VS {% if "now"|date("m") == 01 %}{{ "now"|date("Y") - 2 }}{% else %}{{ "now"|date("Y") }}{% endif %}{% else %}Janvier -{{getMonthWording(month)}} {% if "now"|date("m") == 01 %}{{ "now"|date("Y") - 1 }}{% else %}{{ "now"|date("Y") }}{% endif %} VS Janvier -{{getMonthWording(month)}} {% if "now"|date("m") == 01 %}{{ "now"|date("Y") - 2 }}{% else %}{{ "now"|date("Y") }}{% endif %}{% endif %}</p>
+							<div class="circle yellowCircle text-center">
+								<span class="bigNumber" style="font-size:42px;">{% if kpiLastYear.nbCliActifsExistYL > 0 %}
+									{% if  kpiCurrentYear.nbCliActifsExistYL - kpiLastYear.nbCliActifsExistYL > 0 %}+{% endif %}{{ ((( kpiCurrentYear.nbCliActifsExistYL - kpiLastYear.nbCliActifsExistYL) / kpiLastYear.nbCliActifsExistYL) * 100)|number_format(0, ',', ' ') }}%
+								{% else %}0{% endif %}</span><br />
+								<span style="font-size:22px;">de clients<br />
+								existants</span>
+							</div>
+						</figure>
+					{% endif %}
+					<div class="spacer"></div>
+
+				{% else %}
+					<div class="col-xs-12" style="padding:0;margin:0;">
+						<p class="text-center">
+							&nbsp;<br>
+							Aucunes données à afficher.
+						</p>
+					</div>
+				{% endif %}
+			</div>
+		</div>
+	</div>
+
+
+	<div style="height:30px;" class="spacer"></div>
+
+	<div class="col-xs-12 hidden-print">
+		<a href="{{ path('app_kpi_ytd_locaux', { 'year' : '2015' } ) }}" class="btn-kpi btn btn-xs {% if dateYear == "2015" %}active{% endif %}">2015</a>
+		<a href="{{ path('app_kpi_ytd_locaux', { 'year' : '2016' } ) }}" class="btn-kpi btn btn-xs {% if dateYear == "2016" %}active{% endif %}">2016</a>
+		<a href="{{ path('app_kpi_ytd_locaux', { 'year' : '2017' } ) }}" class="btn-kpi btn btn-xs {% if dateYear == "2017" %}active{% endif %}">2017</a>
+	</div>
+
+	<div style="height:30px;" class="spacer"></div>
+
+{% endblock %}
+
+{% block canvasJs %}
+
+	<script type="text/javascript">
+
+    CanvasJS.addColorSet("set1",
+                [
+                "#16a085",
+                "#f0f0f0",
+                "#aaaaaa",
+                ]);
+    CanvasJS.addColorSet("set2",
+                [
+                "#E3009B",
+                "#f0f0f0",
+                "#aaaaaa",
+                ]);
+    CanvasJS.addColorSet("set3",
+                [
+                "#f2ce18",
+                "#f0f0f0",
+                "#aaaaaa",
+                ]);
+    CanvasJS.addColorSet("set4",
+                [
+                "#2D89FF",
+                "#f0f0f0",
+                "#aaaaaa",
+                ]);
+    CanvasJS.addColorSet("set5",
+                [
+                "#aaaaaa",
+                "#f0f0f0", 
+                "#16a085",              
+                ]);
+    CanvasJS.addCultureInfo("fr",{
+        shortMonths: ["Janvier", "Février", "Mars", "Avril", "Mai", "Juin", "Juillet", "Août","Septembre", "Octobre", "Novembre", "Décembre"],
+    });
+
+	window.onload = function () {
+		var chart = new CanvasJS.Chart("chartContainer1",
+		{
+			colorSet: "set1",
+			animationEnabled: true,
+			title:{
+				text: {{ (kpiCurrentYear.pctTransCoordValidYL )|number_format('0','.','') }} + "%",
+				fontSize: 22,
+				verticalAlign: "center", // "top", "center", "bottom"
+				horizontalAlign: "center", // "left", "right", "center"
+				fontColor: "#16a085",
+			},
+			toolTip:{  
+			enabled: true
+			},
+			data: [
+			{
+				startAngle: 90,  
+				indexLabelFontColor: "black",
+				indexLabelLineColor: "#4c4c4c",
+				indexLabelPlacement: "inside",
+				type: "doughnut",
+				innerRadius: "60%",
+				dataPoints: [
+					{  y: {{ (kpiCurrentYear.pctTransCoordValidYL )|number_format('0','.','') }}, toolTipContent: "{y}% contactables"},
+					{  y: {{ (kpiCurrentYear.pctTransCoordNonrensYL )|number_format('0','.','') }}, indexLabel: "", indexLabelFontWeight: "bold", indexLabelFontColor: "white", indexLabelFontSize: 10, toolTipContent: "{y}% non collectées"},
+					{  y: {{ (kpiCurrentYear.pctTransCoordNonvalidYL )|number_format('0','.','') }}, indexLabel: "", indexLabelFontWeight: "bold", indexLabelFontColor: "black", indexLabelFontSize: 8, toolTipContent: "{y}% non valides"}
+				]
+			}
+			]
+
+		});
+
+		chart.render();
+		var chart = new CanvasJS.Chart("chartContainer2",
+		{
+			colorSet: "set2",
+			animationEnabled: true,
+			title:{
+				text: {{ (kpiCurrentYear.pctTransEmailValidYL )|number_format('0','.','') }} + "%",
+				fontSize: 22,
+				verticalAlign: "center", // "top", "center", "bottom"
+				horizontalAlign: "center", // "left", "right", "center"
+				fontColor: "#E3009B",
+			},
+			toolTip:{  
+				enabled: true
+			},
+			data: [
+			{
+				startAngle: 90,  
+				indexLabelFontColor: "black",
+				indexLabelLineColor: "#4c4c4c",
+
+				indexLabelPlacement: "inside",
+				type: "doughnut",
+				innerRadius: "60%",
+				dataPoints: [
+					{  y: {{ (kpiCurrentYear.pctTransEmailValidYL )|number_format('0','.','') }}, indexLabel: "", indexLabelFontWeight: "bold", toolTipContent: "{y}% contactables"},
+					{  y: {{ (kpiCurrentYear.pctTransEmailNonrensYL )|number_format('0','.','') }}, indexLabel: "", indexLabelFontSize: 10,indexLabelFontColor: "white",indexLabelFontWeight: "bold",toolTipContent: "{y}% non collectées"},
+					{  y: {{ (kpiCurrentYear.pctTransEmailNonvalidYL )|number_format('0','.','') }}, indexLabel: "", indexLabelFontWeight: "bold", indexLabelFontColor: "black", indexLabelFontSize: 10, toolTipContent: "{y}% non valides"}
+				]
+			}
+			]
+
+		});
+
+		chart.render();
+		var chart = new CanvasJS.Chart("chartContainer3",
+		{
+			colorSet: "set3",
+			animationEnabled: true,
+			title:{
+				text: {{ (kpiCurrentYear.pctTransTelValidYL )|number_format('0','.','') }} + "%",
+				fontSize: 22,
+				verticalAlign: "center", // "top", "center", "bottom"
+				horizontalAlign: "center", // "left", "right", "center"
+				fontColor: "#f2ce18",
+			},
+			toolTip:{  
+				enabled: true
+			},
+			data: [
+			{
+				startAngle: 90,  
+				indexLabelFontColor: "black",
+				indexLabelLineColor: "#4c4c4c",
+
+				indexLabelPlacement: "inside",
+				type: "doughnut",
+				innerRadius: "60%",
+				dataPoints: [
+					{  y: {{ (kpiCurrentYear.pctTransTelValidYL )|number_format('0','.','') }}, indexLabel: "",indexLabelFontSize: 10, indexLabelFontWeight: "bold", toolTipContent: "{y}% contactables"},
+					{  y: {{ (kpiCurrentYear.pctTransTelNonrensYL )|number_format('0','.','') }}, indexLabel: "",indexLabelFontSize: 10,indexLabelFontColor: "white", indexLabelFontWeight: "bold",toolTipContent: "{y}% non collectées"},
+					{  y: {{ (kpiCurrentYear.pctTransTelNonvalidYL )|number_format('0','.','') }}, indexLabel: "", indexLabelFontWeight: "bold", indexLabelFontColor: "black", indexLabelFontSize: 10, toolTipContent: "{y}% non valides"}
+				]
+			}
+			]
+
+		});
+
+		chart.render();
+		var chart = new CanvasJS.Chart("chartContainer4",
+		{
+			colorSet: "set4",
+			animationEnabled: true,
+			title:{
+				text: {{ (kpiCurrentYear.pctTransAddValidYL )|number_format('0','.','') }} + "%",
+				fontSize: 22,
+				verticalAlign: "center", // "top", "center", "bottom"
+				horizontalAlign: "center", // "left", "right", "center"
+				fontColor: "#2D89FF",
+			},
+			toolTip:{  
+				enabled: true
+			},
+			data: [
+			{
+				startAngle: 90,  
+				indexLabelFontColor: "black",
+				indexLabelLineColor: "#4c4c4c",
+
+				indexLabelPlacement: "inside",
+				type: "doughnut",
+				innerRadius: "60%",
+				dataPoints: [
+					{  y: {{ (kpiCurrentYear.pctTransAddValidYL )|number_format('0','.','') }}, indexLabel: "",indexLabelFontSize: 12, indexLabelFontWeight: "bold", toolTipContent: "{y}% contactables"},
+					{  y: {{ (kpiCurrentYear.pctTransAddNonrensYL )|number_format('0','.','') }}, indexLabel: "",indexLabelFontSize: 12,indexLabelFontColor: "white", indexLabelFontWeight: "bold",toolTipContent: "{y}% non collectées"},
+					{  y: {{ (kpiCurrentYear.pctTransAddNonvalidYL )|number_format('0','.','') }}, indexLabel: "", indexLabelFontWeight: "bold", indexLabelFontColor: "black", indexLabelFontSize: 10, toolTipContent: "{y}% non valides"}
+				]
+			}
+			]
+
+		});
+
+		chart.render();
+
+		
+	};
+
+
+	$(function(){
+		$('#appbundle_kpi_filter_boutique').on('change', function() {
+    		var form = $("#clients-filter");
+    		form.submit();
+    	});
+	});
+	</script>
+{% endblock %}

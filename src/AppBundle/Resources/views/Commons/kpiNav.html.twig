@@ -1,0 +1,30 @@
+{# Get user id from url for menu parameters #}
+
+<nav class="navbar sub-menu kpi-menu {% if app.request.get('_route') in ['app_kpi_month_locaux','app_kpi_month_nlocaux','app_kpi_ytd_locaux','app_kpi_ytd_nlocaux','app_kpi_trigger', 'app_kpi_top_boutique'] %}gris{% endif %}">
+    <div class="container">
+        <ul class="nav navbar-nav col-xs-12">
+            <li class="col-xs-2 text-center {% if app.request.attributes.get('_route') == 'app_kpi_month_locaux' %}active{% endif %}">
+                <a href="{{ path('app_kpi_month_locaux') }}">
+                    Mensuel<br />Locaux
+                </a>
+            </li>
+            <li class="col-xs-2 text-center {% if app.request.attributes.get('_route') == 'app_kpi_ytd_locaux' %}active{% endif %}">
+                <a href="{{ path('app_kpi_ytd_locaux') }}">
+                    Annuel<br />Locaux
+                </a>
+            </li>
+            <li class="col-xs-2 text-center {% if app.request.attributes.get('_route') == 'app_kpi_trigger' %}active{% endif %}">
+                <a href="{{ path('app_kpi_trigger' ) }}">
+                    Suivi<br />Campagnes
+                </a>
+            </li> 
+            {% if is_granted("ROLE_SIEGE") %}
+                <li class="col-xs-2 text-center {% if app.request.attributes.get('_route') == 'app_kpi_top_boutique' %}active{% endif %}">
+                    <a href="{{ path('app_kpi_top_boutique' ) }}">
+                        Classement<br />Boutique
+                    </a>
+                </li>    
+            {% endif %}              
+        </ul>
+    </div><!-- /.container-fluid -->
+</nav>

@@ -1,0 +1,57 @@
+{# src/OC/PlatformBundle/Resources/views/layout.html.twig #}
+
+{% extends "::layout.html.twig" %}
+
+{% block title %}
+  Email bounced - {{ parent() }}
+{% endblock %}
+
+{% block subheader %}
+{% endblock %}
+
+{% block body %}	
+	{# On définit un nouveau bloc, que les vues du bundle pourront remplir #}
+	{% block content %}
+		
+		<h1>Bounces</h1>
+		<h2>{{ count }} bounced emails</h2>
+		<table class="table">
+			<thead>
+				<tr>
+					<th>Recipient</th>
+					<th>Campagne</th>
+					<th>Tracking</th>
+					<th>Date</th>
+					<th>Error</th>
+					<th>Status</th>
+					<th>Size</th>
+					<th>Action</th>
+					<th>Type</th>
+				</tr>
+			</thead>
+			{{ output|raw }}
+		</table>
+
+		<h1>Hard bounce VS soft bounce : mais de quoi s’agit-il ?</h1>
+		<p>
+			La notion est un peu complexe, mais je vais essayer de faire simple. Vous connaissez sans doute les NPAI (« N’habite Pas à l’Adresse Indiquée ») postaux indiquant qu’un courrier n’a pas pu être ditribué ? Eh bien, les bounce sont leur équivalent pour les mails. Ils signalent en fait que votre mailing n’est pas arrivé dans la boite de réception de son destinataire. Lorsque c’est le cas, votre mail « rebondit » (c’est la signification de « bounce ») et revient vers vous par le biais d’un message d’erreur ou d’échec de réception. En comptant ces messages, on peut alors quantifier le « taux de bounce » sur une campagne donnée. Mais ça ne s’arrête pas là ! On distingue ensuite les « hard bounce » des « soft bounce », pour indiquer la « gravité » du problème de réception rencontré :<br />
+			&nbsp;<br />
+			Lorsque le problème est définitif (il ne sera pas résolu avec le temps), on parlera de hard bounce.<br />
+			Si c’est au contraire un problème temporaire, on le désignera sous l’appellation « soft bounce ». Bonne nouvelle : les soft bounce se résolvent généralement tout seul.
+		</p>
+		<i>source : <a href="http://www.alesiacom.com/blog/emailing-hard-bounce-soft-bounce-expliques-simplement" target="_blank">http://www.alesiacom.com/blog/emailing-hard-bounce-soft-bounce-expliques-simplement</a></i>
+
+		<h1>Comprendre les erreurs</h1>
+		<p>
+			<strong>Erreurs temporaires : 4XX | Soft Bounce</strong><br />
+			Ces erreurs sont parfois données à titre indicatif pour expliquer pourquoi l'e-mail n'a pas encore été délivré. Mais aucune action n'est nécessaire, le serveur va régulièrement renouveler sa tentative.
+		</p>
+		<p>
+			<strong>Erreurs permanentes : 5XX | Hard Bounce</strong><br />
+			Ces erreurs indiquent clairement que l'email n'a pas été reçu par son destinataire.
+		</p>
+		<i>source : <a href="http://www.calexium.com/fr/faq/1-mailfountain/4-les-codes-derreur-smtp.html" target="_blank">http://www.calexium.com/fr/faq/1-mailfountain/4-les-codes-derreur-smtp.html</a></i>
+		<br />&nbsp;
+	{% endblock %}
+
+{% endblock %}

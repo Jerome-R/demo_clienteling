@@ -1,0 +1,275 @@
+{% extends "AppBundle::layout.html.twig" %}
+
+{% block subheader %}
+	{% include 'AppBundle:Commons:subheader.html.twig' 
+		with { 'ariane': 
+			campaign.name ~
+			' | Clients à contacter'
+		} 
+	%}
+{% endblock %}
+
+{% block content %}	
+	{% block clientsFilter %}
+		{% include 'AppBundle:Commons:clientsFilter.html.twig' %}
+
+		<div class="col-md-4  col-xs-4 hidden-print">
+			<div class="spacer" style="height:20px;"></div>
+			<a class="btn big-action-btn" id="displayAllBtn" style="font-size:16px;" class="details" data="hidden">Afficher tous les détails</a>
+			<a class='btn big-gray-btn pull-right' style='margin-right: 5px; width: 170px; margin-top: 30px;' href="{{ path('app_campaigns_index') }}">Retour</a>
+		</div>	
+	{% endblock %}
+
+	<div class="col-md-offset-1 col-md-10  col-xs-12 hidden-print">
+		<div class="pull-right">
+	    	{{ knp_pagination_render(recipients) }}
+	    </div>
+	</div>
+
+
+
+	{% for label, flashes in app.session.flashbag.all %}
+	    {% for flash in flashes %}
+	        <div class="bg-{{ label }}">
+	            {{ flash }}
+	        </div>
+	    {% endfor %}
+	{% endfor %}
+
+	<div id="clientsList">
+		{% for recipient in recipients %}
+			<div class="campaign-block-list col-md-offset-1 col-md-10  col-xs-12" code="{% if recipient.dataRecipient.codevendeur is defined %}{{ recipient.dataRecipient.codevendeur|lower }}{% endif %}" local="{% if recipient.client.local is defined %}{{ recipient.client.local }}{% endif %}">
+			<div class="channel col-md-1 col-xs-2">
+				<span class="glyphicon glyphicon-user green" style="font-size:34px; color: #16a085;" aria-hidden="true"></span>
+				<p class="small">{% if recipient.dataRecipient.codevendeur is defined %}{{ recipient.dataRecipient.codevendeur|lower }}{% endif %}</p>
+			</div>
+			<div class="data col-md-9 col-xs-7">
+				<h2>
+					<a class="black" href="{{ path( 'app_campaign_client', { 'campaign_id' : campaign.id, 'client_id' : recipient.client.id } ) }}">
+						{{ recipient.client.civilite }} {{ recipient.client.getFullName()|length > 20 ?  recipient.client.getFullName()|slice(0, 20) ~ '...' :  recipient.client.getFullName() }}
+					</a>
+					{% if recipient.contactedAt != null %}
+						<span class="small">{{"Contacted"|trans}} <span class="glyphicon glyphicon-ok" aria-hidden="true"></span></span>
+					{% elseif recipient.contactLater == true %}
+						<span class="small">&Agrave; recontacter <i class="fa fa-phone-square" aria-hidden="true"></i></span>
+					{% endif %}
+				</h2>
+				<p class="small">			
+					<span class="badge">{% if recipient.comment != "" %}1{% else %}0{% endif %}</span> {{"comment"|trans}} |
+					&Agrave; contacter jusqu'au<strong>
+					{% if recipient.dataRecipient.dateEntree is defined %}
+						{{ recipient.dataRecipient.dateEntree|date_modify("+15 day")|date("d/m/Y") }}</strong> |
+					{% endif %}
+					<a data-toggle="collapse" class="details" href="#collapse_{{ loop.index }}" aria-expanded="false" aria-controls="collapse_{{ loop.index }}" data="hidden">
+					  {{"see more details"|trans}}
+					</a>
+				</p>
+			</div>
+			<div class="action pull-right col-md-2 col-xs-3">
+				{% if recipient.contactedAt == null %}
+					<a href="{{ path( 'app_campaign_client', { 'campaign_id' : campaign.id, 'client_id' : recipient.client.id } ) }}" class="btn btn-action pull right hidden-print">{{"Select"|trans}}</a>
+				{% endif %}
+			</div>
+
+			<div class="spacer"></div>
+
+			<div class="collapse" id="collapse_{{ loop.index }}">
+			 	<div class="well">
+			 		<strong>Informations client :</strong><br />
+					
+					CA 12 mois : {% if recipient.client.ca12Mois %}{{ recipient.client.ca12Mois }} €{% else %}<span class="small">n/a</span>{% endif %} | CA 3 ans : {% if recipient.client.ca3ans %}{{ recipient.client.ca3ans }} €{% else %}<span class="small">n/a</span>{% endif %} | Prix max dépensé : {% if recipient.client.pmaxArticleHisto %}{{ recipient.client.pmaxArticleHisto }} €{% else %}<span class="small">n/a</span>{% endif %}
+					<br />
+					{% if recipient.campaign.idCampaignName != "Adhoc_ChampsElysées" %}
+						<strong>Informations produit {% if recipient.campaign.idCampaignName in ['Trigger_AA_Boutique_1_P','Trigger_AA_Boutique_1_E'] %}acheté il y a un an {% endif %}:</strong><br />						
+					{% endif %}
+
+			 		{% if recipient.comment != "" %} 
+			 			<br />
+			 			&nbsp;<br />
+			 			<strong>Commantaire :</strong><br />{{ recipient.comment }} <br />
+			 		{% endif %}
+			 	</div>
+			</div>
+		</div>
+		{% endfor %}
+	</div>
+
+	{% if recipients|length == 0 %}
+		<div class="campaign-block-list col-md-offset-1 col-md-10 col-xs-12 text-center">
+			<h3>Aucun résultat ne correspond aux critères sélectionnés.</h3>
+		</div>
+	{% endif %}
+
+	<div class="col-md-offset-1 col-md-10  col-xs-12 hidden-print">
+		<div class="pull-right">
+	    	{{ knp_pagination_render(recipients) }}
+	    </div>
+	</div>
+
+	<div class="col-xs-12">
+		<a class='btn big-gray-btn pull-right' style='margin-right: 5px; width: 170px; margin-top: 30px;' href="{{ path('app_campaigns_index') }}">Retour</a>
+	</div>
+{% endblock %}
+
+{% block javascripts %}
+	{{ parent() }}
+
+	<script type="text/javascript">
+	    $(function(){
+
+	    	$('a.details').on('click', function() {    			
+
+	    			if( $(this).attr('data') == 'hidden' ){
+	    				$(this).text("{{'hide details'|trans}}");
+	    				$(this).attr('data', 'shown');
+	    			}
+	    			else {
+	    				$(this).text("{{'see more details'|trans}}");
+	    				$(this).attr('data', 'hidden');
+	    			}
+	    		}
+	    	);
+
+	    	$('a#displayAllBtn').on('click', function() {    			
+
+	    			if( $(this).attr('data') == 'hidden' ){
+	    				$(this).text("Masquer tous les détails");
+	    				$(this).attr('data', 'shown');
+
+	    				$( ".campaign-block-list .collapse" ).each(function( index ) {
+							$( this ).addClass('in');
+						});
+	    			}
+	    			else {
+	    				$(this).text("Afficher tous les détails");
+	    				$(this).attr('data', 'hidden');
+
+	    				$( ".campaign-block-list .collapse" ).each(function( index ) {
+							$( this ).removeClass('in');
+						});
+	    			}
+	    		}
+	    	);
+
+
+	    	/*$('#appbundle_clients_filter_vendorCode').keyup(function() {
+	    		if ( $(this).val() == '' ) {
+	    			$('.campaign-block-list').css('display', 'block');
+	    		}else{
+	    			var code = $(this).val().toLowerCase();
+	    			var exp = '^' + code; //+ '.*$/';
+
+	    			$( ".campaign-block-list" ).each(function( index ) {
+					 	console.log( index + ": " + $( this ).attr('code') + $( this ).attr('code').match( exp ) );
+						if ( $( this ).attr('code').match( exp ) == null ) 
+						{ 
+						    $( this ).css('display', 'none');
+						}else{
+	    					$( this ).css('display', 'block');
+						}
+					});
+	    		}
+	    	});*/
+
+	    	/*$('#appbundle_clients_filter_local').on('change', function() {
+	    		if ( $(this).val() == '' ) {
+	    			$('.campaign-block-list').css('display', 'block');
+	    		}
+	    		if ( $(this).val() == 't' ) {	   		
+	    			$( ".campaign-block-list" ).each(function( index ) {
+					 	//console.log( index + ": " + $( this ).attr('code') + $( this ).attr('code').match( exp ) );
+						if ( $( this ).attr('local') == "f"  || $( this ).attr('local') == "") 
+						{ 
+						    $( this ).css('display', 'none');
+						}
+						else{
+	    					$( this ).css('display', 'block');
+						}
+		    		});
+	    		}
+	    		if ( $(this).val() == 'f' ) {
+	    			$( ".campaign-block-list" ).each(function( index ) {
+					 	//console.log( index + ": " + $( this ).attr('code') + $( this ).attr('code').match( exp ) );
+						if ( $( this ).attr('local') == "t" || $( this ).attr('local') == "" ) 
+						{ 
+						    $( this ).css('display', 'none');
+						}
+						else{
+	    					$( this ).css('display', 'block');
+						}
+		    		});
+		    	}
+		    });	*/
+
+	    	/*$('#appbundle_clients_filter_store, #appbundle_clients_filter_retailManager').change(function() {
+	    		
+	    		form = $("#clients-filter");
+	    		form.submit();
+
+	    		formdata = form.serialize();
+
+                //alert(url);
+                $('#showTopContainer').append('<div class="loading"></div>');
+                $.ajax({
+                    type: form.attr('method'),
+                    url: form.attr('action'),
+                    data: formdata,
+                    cache: false,
+                    success: function (data) {
+                        
+                        $('#clientsList').append(data);
+                    },  
+                    error: function (XMLHttpRequest, textStatus, errorThrown) {
+                        alert('La requête n\'a pas abouti');
+                    }
+                })
+	    	});*/
+
+			$('.pagination a').click(function( event ) {
+  				event.preventDefault();
+  					$('#appbundle_clients_filter_page').val($(this).attr('href').replace('/campaign_clients_list/'.concat({{campaign.id}}).concat('?page='), ''));
+				$('#clients-filter').submit();
+  			});
+
+			$('#appbundle_clients_filter_local').on('change', function() {
+				if ($(this).attr('isSubmit') == 'no') {
+		    		var form = $("#clients-filter");
+		    		//$('#appbundle_clients_filter_store').val("");
+		    		//$('#appbundle_clients_filter_retailManager').val("");
+		    		$('#appbundle_clients_filter_store').attr('isSubmit', 'yes');
+		    		$('#appbundle_clients_filter_retailManager').attr('isSubmit', 'yes');
+		    		$('#appbundle_clients_filter_page').val("1");
+		    		form.submit();
+		    	}
+			});
+
+	    	$('#appbundle_clients_filter_retailManager').on('change', function() {
+	    		if ($(this).attr('isSubmit') == 'no') {
+		    		var form = $("#clients-filter");
+		    		$('#appbundle_clients_filter_store').val("");
+		    		$('#appbundle_clients_filter_store').attr('isSubmit', 'yes');
+		    		$('#appbundle_clients_filter_page').val("1");
+		    		form.submit();
+		    	}
+	    	});
+
+	    	$('#appbundle_clients_filter_store').on('change', function() {
+	    		if ($(this).attr('isSubmit') == 'no') {
+	    			var form = $("#clients-filter");
+	    			$('#appbundle_clients_filter_retailManager').attr('isSubmit', 'yes');
+		    		$('#appbundle_clients_filter_page').val("1");
+	    			form.submit();
+	    		}
+
+	    	});
+
+	    	$('#appbundle_clients_filter_fullName').on('change', function() {
+		    	$('#appbundle_clients_filter_page').val("1");
+	    	});
+
+	    	$('#appbundle_clients_filter_fvendorCode').on('change', function() {
+		    	$('#appbundle_clients_filter_page').val("1");
+	    	});
+	    });
+	</script>
+{% endblock %}

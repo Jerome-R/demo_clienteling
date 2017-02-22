@@ -1,0 +1,400 @@
+{% extends "AppBundle::layout.html.twig" %}
+
+{% block subheader %}
+	{% include 'AppBundle:Commons:subheader.html.twig' 
+		with { 'ariane': 
+			'<a href="' ~
+			path( 'app_campaign_clients_list', {'campaign_id' : campaign.id}) ~
+			'"> ' ~
+			campaign.name ~ 
+			'</a> | Fiche client'
+		} 
+	%}
+{% endblock %}
+
+{% block content %}
+
+	{% include 'AppBundle:Commons:campaignClientHead.html.twig' %}
+
+	<div class="client-block col-md-offset-1 col-md-10 col-xs-12">
+		
+		<h3 class="green">Coordonnées du client</h3>
+
+		<!--div class="col-xs-3 field">
+			<ul class="list-group">
+				<li class="list-group-item">Civilité :</li>
+				<li class="list-group-item">{{"Firstname:"|trans}}</li>
+				<li class="list-group-item">{{"Lastname:"|trans}}</li>
+				<li class="list-group-item">Email :</li>
+				<li class="list-group-item">{{"Phone 1:"|trans}}</li>
+				<li class="list-group-item">{{"Phone 2:"|trans}}</li>
+				<li class="list-group-item">Adresse 1 :</li>
+				<li class="list-group-item">Adresse 2 :</li>
+				<li class="list-group-item">Adresse 3 :</li>
+				<li class="list-group-item">{{"Postal code:"|trans}}</li>
+				<li class="list-group-item">{{"City:"|trans}}</li>
+				<li class="list-group-item">{{"Country:"|trans}}</li>
+			</ul>
+		</div-->
+		<div class="col-xs-8 data">
+			<ul class="list-group">
+				<li class="list-group-item">
+					<div class="col-xs-3 no-padding text-right">
+						<strong>Civilité : </strong>
+					</div>
+					<div class="col-xs-9">
+						{% if client.civilite == "MR" %}Monsieur{% elseif client.civilite == "MME" %}Madame{% elseif client.civilite == "MLE" %}Mademoiselle{% else %}n/a{% endif %}
+					</div>					
+				</li>
+				<li class="list-group-item">
+					<div class="col-xs-3 no-padding text-right">
+						<strong>Prénom : </strong>
+					</div>
+					<div class="col-xs-9">
+						{{ client.prenom }}
+					</div>
+				</li>
+				<li class="list-group-item">
+					<div class="col-xs-3 no-padding text-right">
+						<strong>Nom : </strong>
+					</div>
+					<div class="col-xs-9">
+						{{ client.nom }}
+					</div>
+				</li>
+				<li class="list-group-item">
+					<div class="col-xs-3 no-padding text-right">
+						<strong>Email : </strong>
+					</div>
+					<div class="col-xs-9">
+						{{ client.email }}
+						{% if ( not client.isEmailvalide or client.isHardBounce ) and client.email is not null and client.email != "" %}
+							<span class="text-danger">
+								<i class="fa fa-warning fa-1" aria-hidden="true"></i>
+							</span>
+						{% endif %}
+						{% if not client.isEmailValide and client.email is not null and client.email != "" %}
+							<span class="text-danger">
+								invalide
+							</span>
+						{% endif %}
+						{% if client.isHardBounce and client.email is not null and client.email != "" %}
+							<span class="text-danger">
+							hard bounce
+							</span>
+						{% endif %}
+					</div>
+				</li>
+				<li class="list-group-item">
+					<div class="col-xs-3 no-padding text-right">
+						<strong>Telephone 1 : </strong>
+					</div>
+					<div class="col-xs-9">
+						{{ client.telephone1 }}
+						{% if not client.isTelValide and client.telephone1 is not null and client.telephone1 != "" %}
+							<span class="text-danger">
+							<i class="fa fa-warning fa-1" aria-hidden="true"></i>
+							invalide
+						{% endif %}
+					</div>
+				</li>
+				<li class="list-group-item">
+					<div class="col-xs-3 no-padding text-right">
+						<strong>Telephone 2 : </strong>
+					</div>
+					<div class="col-xs-9">
+						{{ client.telephone2 }}
+					</div>
+				</li>
+				<li class="list-group-item">
+					<div class="col-xs-3 no-padding text-right">
+						<strong>Adresse 1 : </strong>
+					</div>
+					<div class="col-xs-9">
+						{{ client.adresse1 }}
+						{% if client.isAdresseValide == 0 and client.adresse1 is not null and client.adresse1 != "" %}
+							<span class="text-danger">
+							<i class="fa fa-warning fa-1" aria-hidden="true"></i>
+							invalide
+						{% endif %}
+					</div>
+				</li>
+				<li class="list-group-item">
+					<div class="col-xs-3 no-padding text-right">
+						<strong>Adresse 2 : </strong>
+					</div>
+					<div class="col-xs-9">
+						{{ client.adresse2 }}
+					</div>
+				</li>
+				<li class="list-group-item">
+					<div class="col-xs-3 no-padding text-right">
+						<strong>Adresse 3 : </strong>
+					</div>
+					<div class="col-xs-9">
+						{{ client.adresse3 }}
+					</div>
+				</li>
+				<li class="list-group-item">
+					<div class="col-xs-3 no-padding text-right">
+						<strong>Code postal : </strong>
+					</div>
+					<div class="col-xs-9">
+						{% if client.codepostal|number_format(0,'',' ') == "0" %}
+							{{ client.codepostal }}
+						{% else %}
+							{{ client.codepostal|number_format(0,'',' ') }}
+						{% endif %}
+					</div>
+				</li>
+				<li class="list-group-item">
+					<div class="col-xs-3 no-padding text-right">
+						<strong>Ville : </strong>
+					</div>
+					<div class="col-xs-9">
+						{{ client.ville }}
+					</div>
+				</li>
+				<li class="list-group-item">
+					<div class="col-xs-3 no-padding text-right">
+						<strong>Pays : </strong>
+					</div>
+					<div class="col-xs-9">
+						{{ getCountry(client.pays) }}
+					</div>
+				</li>
+			</ul>
+		</div>
+
+		<div class="col-xs-4 action hidden-print">
+			{% if recipient.contactedAt == null %}
+				{% if recipient.campaign.type == "trigger" %}
+					{% if recipient.canal == "Email" %}
+						<a href="{{ path("app_campaign_send_email",  { 'recipient_id' : recipient.id }) }}" class="btn big-action-btn">{{"Send the email"|trans}}</a>
+					{% else %}
+						{% if recipient.canal == "Mail" %}
+							{{ form_start(formFour) }}
+								{{ form_widget(formFour.submit, {'attr': {'class': 'btn big-action-btn', 'onclick': 'return confirm("Confirmer ?");' }, 'label' : 'Envoyer le courrier'|trans}) }}
+								{{ form_rest(formFour) }}
+							{{ form_end(formFour) }}
+						{% elseif recipient.canal == "Phone" %}
+							{{ form_start(formFour) }}
+								{{ form_widget(formFour.submit, {'attr': {'class': 'btn big-action-btn', 'onclick': 'return confirm("Confirmer ?");' }, 'label' : 'Contacter par téléphone'|trans}) }}
+								{{ form_rest(formFour) }}
+							{{ form_end(formFour) }}
+						{% endif %}
+					{% endif %}
+				{% else %}
+					<a class="btn big-action-btn" data-toggle="modal" data-target="#myModalThree">Vous avez contacté le client</a>
+				{% endif %}
+
+				{% if recipient.campaign.type == "trigger" %}
+					<a class="btn big-gray-btn" data-toggle="modal" style="font-size:14px;" data-target="#myModalThree">{{"Changer le moyen de contact"|trans}}</a>
+				{% endif %}
+
+				{{ form_start(formFive, {'attr': {'class': ''}}) }}
+					{{ form_errors(formFive) }}
+					{{ form_widget(formFive.submit, {'attr': {'class': 'btn big-gray-btn hidden-print', 'style': 'font-size:14px;'}, 'label': 'Contacter ultérieurement'}) }}
+					{{ form_rest(formFive) }}
+				{{ form_end(formFive) }}
+				<a class="btn big-gray-btn" data-toggle="modal" style="font-size:14px;" data-target="#myModal">Exclure le client</a>
+			{% else %}
+				<div class="btn big-gray-btn">Client contacté !</div>
+			{% endif %}
+				<a class="btn big-gray-btn" data-toggle="modal" style="font-size:14px;" data-target="#myModalTwo">Ne souhaite pas être contacté</a>
+				<a class="btn big-green-btn hidden-print" style="font-size:14px;" onclick="window.print();"><i class="fa fa-print" aria-hidden="true"></i> Imprimer la fiche</a>
+		</div> 
+
+		<div class="spacer"></div>
+
+		<hr>
+
+		{% if recipient.dataRecipient.skuDesc is defined %}
+			{% if recipient.campaign.idCampaignName == "Trigger_AA_Boutique_1_P" or recipient.campaign.idCampaignName == "Trigger_AA_Boutique_1_E" %}
+				<h3 class="green">Produit acheté il y a un an</h3>
+			{% else %}
+				<h3 class="green">Produit acheté</h3>
+			{% endif %}
+
+			<div class="col-xs-12 data">
+				<ul class="list-group col-xs-6">
+					<li class="list-group-item"><strong>SKU : </strong>{% if recipient.dataRecipient.skuDesc %}{{ recipient.dataRecipient.skuDesc }}{% else %}<span class="small">n/a</span>{% endif %}</li>
+					<li class="list-group-item"><strong>Genre : </strong>{% if recipient.dataRecipient.genreDesc %}{{ recipient.dataRecipient.genreDesc }}{% else %}<span class="small">n/a</span>{% endif %}</li>
+					<li class="list-group-item"><strong>Code UVC : </strong>{% if recipient.dataRecipient.codeUvc %}{{ recipient.dataRecipient.codeUvc }}{% else %}<span class="small">n/a</span>{% endif %}</li>
+					<li class="list-group-item"><strong>Motif de l'achat : </strong>{% if recipient.dataRecipient.motifAchat %}<span class="text-uppercase">{{ recipient.dataRecipient.motifAchat }}</span>{% else %}<span class="small">n/a</span>{% endif %}</li>
+				</ul>
+				<ul class="list-group col-xs-6">
+					<li class="list-group-item"><strong>Ligne : </strong>{% if recipient.dataRecipient.ligneDesc %}{{ recipient.dataRecipient.ligneDesc }}{% else %}<span class="small">n/a</span>{% endif %}</li>
+					<li class="list-group-item"><strong>Prix TTC : </strong>{% if recipient.dataRecipient.prixPaye %}{{ recipient.dataRecipient.prixPaye|number_format(0,'',' ') }} €{% else %}<span class="small">n/a</span>{% endif %}</li>
+					<li class="list-group-item"><strong>Vendeur : </strong>{% if recipient.dataRecipient.codevendeur %}{{ recipient.dataRecipient.codevendeur }}{% else %}<span class="small">n/a</span>{% endif %}</li>
+				</ul>
+			</div>
+		
+		{% endif %}
+
+		<h3 class="green">Profil du client</h3>
+
+		<div class="col-xs-12 data">
+			<ul class="list-group col-xs-6">
+				<li class="list-group-item"><strong>Segment : </strong>{% if client.segment %}{{ client.segment }}{% else %}<span class="small">n/a</span>{% endif %}</li>
+				<li class="list-group-item"><strong>CA 3 ans : </strong>{% if client.ca3ans %}{{ client.ca3ans|number_format(0,'',' ') }} €{% else %}<span class="small">n/a</span>{% endif %}</li>
+				<li class="list-group-item"><strong>CA 12 mois : </strong>{% if client.ca12mois %}{{ client.ca12mois|number_format(0,'',' ') }} €{% else %}<span class="small">n/a</span>{% endif %}</li>
+				<li class="list-group-item"><strong>Fréquence 3 ans : </strong>{% if client.freq3ans %}{{ client.freq3ans }}{% else %}<span class="small">n/a</span>{% endif %}</li>
+				<li class="list-group-item"><strong>Fréquence 12 mois : </strong>{% if client.freq12mois %}{{ client.freq12mois }}{% else %}<span class="small">n/a</span>{% endif %}</li>
+			</ul>
+			<ul class="list-group col-xs-6">
+				<li class="list-group-item"><strong>Prix max : </strong>{% if client.pmaxArticleHisto %}{{ client.pmaxArticleHisto|number_format(0,'',' ') }} €{% else %}<span class="small">n/a</span>{% endif %}</li>
+				<li class="list-group-item"><strong>Panier moyen : </strong>{% if client.pmHisto %}{{ client.pmHisto|number_format(0,'',' ') }} €{% else %}<span class="small">n/a</span>{% endif %}</li>
+				<li class="list-group-item"><strong>Date premier achat : </strong>{% if client.date1erachat %}{{ client.date1erachat|date('d/m/Y') }}{% else %}<span class="small">n/a</span>{% endif %}</li>
+				<li class="list-group-item"><strong>Date dernier achat : </strong>{% if client.dateDernachat %}{{ client.dateDernachat|date('d/m/Y') }}{% else %}<span class="small">n/a</span>{% endif %}</li>
+			</ul>
+		</div>
+
+		<div class="spacer"></div>
+
+		<hr>
+
+		<h3 class="green">Laisser un commentaire</h3>
+
+		{{ form_start(formTwo, {'attr': {'class': ''}}) }}
+			{{ form_errors(formTwo) }}
+			<div class="form-group">
+				<div class="col-xs-12">
+					{{ form_widget(formTwo.comment, {'attr': {'class': 'form-control'}}) }}
+				</div>
+			</div>
+			{{ form_widget(formTwo.submit, {'attr': {'class': 'btn big-green-btn pull-right hidden-print', 'style': 'width:200px;margin-top:30px;'}, 'label': 'Valider le commentaire'}) }}
+
+			
+			<a class='btn big-gray-btn pull-right hidden-print' style='margin-right: 5px; width: 170px; margin-top: 30px;' href="{{ path( 'app_campaign_clients_list', { 'campaign_id' : campaign.id } ) }}">Retour</a>
+			{{ form_rest(formTwo) }}
+		{{ form_end(formTwo) }}
+
+	</div>
+	<div id="myModal" class="modal fade" tabindex="-1" role="dialog">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+					<h4 class="modal-title">{{"Exclude client from"|trans}} {{ campaign.name }}</h4>
+				</div>
+				<div class="modal-body">
+					{{ form_start(form, {'attr': {'class': 'form-horizontal'}}) }}
+						{{ form_errors(form) }}
+						<div class="form-group">
+							<label class="col-xs-10 control-label control-label optional" for="appbundle_exclude_cli11nt_from_campaign_client_optoutNonPertinent">
+								L'action n'est pas pertinente pour ce client
+							</label>
+							<div class="col-xs-2 checkbox">
+								<label>
+									{{ form_widget(form.optoutNonPertinent) }}
+								</label>
+							</div>
+						</div>
+						<hr />
+						<div class="form-group">
+							<label class="col-xs-9 control-label control-label optional" for="appbundle_exclude_client_from_campaign_client_emailErr">
+								L'email est incorrect
+							</label>
+							<div class="col-xs-3 checkbox">
+								<label>
+									{{ form_widget(form.client.isEmailValide) }}
+								</label>
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-xs-9 control-label control-label optional" for="appbundle_exclude_client_from_campaign_client_adresseErr">
+								L'adresse est incorrect
+							</label>
+							<div class="col-xs-3 checkbox">
+								<label>
+									{{ form_widget(form.client.isAdresseValide) }}
+								</label>
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-xs-9 control-label control-label optional" for="appbundle_exclude_client_from_campaign_client_phoneErr">
+								Le téléphone est incorrect 
+							</label>
+							<div class="col-xs-3 checkbox">
+								<label>
+									{{ form_widget(form.client.isTelValide) }}
+								</label>
+							</div>
+						</div>
+						<hr />
+						<div class="form-group">
+							<label class="col-xs-12 control-label control-label optional" style="text-align: left; margin-bottom:10px;" for="appbundle_exclude_client_from_campaign_client_optoutAutre">
+								Autre raison
+							</label>
+							<div class="col-xs-12">
+								{{ form_widget(form.optoutAutre, {'attr': {'class': 'form-control'}}) }}
+							</div>
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-default" data-dismiss="modal">Annuler</button>
+							{{ form_widget(form.submit, {'attr': {'class': 'btn btn-action pull-right'}, 'label': 'Exclude'|trans} ) }}
+						</div>
+						{{ form_rest(form) }}
+					{{ form_end(form) }}
+				</div>
+			</div><!-- /.modal-content -->
+		</div><!-- /.modal-dialog -->
+	</div><!-- /.modal -->
+
+	<div id="myModalThree" class="modal fade" tabindex="-1" role="dialog">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+					{% if recipient.campaign.type != "trigger" %}
+						<h4 class="modal-title">Par quel moyen de contact ?</h4>
+					{% else %}
+						<h4 class="modal-title">Changer le moyen de contact</h4>
+					{% endif %}
+				</div>
+				<div class="modal-body">
+					{{ form_start(formThree, {'attr': {'class': 'form-horizontal'}}) }}
+						{{ form_errors(formThree) }}
+						<div class="form-group">
+							{{ form_label(formThree.canal, "Canal", {'label_attr': {'class': 'col-xs-4 control-label'}}) }}
+							<div class="col-xs-8">
+								{{ form_widget(formThree.canal, {'attr': {'class': 'form-control'}}) }}
+							</div>
+						</div>
+
+						<div class="modal-footer">
+							<button type="button" class="btn btn-default" data-dismiss="modal">Annuler</button>
+							{{ form_widget(formThree.submit, {'attr': {'class': 'btn btn-action pull-right'}, 'label': 'Select'|trans} ) }}
+						</div>
+						{{ form_rest(formThree) }}
+					{{ form_end(formThree) }}
+				</div>
+			</div><!-- /.modal-content -->
+		</div><!-- /.modal-dialog -->
+	</div><!-- /.modal -->
+
+	<div id="myModalTwo" class="modal fade" tabindex="-1" role="dialog">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+					<h4 class="modal-title">Le client ne souhaite pas être contacté</h4>
+				</div>
+				<div class="modal-body">
+					<p>
+						Pensez à renseigner dans votre outil de caisse que le client ne souhaite pas être contacté (optout).
+					</p>
+				</div>
+			</div><!-- /.modal-content -->
+		</div><!-- /.modal-dialog -->
+	</div><!-- /.modal -->
+
+
+
+	<div class="col-xs-12">
+	{#dump(campaign)#}
+	{#dump(client)#}
+	{#dump(recipient)#}
+	</div>
+{% endblock %}

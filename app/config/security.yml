@@ -1,0 +1,114 @@
+# To get started with security, check out the documentation:
+# http://symfony.com/doc/current/book/security.html
+security:
+    encoders:
+        Application\Sonata\UserBundle\Entity\User:
+            algorithm: sha512
+            encode_as_base64: true
+            iterations: 2
+
+    acl:
+        connection: default
+
+    role_hierarchy:
+        ROLE_BOUTIQUE:          [ROLE_USER]
+        ROLE_DIRECTEUR:         [ROLE_USER, ROLE_BOUTIQUE]
+        ROLE_RETAIL_MANAGER:    [ROLE_USER, ROLE_DIRECTEUR]
+        ROLE_SIEGE:             [ROLE_USER, ROLE_RETAIL_MANAGER]
+        ROLE_ADMIN:             [ROLE_USER, ROLE_SONATA_ADMIN]
+        ROLE_SUPER_ADMIN:       [ROLE_ADMIN, ROLE_ALLOWED_TO_SWITCH, ROLE_SIEGE]
+        SONATA:
+            # if you are not using acl then this line must be uncommented
+            #- ROLE_SONATA_PAGE_ADMIN_PAGE_EDIT
+            #- ROLE_SONATA_PAGE_ADMIN_BLOCK_EDIT
+
+    providers:
+        fos_userbundle:
+            #id: fos_user.user_manager
+            #id: fos_user.user_provider.username
+            id: fos_user.user_provider.username_email
+
+    firewalls:
+        # disables authentication for assets and the profiler, adapt it according to your needs
+        dev:
+            pattern: ^/(_(profiler|wdt)|css|images|js)/
+            security: false
+
+        admin:
+            pattern:            /admin(.*)
+            context:            user
+            form_login:
+                provider:       fos_userbundle
+                login_path:     /admin/login
+                use_forward:    false
+                check_path:     /admin/login_check
+                failure_path:   null
+                default_target_path: /admin
+            logout:
+                path:           /admin/logout
+                target:         /admin/login
+            anonymous:          true
+            switch_user:        true
+
+        main:
+            pattern:             /
+            context:             user
+            form_login:
+                provider:       fos_userbundle
+                login_path:     /login
+                use_forward:    false
+                check_path:     /login_check
+                failure_path:   null
+                default_target_path: /
+            logout:             true
+            anonymous:          true
+            switch_user:        true
+            remember_me:
+                key: "%secret%"
+                lifetime: 172800 # 2 days
+                #always_remember_me: true
+
+    access_control:
+        # URL of FOSUserBundle which need to be available to anonymous users
+        #- { path: ^/.*, requires_channel: http }
+        - { path: ^/_open, role: IS_AUTHENTICATED_ANONYMOUSLY, requires_channel: http }
+        - { path: ^/login$, role: IS_AUTHENTICATED_ANONYMOUSLY, requires_channel: http }
+        - { path: ^/register, role: ROLE_ADMIN , requires_channel: http }
+        - { path: ^/resetting, role: IS_AUTHENTICATED_ANONYMOUSLY, requires_channel: http }
+        - { path: ^/web/config.php, role: ROLE_ADMIN , requires_channel: http }
+        - { path: ^/profile/edit-profile, role: ROLE_ADMIN , requires_channel: http }
+        - { path: ^/profile, role: ROLE_BOUTIQUE , requires_channel: http }
+        # Admin login page needs to be accessed without credential
+        - { path: ^/admin/login$, role: IS_AUTHENTICATED_ANONYMOUSLY, requires_channel: http }
+        - { path: ^/admin/logout$, role: IS_AUTHENTICATED_ANONYMOUSLY, requires_channel: http }
+        - { path: ^/admin/login_check$, role: IS_AUTHENTICATED_ANONYMOUSLY, requires_channel: http }
+        - { path: ^/admin/resetting, role: IS_AUTHENTICATED_ANONYMOUSLY, requires_channel: http }
+        - { path: ^/_test$, role: ROLE_ADMIN, requires_channel: http }
+        - { path: ^/_bounce$, role: ROLE_ADMIN, requires_channel: http }
+        - { path: ^/_impersonate$, role: ROLE_ADMIN, requires_channel: http }
+
+        # App URLs
+        - { path: ^/home$, role: ROLE_USER, requires_channel: http }
+        - { path: ^/campaign$, role: ROLE_USER, requires_channel: http }
+        - { path: ^/campaign/, role: ROLE_USER, requires_channel: http }
+        - { path: ^/campaign_send_email/, role: ROLE_USER, requires_channel: http }
+        - { path: ^/top_clients, role: ROLE_USER, requires_channel: http }
+        - { path: ^/top_clients_view/, role: ROLE_USER, requires_channel: http }
+        - { path: ^/top_clients_remove_comment/, role: ROLE_USER, requires_channel: http }
+        - { path: ^/kpi_ml/, role: ROLE_USER, requires_channel: http }
+        - { path: ^/kpi_ytdl/, role: ROLE_USER, requires_channel: http }
+        - { path: ^/kpi_mnl/, role: ROLE_USER, requires_channel: http }
+        - { path: ^/kpi_ytdnl/, role: ROLE_USER, requires_channel: http }
+        - { path: ^/kpi_trigger/, role: ROLE_USER, requires_channel: http }
+        - { path: ^/kpi_top_boutique$, role: ROLE_SIEGE, requires_channel: http }
+        - { path: ^/log_export$, role: ROLE_SIEGE, requires_channel: http }
+
+        #Profile routes
+        - { path: ^/profile/edit-authentication$, role: ROLE_USER, requires_channel: http }
+        - { path: ^/profile/$, role: ROLE_USER, requires_channel: http }
+
+        # Secured part of the site
+        # This config requires being logged for the whole site and having the admin role for the admin part.
+        # Change these rules to adapt them to your needs
+        - { path: ^/admin/, role: [ROLE_ADMIN, ROLE_SONATA_ADMIN], requires_channel: http }
+        - { path: ^/.*, role: ROLE_USER, requires_channel: http }

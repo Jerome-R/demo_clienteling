@@ -1,0 +1,129 @@
+{% extends "AppBundle::layout.html.twig" %}
+
+{% block content %}
+
+	{% if is_granted("ROLE_BOUTIQUE") %}
+	<div class="row home-block">
+		<div class=" col-md-10 col-md-offset-1 col-xs-12 block-1" style="padding-left:0;">
+			<div class="col-xs-4 image-block">
+				<a href="{{ path('app_campaigns_index') }}"><img src="{{ asset('web/images/campaign_image.png') }}" alt="" width="100%" /></a>
+			</div>
+			<div class="col-xs-8">
+				<h2>{{"MY CAMPAIGNS"|trans}}</h2>
+				<p class="white">
+					Accédez à la liste des campagnes en cours dans votre boutique et retrouvez chaque jour de nouveaux clients à contacter.
+				</p>
+				<a href="{{ path('app_campaigns_index') }}" class="btn btn-home-box-1 pull-right hidden-print">{{"Open"|trans}}</a>
+			</div>
+		</div>
+	</div>
+	{% endif %}
+	{% if is_granted("ROLE_BOUTIQUE") %}
+	<div class="row home-block">
+		<div class=" col-md-10 col-md-offset-1 col-xs-12 block-2" style="padding-left:0;">
+			<div class="col-xs-4 image-block">
+				<a href="{{ path('app_top_client_index') }}"><img src="{{ asset('web/images/top_client_image.png') }}" alt="" width="100%" /></a>
+			</div>
+			<div class="col-xs-8">
+				<h2>{{"MY TOP CLIENTS"|trans}}</h2>
+				<p class="white">
+					Accédez à la liste des meilleurs clients de votre boutique et réalisez des actions personnalisées pour les fidéliser ou les réactiver.
+				</p>
+				<a href="{{ path('app_top_client_index') }}" class="btn btn-home-box-2 pull-right hidden-print">{{"Open"|trans}}</a>
+			</div>
+		</div>
+	</div>
+	{% endif %}
+	{% if is_granted("ROLE_DIRECTEUR") %}
+	<div class="row home-block">
+		<div class=" col-md-10 col-md-offset-1 col-xs-12 block-3" style="padding-left:0;">
+			<div class="col-xs-4 image-block">
+				<a href="{{ path('app_kpi_month_locaux') }}"><img src="{{ asset('web/images/kpi_image.png') }}" alt="" width="100%" /></a>
+			</div>
+			<div class="col-xs-8">
+				<h2>{{"MY KPIs"|trans}}</h2>
+				<p class="white">
+					Retrouvez les indicateurs de votre boutique pour mesurer la performance de votre équipe et de leurs actions.
+				</p>
+				<a href="{{ path('app_kpi_month_locaux' ) }}" class="btn btn-home-box-3 pull-right hidden-print">{{"Open"|trans}}</a>
+			</div>
+		</div>
+	</div>
+	{% endif %}
+
+	{#% if (date() > user.credentialsExpireAt|date_modify("-1 day") or user.credentialsExpireAt is null) and count_home == 1  %}
+		<div class="modal fade" id="reset_password" tabindex="-1" role="dialog" aria-labelledby="modal_reset_password">
+		  <div class="modal-dialog" role="document">
+		    <div class="modal-content">
+		    {% if user.credentialsExpireAt is null %}
+			     <div class="modal-header">
+			        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+			        <h4 class="modal-title" id="modal_reset_password">Renouvellement du mot de passe</h4>
+			    </div>
+			    <div class="modal-body">
+		      		Mesdames, Messieurs,,<br />
+		      		&nbsp;<br />
+					Pour assurer la sécurité des informations disponibles sur votre outil de clienteling, nous vous invitons à changer votre mot de passe en suivant les indications suivantes.<br />
+					&nbsp;<br />
+					Il doit contenir au minimum 8 caractères dont au moins :<br />
+					&nbsp;- une minuscule <br />
+					&nbsp;- une majuscule <br />
+					&nbsp;- un chiffre<br />
+					&nbsp;- un caractère spécial<br />
+					&nbsp;<br />
+			        <a class="btn btn-default" href="/profile/change-password">Modifier mon mot de passe en cliquant ici</a><br />
+			        &nbsp;<br />
+			        Ce nouveau mot de passe sera effectif 6 mois.<br />
+			        &nbsp;<br />
+					Vous avez jusqu'au 1er octobre pour choisir un nouveau mot de passe. Au-delà, votre mot de passe actuel sera expiré.<br />
+					&nbsp;<br />
+					Merci de votre confiance,<br />
+					&nbsp;<br />
+					L'équipe Claravista.
+			    </div>
+		      	{% elseif date() > user.credentialsExpireAt|date_modify("-1 day") %}
+		      		<div class="modal-header">
+			        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+			        <h4 class="modal-title" id="modal_reset_password">Votre mot de passe va bientôt expirer</h4>
+			    </div>
+			    <div class="modal-body">
+		      		Bonjour,<br />
+		      		&nbsp;<br />
+					Votre mot de passe est sur le point d'expirer. Vous pouvez dès maintenant le modifier en vous suivant ce lien : <br />
+					&nbsp;<br />
+					<a class="btn btn-default" href="/profile/change-password">Modifier mon mot de passe en cliquant ici</a><br />
+					&nbsp;<br />
+					Pour rappel, votre mot de passe doit contenir au minimum 8 caractères dont au moins :<br />
+					&nbsp;- une minuscule <br />
+					&nbsp;- une majuscule<br /> 
+					&nbsp;- un chiffre<br />
+					&nbsp;- un caractère spécial<br />
+					&nbsp;<br />
+					A très vite sur votre outil de clienteling,<br />
+					&nbsp;<br />
+					L'équipe Claravista.
+			    </div>
+		      	
+			    {% endif %}
+			    <div class="modal-footer">
+			        <button type="button" class="btn btn-default" data-dismiss="modal">Fermer</button>
+			    </div>
+		    </div>
+		  </div>
+		</div>
+	{% endif %#}
+{% endblock %}
+
+{% block layout %}
+    <div class="home-layout"></div>
+{% endblock %}
+
+{% block javascripts %}
+	{{ parent() }}
+
+	<script type="text/javascript">
+		$(function(){
+				$('#reset_password').modal('show');
+			});
+	</script>
+{% endblock %}

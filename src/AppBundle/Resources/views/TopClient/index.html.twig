@@ -1,0 +1,353 @@
+{% extends "AppBundle::layout.html.twig" %}
+
+{% block subheader %}
+	{% include 'AppBundle:Commons:subheader.html.twig' 
+		with { 'ariane': 'Liste des top clients'
+		} 
+	%}
+{% endblock %}
+
+{% block content %}	
+
+	{% block clientsFilter %}
+		{% include 'AppBundle:Commons:clientsFilter.html.twig' %}
+		 
+			<div class="col-md-4  col-xs-12 hidden-print">
+				{{ form_start(form2, {'id' : 'clients-export'}) }}
+					<br />
+					{% if is_granted("ROLE_ADMIN") or is_granted("ROLE_SIEGE") or is_granted("ROLE_RETAIL_MANAGER") or is_granted("ROLE_DIRECTEUR") %}
+					{{ form_widget(form2.clients) }}
+					
+					<div class="form-group col-md-12 col-xs-8 pull-right">
+						{{ form_widget(form2.submit, {'attr': {'class': 'btn big-action-orange-btn'}, 'label' : 'Exporter en CSV (Excel)'|trans}) }}
+					</div>
+					<div class="form-group col-md-12 col-xs-8 pull-right">
+						<a class="btn big-action-orange-btn" style="font-size:16px;" id="displayAllBtn" data="hidden">Afficher tous les détails</a>
+					</div>
+
+				{{ form_end(form2) }}
+				{% endif %}
+				<form class="form-horizontal">
+					<div class="form-group col-md-12 col-xs-8 pull-right">
+						<a class="btn big-action-orange-btn" href="{{path( 'app_top_client_sortant' )}}">Archives top clients</a>
+					</div>
+				</form>
+
+				<p class="text-right">Dernière mise à jour de la liste le : {{dateImport.dateImport|date("d/m/Y")}}</p>
+			</div>
+	{% endblock %}
+	
+	<div class="spacer"></div>
+
+	<div id="clientsList">
+		<div class="col-md-offset-1 col-md-10  col-xs-12 hidden-print">
+			<div class="pull-right">
+		    	{{ knp_pagination_render(topClients) }}
+		    </div>
+		</div>
+		{% for topClient in topClients %}
+			<div class="campaign-block-list col-md-offset-1 col-md-10  col-xs-12" code="{{ topClient.codeVendeur|lower }}" local="{{ topClient.local }}">
+				<div class="channel col-md-1 col-xs-2">
+					<span class="glyphicon glyphicon-user orange" style="font-size:34px; color: #d35400;" aria-hidden="true"></span>
+					<p class="small hidden">{{ topClient.codeVendeur }}</p>
+				</div>
+				<div class="data col-md-6 col-xs-4">
+					<h2 class="col-xs-12" style="max-width:600px;">
+						<a class="black" href="{{ path('app_top_client_view', { 'top_client_id': topClient.id } ) }}" {% if topClient.isNouveauTopClient %}style="color: #d35400 !important;"{% endif %}>{{ topClient.civilite }} {{ topClient.getFullName()|length > 20 ?  topClient.getFullName()|slice(0, 20) ~ '...' :  topClient.getFullName() }}</a>
+					</h2>
+					<div class="col-xs-12">
+						<p class="small">
+							<span class="badge">{% if topClient.clientComments|last %}{{ topClient.clientComments|length }}{% else %}0{% endif %}</span> commentaire{% if topClient.clientComments|length > 1 %}s{% endif %} |
+							<a data-toggle="collapse" class="details" href="#collapse_{{ loop.index }}" aria-expanded="false" aria-controls="collapse_{{ loop.index }}" data="hidden">
+							  Détails
+							</a>
+						</p>
+					</div>
+				</div>
+				<div class="data col-md-3 col-xs-3">
+					{#% if topClient.ca3ans > 1635 %}
+						<span class="fa-stack">
+							<i class="fa fa-star fa-1" type="button" rel data-toggle="tooltip" data-placement="top" title="CA&nbsp;3&nbsp;ans > 1635&nbsp;€"></i>
+						</span>
+					{% endif %#}
+					{#% if topClient.segmentActuel in ['One-timer>550€','One-timer 550€ 275€','One-timer<275€'] %}
+						<span class="fa-stack">
+							<i class="fa fa-child fa-1" type="button" rel data-toggle="tooltip" data-placement="top" title="Nouveau client segment One Timer"></i>
+					</span>
+					{% endif %#}
+					{% if topClient.dateDernachat < date('-6months') %}
+						<span class="fa-stack">
+							<i class="fa fa-exclamation-triangle fa-1" type="button" rel data-toggle="tooltip" data-placement="top" title="Inactif&nbsp;sur les&nbsp;6&nbsp;derniers&nbsp;mois"></i>
+					</span>
+					{% elseif topClient.dateDernachat > date('-6months') %}
+						<span class="fa-stack">
+							<i class="fa fa-play fa-1" type="button" rel data-toggle="tooltip" data-placement="top" title="Actif&nbsp;sur les&nbsp;6&nbsp;derniers&nbsp;mois"></i>
+					</span>
+					{% endif %}
+					{% if topClient.local == "t" %}
+						<span class="fa-stack">
+							<i class="fa fa-flag fa-1" type="button" rel data-toggle="tooltip" data-placement="top" title="Locaux"></i>
+					</span>
+					{% elseif topClient.local == "f" %}
+						<span class="fa-stack">
+							<i class="fa fa-flag-o fa-1" type="button" rel data-toggle="tooltip" data-placement="top" title="Non Locaux"></i>
+					</span>
+					{% endif %}
+					{#% if topClient.email != "" %}
+						<span class="fa-stack">
+							<i class="fa fa-at fa-1" type="button" rel data-toggle="tooltip" data-placement="top" title="Contactable email"></i>
+					</span>
+					{% endif %}
+					{% if topClient.telephone1 != "" %}
+						<span class="fa-stack">
+							<i class="fa fa-phone fa-1" type="button" rel data-toggle="tooltip" data-placement="top" title="Contactable téléphone"></i>
+					</span>
+					{% endif %}
+					{% if topClient.adresse1 != "" %}
+						<span class="fa-stack">
+							<i class="fa fa-envelope fa-1" type="button" rel data-toggle="tooltip" data-placement="top" title="Contactable print"></i>
+					</span>
+					{% endif %#}
+					{#% if 1 %}
+						<span class="fa-stack">
+							<i class="fa fa-gift fa-1" type="button" rel data-toggle="tooltip" data-placement="top" title="Trigger Anniversaire&nbsp;d'achat"></i>
+					</span>
+					{% elseif 1 %}
+						<span class="fa-stack">
+							<i class="fa fa-cart-arrow-down fa-1" type="button" rel data-toggle="tooltip" data-placement="top" title="Trigger Welcome&nbsp;process"></i>
+					</span>
+					{% elseif 1 %}
+						<span class="fa-stack">
+							<i class="fa fa-cart-plus fa-1" type="button" rel data-toggle="tooltip" data-placement="top" title="Trigger Welcome&nbsp;back"></i>
+					</span>
+					{% endif %#}
+					{#% if 1 %}
+						<span class="fa-stack">
+							<i class="fa fa-square fa-stack-1" type="button" rel data-toggle="tooltip" data-placement="top" title="Nouvelles collections"></i>
+	  						<i class="fa fa-stack-1 text"  type="button" rel data-toggle="tooltip" data-placement="top" title="Nouvelles collections" style="color:white;font-size:9px; font-family: Arial; padding-top:0px;margin-top:-1px; margin-left:-13px;">N</i>
+	  					</span>
+					{% endif %}
+					{% if 1 %}
+						<span class="fa-stack">
+							<i class="fa fa-shopping-bag fa-stack-1" type="button" rel data-toggle="tooltip" data-placement="top" title="Sac&nbsp;à&nbsp;main Bianca"></i>
+	  						<i class="fa fa-stack-1 text"  type="button" rel data-toggle="tooltip" data-placement="top" title="Achat&nbsp;sac&nbsp;à&nbsp;main Bianca" style="color:white;font-size:9px; font-family: Arial; padding-top:5px; margin-left:-14px;">B</i>
+	  					</span>
+					{% endif %}
+					{% if 1 %}
+						<span class="fa-stack">
+							<i class="fa fa-shopping-bag fa-stack-1" type="button" rel data-toggle="tooltip" data-placement="top" title="Sac&nbsp;à&nbsp;main Charlie"></i>
+	  						<i class="fa fa-stack-1 text"  type="button" rel data-toggle="tooltip" data-placement="top" title="Achat&nbsp;sac&nbsp;à&nbsp;main Charlie" style="color:white;font-size:9px; font-family: Arial; padding-top:5px; margin-left:-14px;">C</i>
+	  					</span>
+					{% endif %}
+					{% if 1 %}
+						<span class="fa-stack">
+							<i class="fa fa-shopping-bag fa-stack-1" type="button" rel data-toggle="tooltip" data-placement="top" title="Sac&nbsp;à&nbsp;main  Le Huit"></i>
+	  						<i class="fa fa-stack-1 text"  type="button" rel data-toggle="tooltip" data-placement="top" title="Achat&nbsp;sac&nbsp;à&nbsp;main Le Huit" style="color:white;font-size:9px; font-family: Arial; padding-top:5px; margin-left:-14px;">H</i>
+	  					</span>
+					{% endif %#}
+				</div>
+				<div class="action pull-right col-md-2 col-xs-3 hidden-print">
+					<a href="{{ path('app_top_client_view', { 'top_client_id': topClient.id } ) }}" class="btn btn-action-orange pull right">{{"Select"|trans}}</a>
+				</div>
+
+				<div class="spacer"></div>
+
+				<div class="collapse" id="collapse_{{ loop.index }}">
+				 	<div class="well"> 
+				    	<strong>Informations client :</strong><br />
+    					Dernier achat le : {{ topClient.dateDernachat|date("d/m/Y") }} | CA 12 mois : {% if topClient.ca12mois %}{{ topClient.ca12mois }} €{% else %}<span class="small">n/a</span>{% endif %} | CA 3 ans : {% if topClient.ca3ans %}{{ topClient.ca3ans }} €{% else %}<span class="small">n/a</span>{% endif %} | Prix max dépensé : {% if topClient.pmaxArticleHisto %}{{ topClient.pmaxArticleHisto }} €{% else %}<span class="small">n/a</span>{% endif %}
+
+				 		{% if topClient.clientComments|last != '' %}
+				 			<br />
+				 			&nbsp;<br />
+				 			<strong>Dernier commentaire :</strong><br />{{ topClient.clientComments|last.comment }}
+				 		{% endif %}
+				 	</div>
+				</div>
+			</div>
+		{% endfor %}
+
+
+		{% if topClients|length == 0 %}
+			<div class="campaign-block-list col-md-offset-1 col-md-10 col-xs-12 text-center">
+				<h3 class="orange">Aucun résultat ne correspond aux critères sélectionnés.</h3>
+			</div>
+		{% endif %}
+
+		<div class="col-md-offset-1 col-md-10  col-xs-12 hidden-print">
+			<div class="pull-right">
+		    	{{ knp_pagination_render(topClients) }}
+		    </div>
+		</div>
+	</div>
+
+{% endblock %}
+
+{% block javascripts %}
+	{{ parent() }}
+
+	<script type="text/javascript">
+	    $(function(){
+	    	$('select[multiple]').multiselect({
+	    		columns: 2,
+	    		search: true,
+	    		texts: {
+			        placeholder: 'Sélectionner les options',
+			        search: 'Rechercher'
+			    },
+			    searchOptions: {
+			    	showOptGroups: true
+			    }
+	    	});
+
+	    	$('[data-toggle="tooltip"]').tooltip();
+
+	    	
+	    	$('#filtres_toggle').on('click', function() {
+
+	    			if( $(this).attr('data') == 'hidden' ){
+	    				$("#filtres_toggle i").removeClass('fa-plus');
+	    				$("#filtres_toggle i").addClass('fa-minus');
+	    				$(this).html("Masquer les filtres <i class='fa fa-minus' aria-hidden='true'></i>");
+	    				$(this).attr('data', 'shown');
+	    			}
+	    			else {
+	    				$("#filtres_toggle i").removeClass('fa-minus');
+	    				$("#filtres_toggle i").addClass('fa-plus');
+	    				$(this).html("Afficher les filtres <i class='fa fa-plus' aria-hidden='true'></i>");
+	    				$(this).attr('data', 'hidden');
+	    			}
+	    		}
+	    	);
+
+	    	$('a.details').on('click', function() {    			
+
+	    			if( $(this).attr('data') == 'hidden' ){
+	    				//$(this).text("Masquer Tous les Détails");
+	    				$(this).attr('data', 'shown');
+	    			}
+	    			else {
+	    				//$(this).text("Afficher Tous les Détails");
+	    				$(this).attr('data', 'hidden');
+	    			}
+	    		}
+	    	);
+
+	    	$('a#displayAllBtn').on('click', function() {    			
+
+	    			if( $(this).attr('data') == 'hidden' ){
+	    				$(this).text("Masquer Tous les détails");
+	    				$(this).attr('data', 'shown');
+
+	    				$( ".campaign-block-list .collapse" ).each(function( index ) {
+							$( this ).addClass('in');
+						});
+	    			}
+	    			else {
+	    				$(this).text("Afficher Tous les détails");
+	    				$(this).attr('data', 'hidden');
+
+	    				$( ".campaign-block-list .collapse" ).each(function( index ) {
+							$( this ).removeClass('in');
+						});
+	    			}
+	    		}
+	    	);
+
+
+	    	/*$('#appbundle_clients_filter_vendorCode').keyup(function() {
+	    		if ( $(this).val() == '' ) {
+	    			$('.campaign-block-list').css('display', 'block');
+	    		}else{
+	    			var code = $(this).val().toLowerCase();
+	    			var exp = '^' + code; //+ '.*$/';
+
+	    			$( ".campaign-block-list" ).each(function( index ) {
+					 	console.log( index + ": " + $( this ).attr('code') + $( this ).attr('code').match( exp ) );
+						if ( $( this ).attr('code').match( exp ) == null ) 
+						{ 
+						    $( this ).css('display', 'none');
+						}else{
+	    					$( this ).css('display', 'block');
+						}
+					});
+	    		}
+	    	});*/
+
+	    	/*$('#appbundle_clients_filter_local').on('change', function() {
+	    		if ( $(this).val() == '' ) {
+	    			$('.campaign-block-list').css('display', 'block');
+	    		}
+	    		if ( $(this).val() == 't' ) {	   		
+	    			$( ".campaign-block-list" ).each(function( index ) {
+					 	//console.log( index + ": " + $( this ).attr('code') + $( this ).attr('code').match( exp ) );
+						if ( $( this ).attr('local') == "f" || $( this ).attr('local') == "" ) 
+						{ 
+						    $( this ).css('display', 'none');
+						}
+						else{
+	    					$( this ).css('display', 'block');
+						}
+		    		});
+	    		}
+	    		if ( $(this).val() == 'f' ) {
+	    			$( ".campaign-block-list" ).each(function( index ) {
+					 	//console.log( index + ": " + $( this ).attr('code') + $( this ).attr('code').match( exp ) );
+						if ( $( this ).attr('local') == "t" || $( this ).attr('local') == "" ) 
+						{ 
+						    $( this ).css('display', 'none');
+						}
+						else{
+	    					$( this ).css('display', 'block');
+						}
+		    		});
+		    	}
+		    });	*/ 
+			/*$('#appbundle_clients_filter_local').on('change', function() {
+				if ($(this).attr('isSubmit') == 'no') {
+		    		var form = $("#clients-filter");
+		    		//$('#appbundle_clients_filter_store').val("");
+		    		//$('#appbundle_clients_filter_retailManager').val("");
+		    		$('#appbundle_clients_filter_store').attr('isSubmit', 'yes');
+		    		$('#appbundle_clients_filter_retailManager').attr('isSubmit', 'yes');
+		    		$('#appbundle_clients_filter_page').val("1");
+		    		form.submit();
+		    	}
+			});*/
+	    	
+	    	$('#appbundle_clients_filter_retailManager').on('change', function() {
+	    		if ($(this).attr('isSubmit') == 'no') {
+		    		var form = $("#clients-filter");
+		    		$('#appbundle_clients_filter_store').val("");
+		    		$('#appbundle_clients_filter_store').attr('isSubmit', 'yes');
+		    		$('#appbundle_clients_filter_local').attr('isSubmit', 'yes');
+		    		$('#appbundle_clients_filter_page').val("1");
+		    		form.submit();
+		    	}
+	    	});
+
+	    	$('#appbundle_clients_filter_store').on('change', function() {
+	    		if ($(this).attr('isSubmit') == 'no') {
+	    			var form = $("#clients-filter");
+	    			$('#appbundle_clients_filter_retailManager').attr('isSubmit', 'yes');
+	    			$('#appbundle_clients_filter_local').attr('isSubmit', 'yes');
+	    			$('#appbundle_clients_filter_page').val("1");
+	    			form.submit();
+	    		}
+
+	    	});	    	
+
+	    	$('.pagination a').click(function( event ) {
+  				event.preventDefault();
+				$('#appbundle_clients_filter_page').val($(this).attr('href').replace('/top_clients?page=', ''));
+				$('#clients-filter').submit();
+  			});	
+
+
+  			$("#appbundle_clients_filter_fullName").on("keydown", function(e) {
+			    // Enter is pressed
+			    if (e.keyCode == 13) { $("#clients-filter").submit(); }
+			});	
+	    });
+	</script>
+{% endblock %}

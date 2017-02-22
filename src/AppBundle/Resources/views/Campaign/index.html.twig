@@ -1,0 +1,101 @@
+{% extends "AppBundle::layout.html.twig" %}
+
+{% block subheader %}
+	{% include 'AppBundle:Commons:subheader.html.twig' with {'ariane': 'Liste des campagnes'} %}
+{% endblock %}
+
+{% block content %}
+	{% set totClient = 0 %}
+
+	<div class="col-md-offset-1 col-md-10 col-xs-12">
+		<h3>Campagnes de remerciement :</h3>
+	</div>
+
+	{% for campaign in campaigns %}
+		{% if user.libelle in campaign.visibleBy|split(',') or ( is_granted('ROLE_SIEGE') and (user.libelle == "Eric Tomat") ) or is_granted('ROLE_ADMIN') or "all" in campaign.visibleBy|split(',') %}
+			{% if campaign.type == "trigger" %}
+				{% if campaign.nbClients > 0 %}
+					{% set totClient = totClient + campaign.nbClients  %}
+					{% if campaign.visible or is_granted('ROLE_ADMIN') or ( is_granted('ROLE_SIEGE') and (user.libelle == "Eric Tomat")) %}
+						<div class="campaign-block-list col-md-offset-1 col-md-10 col-xs-12">
+							<div class="channel col-xs-2 col-md-1">
+								{% if campaign.canalOne == 'Email' %}
+									<img src="{{ asset('web/images/icon_email.png') }}" alt="Channel Email" width="" />
+								{% elseif campaign.canalOne == 'Mail' %}
+									<img src="{{ asset('web/images/icon_mail.png') }}" alt="Channel Mail" width="" />
+								{% elseif campaign.canalOne == 'Phone' %}
+									<img src="{{ asset('web/images/icon_phone.png') }}" alt="Channel Phone" width="" />
+								{% elseif campaign.canalOne == 'SMS' %}
+									<img src="{{ asset('web/images/icon_sms.png') }}" alt="Channel SMS" width="" />
+								{% endif %}
+							</div>
+							<div class="data col-md-9 col-xs-7">
+								<h2><a class="black" href="{{ path( 'app_campaign_clients_list', { 'campaign_id' : campaign.id } ) }}">{{ campaign.name }}</a></h2>
+								<p class="small">
+									{% if campaign.nbClients > 1 %}{{"Clients contacted:"|trans}}{% else %}Client contacté{% endif %} {{ campaign.nbContacted|number_format(0, ',', ' ') }}/{{ campaign.nbClients|number_format(0, ',', ' ') }}  |  Clients exclus: {{ campaign.nbOptOut|number_format(0, ',', ' ') }}
+								</p>
+							</div>
+							<div class="action pull-right col-xs-3 col-md-2">
+								<a href="{{ path( 'app_campaign_clients_list', { 'campaign_id' : campaign.id } ) }}" class="btn btn-action pull right hidden-print">{{"Select"|trans}}</a>
+							</div>
+						</div>
+					{% endif %}
+				{% endif %}
+			{% endif %}
+		{% endif %}
+	{% endfor %}
+
+	{% if totClient == 0 %}
+		<div class="campaign-block-list col-md-offset-1 col-md-10 col-xs-12 text-center">
+			<h3>Vous n'avez aucun clients à contacter aujourd'hui pour vos campagnes de remerciment.</h3>
+		</div>
+	{% endif %}
+
+	<div class="col-md-offset-1 col-md-10 col-xs-12">
+		<h3>Campagnes Ad Hoc :</h3>
+	</div>
+
+	{% set foo = 0 %}
+
+	{% for campaign in campaigns %}
+		{% if user.libelle in campaign.visibleBy|split(',') or ( is_granted('ROLE_SIEGE') and (user.libelle == "Eric Tomat") ) or is_granted('ROLE_ADMIN') or "all" in campaign.visibleBy|split(',') %}
+			{% if campaign.type == "adHoc" %}
+				{% set foo = foo + 1 %}
+				{% if campaign.visible or is_granted('ROLE_ADMIN') or ( is_granted('ROLE_SIEGE') and (user.libelle == "Eric Tomat")) %}
+					<div class="campaign-block-list col-md-offset-1 col-md-10 col-xs-12">
+						<div class="channel col-xs-2 col-md-1">
+							{% if campaign.canalOne == 'Email' %}
+								<img src="{{ asset('web/images/icon_email.png') }}" alt="Channel Email" width="" />
+							{% elseif campaign.canalOne == 'Mail' %}
+								<img src="{{ asset('web/images/icon_mail.png') }}" alt="Channel Mail" width="" />
+							{% elseif campaign.canalOne == 'Phone' %}
+								<img src="{{ asset('web/images/icon_phone.png') }}" alt="Channel Phone" width="" />
+							{% elseif campaign.canalOne == 'SMS' %}
+								<img src="{{ asset('web/images/icon_sms.png') }}" alt="Channel SMS" width="" />
+							{% endif %}
+						</div>
+						<div class="data col-md-9 col-xs-7">
+							<h2><a class="black" href="{{ path( 'app_campaign_clients_list', { 'campaign_id' : campaign.id } ) }}">{{ campaign.name }}</a></h2>
+							<p>
+								{{"Clients contacted:"|trans}} {{ campaign.nbContacted }}/{{ campaign.nbClients }}  |  Clients exclus: {{ campaign.nbOptOut }}
+							</p>
+						</div>
+						<div class="action pull-right col-xs-3 col-md-2">
+							<a href="{{ path( 'app_campaign_clients_list', { 'campaign_id' : campaign.id } ) }}" class="btn btn-action pull right hidden-print">{{"Select"|trans}}</a>
+						</div>
+					</div>
+				{% endif %}
+			{% endif %}
+		{% endif %}
+	{% endfor %}
+
+	{% if foo == 0 %}
+		<div class="campaign-block-list col-md-offset-1 col-md-10 col-xs-12 text-center">
+			<h3>Aucune campagne Ad Hoc en cours.</h3>
+		</div>
+	{% endif %}
+
+	<div class="col-xs-12">
+	{#dump(campaigns)#}
+	</div>
+{% endblock %}

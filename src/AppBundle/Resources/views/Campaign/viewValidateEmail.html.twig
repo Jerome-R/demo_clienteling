@@ -1,0 +1,37 @@
+{% extends "AppBundle::layout.html.twig" %}
+
+{% block subheader %}
+	{% include 'AppBundle:Commons:subheader.html.twig' 
+		with { 'ariane': 
+			'<a href="' ~
+			path( 'app_campaign_clients_list', {'campaign_id' : campaign.id}) ~
+			'">' ~
+			campaign.name ~ 
+			"</a> | Valider l'email"
+		} 
+	%}
+{% endblock %}
+
+{% block content %}	
+
+	{% include 'AppBundle:Commons:campaignClientHead.html.twig' %}
+	
+	<div class="client-block col-xs-offset-1 col-xs-10">
+
+		<h3>Valider le message</h3>
+
+		<div class="modal-body">
+			<iframe class="col-xs-12" height="800" src="https://www.actions-pdv-l.fr{{ path('app_preview_email' ) }}"></iframe>
+
+			{{ form_start(form, {'attr': {'class': 'form-horizontal'}}) }}
+
+				{{ form_widget(form.submit, {'attr': {'class': 'btn big-green-btn pull-right', 'onclick': 'return confirm("Confirmer l\'envoi ?")'}, 'label': 'Envoyer'}) }}
+				
+				<a class='btn big-gray-btn pull-right' style='margin-right: 5px; width: 170px; margin-top: 30px;' href="{{ path('app_campaign_send_email', { 'recipient_id' : recipient.id }) }}">Retour</a>
+				
+				{{ form_rest(form) }}
+			{{ form_end(form) }}
+		</div>
+	</div>
+
+{% endblock %}

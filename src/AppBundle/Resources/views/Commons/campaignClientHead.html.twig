@@ -1,0 +1,15 @@
+<div class="client-block-title col-xs-offset-1 col-xs-10">
+	<div class="canal col-xs-1">
+		<span class="glyphicon glyphicon-user green" style="font-size:34px; color: #16a085;" aria-hidden="true"></span>
+	</div>
+	<div class="col-xs-11">
+		<h2>{{ client.getFullName() }}
+			<a class='btn big-gray-btn pull-right hidden-print' style='width: 170px;' href="{{ path( 'app_campaign_clients_list', { 'campaign_id' : campaign.id } ) }}">Retour</a>
+		</h2>
+		<p class="small"><strong>Boutique : {{ recipient.dataRecipient.libelleBoutiqueAchat }}</strong>
+			{% if recipient.dataRecipient.dateEntree is defined %}
+				| &Agrave; contacter jusqu'au <strong>{{ recipient.dataRecipient.dateEntree|date_modify("+15 day")|date("d/m/Y") }}</strong>
+			{% endif %}
+		</p>
+	</div>
+</div>

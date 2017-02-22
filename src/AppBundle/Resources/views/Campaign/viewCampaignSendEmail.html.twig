@@ -1,0 +1,232 @@
+{% extends "AppBundle::layout.html.twig" %}
+
+{% block subheader %}
+	{% include 'AppBundle:Commons:subheader.html.twig' 
+		with { 'ariane': 
+			'<a href="' ~
+			path( 'app_campaign_clients_list', {'campaign_id' : campaign.id}) ~
+			'">' ~
+			campaign.name ~ 
+			"</a> | Rédiger l'email"
+		} 
+	%}
+{% endblock %}
+
+{% block content %}	
+
+	{% include 'AppBundle:Commons:campaignClientHead.html.twig' %}
+	
+	<div class="client-block col-xs-offset-1 col-xs-10">
+		
+		<h3>Rédiger votre message</h3>
+
+		<div class="modal-body">
+			{{ form_start(form, {'attr': {'class': 'form-horizontal'}}) }}
+				{{ form_errors(form) }}
+				<div class="form-group hidden">
+					<div class="col-xs-10 col-sm-9">
+						{% if app.session.get('email_subject') != "" %}
+							{{ form_widget(form.subject, {'attr': {'class': 'form-control', 'value': app.session.get('email_subject') }}) }}
+						{% else %}
+		               		{{ form_widget(form.subject, {'attr': {'class': 'form-control', 'value': 'Changer l\'objet'}}) }}
+		               	{% endif %}						
+					</div>
+				</div>
+
+				<div class="form-group">
+					{{ form_label(form.subject, "Objet", {'label_attr': {'class': 'col-xs-2 control-label'}}) }}
+					<div class="col-xs-10 col-sm-9">
+						{% if app.session.get('email_subject') != "" %}
+							<p id="object" class="control-label" style="text-align:left !important;">{{ app.session.get('email_subject')}}</p>
+						{% else %}
+		               		<p id="object" class="control-label" style="text-align:left !important;">Communication</p>
+		               	{% endif %}						
+					</div>
+				</div>
+
+				<div class="form-group">
+					{{ form_label(form.template, "Modèles", {'label_attr': {'class': 'col-xs-2 control-label'}}) }}
+					<div class="col-xs-10 col-sm-9">
+						{{ form_widget(form.template, {'attr': {'class': 'form-control'}}) }}
+					</div>
+				</div>
+
+				<div class="form-group">
+					{{ form_label(form.message, "Message"|trans, {'label_attr': {'class': 'col-xs-2 control-label'}}) }}
+					<div class="col-xs-10 col-sm-9">
+						{{ form_widget(form.message, {'attr': {'class': 'form-control ckeditor'}}) }}
+					</div>
+				</div>
+
+				<div class="form-group">
+					{{ form_label(form.vendeur, "Vendeur", {'label_attr': {'class': 'col-xs-2 control-label'}}) }}
+					<div class="col-xs-10 col-sm-9">
+						{% if app.session.get('email_vendeur') != "" %}
+							{{ form_widget(form.vendeur, {'attr': {'class': 'form-control', 'value': app.session.get('email_vendeur'), 'placeholder': 'Nom du vendeur' }}) }}
+						{% else %}
+		               		{{ form_widget(form.vendeur, {'attr': {'class': 'form-control', 'value': '', 'placeholder': 'Nom du vendeur'}}) }}
+		               	{% endif %}						
+					</div>
+				</div>
+
+				<div id="session_message" class="hidden">
+					{% if app.session.get('email_message') is defined %}
+						{{ app.session.get('email_message')|raw }}
+					{% endif %}
+				</div>
+
+				<!--div class="form-group">
+					{# form_label(form.password, "Password"|trans ~ " " ~ app.user.webMail|capitalize, {'label_attr': {'class': 'col-xs-2 control-label'}}) }}
+					<div class="col-xs-10 col-sm-9">
+						{{ form_widget(form.password, {'attr': {'class': 'form-control'}}) #}
+					</div>
+				</div-->
+
+				{{ form_widget(form.submit, {'attr': {'class': 'btn big-green-btn pull-right'}, 'label': 'Prévisualiser'}) }}
+				
+				<a class='btn big-gray-btn pull-right' style='margin-right: 5px; width: 170px; margin-top: 30px;' href="{{ path( 'app_campaign_client', { 'campaign_id' : campaign.id, 'client_id' : recipient.client.id } ) }}">Retour</a>
+				
+				{{ form_rest(form) }}
+			{{ form_end(form) }}
+		</div>
+	</div>
+
+	<div class="col-xs-12">
+	{#dump(clients)#}
+	</div>
+{% endblock %}
+
+
+
+{% block javascripts %}
+	{{ parent() }}
+
+	<script type="text/javascript">
+	    //Desactiver le filtre
+	    CKEDITOR.config.allowedContent = true;
+	   
+	    // Turn off automatic editor creation first.
+	    var session_message = document.getElementById('session_message');
+	   	var html_message = session_message.innerHTML;
+
+	    //load Templates before set data !!
+	    CKEDITOR.loadTemplates(CKEDITOR.config.templates_files, '');
+	    //CKEDITOR.inline("ckeditor", {
+	   	var editor =
+	    CKEDITOR.replace("appbundle_send_email[message]", {
+	    	//change when online
+	        customConfig : "/web/js/ckeditor/config.js",
+	        removePlugins: 'toolbar, elementspath',
+	        on:{ instanceReady : function( ev ) { 
+	               insert = CKEDITOR.getTemplates('default');
+	               //html = this.setData(insert.templates[$('#appbundle_send_email_template').val()].html);
+	                {#% if app.session.get('email_message') != "" %#}
+						//html = this.insertHtml(html_message);
+					{% if app.session.get('template_number') is defined and app.session.get('template_number') is not null %}
+	               		html = this.setData(insert.templates[{{app.session.get('template_number')}}].html);
+	               	{% endif %}
+	           }
+	        },
+	    });
+	    
+	    $(function(){
+	        //Changer le contenu de l'éditeur
+	        $('#appbundle_send_email_template').on('change', function() {		        	
+	            if($('#appbundle_send_email_template').val() != ''){
+	                CKEDITOR.instances.appbundle_send_email_message.setData(insert.templates[$('#appbundle_send_email_template').val()].html);
+	                //CKEDITOR.instances.id_of_ckeditor_textarea.setData(insert.templates[$('id_of_select').val()].html);
+	            }
+
+	            if($('#appbundle_send_email_template').val() == 0){
+	            	$('#appbundle_send_email_subject').val('Déjà 1 an ...');
+	            	$('#object').html('Déjà 1 an ...');
+	            }
+
+	            if($('#appbundle_send_email_template').val() == 1){
+	            	$('#appbundle_send_email_subject').val('Already 1 year ...');
+	            	$('#object').html('Already 1 year ...');
+	            }
+
+	            if($('#appbundle_send_email_template').val() == 2){
+	            	$('#appbundle_send_email_subject').val('Alweer 1 jaar ...');
+	            	$('#object').html('Alweer 1 jaar ...');
+	            }
+
+	            if($('#appbundle_send_email_template').val() == 3){
+	            	$('#appbundle_send_email_subject').val('Merci pour votre confiance');
+	            	$('#object').html('Merci pour votre confiance');
+	            }
+
+	            if($('#appbundle_send_email_template').val() == 4){
+	            	$('#appbundle_send_email_subject').val('Thank you for your trust');
+	            	$('#object').html('Thank you for your trust');
+	            }
+
+	            if($('#appbundle_send_email_template').val() == 5){
+	            	$('#appbundle_send_email_subject').val('Bedankt voor uw vertrouwen');
+	            	$('#object').html('Bedankt voor uw vertrouwen');
+	            }
+
+	            if($('#appbundle_send_email_template').val() == 6){
+	            	$('#appbundle_send_email_subject').val('Merci pour votre fidélité');
+	            	$('#object').html('Merci pour votre fidélité');
+	            } 
+
+	            if($('#appbundle_send_email_template').val() == 7){
+	            	$('#appbundle_send_email_subject').val('Thank you for you loyalty');
+	            	$('#object').html('Thank you for you loyalty');
+	            } 
+
+	            if($('#appbundle_send_email_template').val() == 8){
+	            	$('#appbundle_send_email_subject').val('Bedankt voor uw loyaliteit');
+	            	$('#object').html('Bedankt voor uw loyaliteit');
+	            } 
+
+	            if($('#appbundle_send_email_template').val() == 9){
+	            	$('#appbundle_send_email_subject').val('Déjà 1 an ...');
+	            	$('#object').html('Déjà 1 an ...');
+	            } 
+
+	            if($('#appbundle_send_email_template').val() == 10){
+	            	$('#appbundle_send_email_subject').val('Already 1 year ...');
+	            	$('#object').html('Already 1 year ...');
+	            }
+
+	            if($('#appbundle_send_email_template').val() == 11){
+	            	$('#appbundle_send_email_subject').val('Alweer 1 jaar ...');
+	            	$('#object').html('Alweer 1 jaar ...');
+	            }  
+
+	            if($('#appbundle_send_email_template').val() == 12){
+	            	$('#appbundle_send_email_subject').val('Merci pour votre confiance');
+	            	$('#object').html('Merci pour votre confiance');
+	            }
+
+	            if($('#appbundle_send_email_template').val() == 13){
+	            	$('#appbundle_send_email_subject').val('Thank you for your trust');
+	            	$('#object').html('Thank you for your trust');
+	            } 
+
+	            if($('#appbundle_send_email_template').val() == 14){
+	            	$('#appbundle_send_email_subject').val('Bedankt voor uw vertrouwen');
+	            	$('#object').html('Bedankt voor uw vertrouwen');
+	            }  
+
+	            if($('#appbundle_send_email_template').val() == 15){
+	            	$('#appbundle_send_email_subject').val('Merci pour votre fidélité');
+	            	$('#object').html('Merci pour votre fidélité');
+	            }
+
+	            if($('#appbundle_send_email_template').val() == 16){
+	            	$('#appbundle_send_email_subject').val('Thank you for you loyalty');
+	            	$('#object').html('Thank you for your trust');
+	            } 
+
+	            if($('#appbundle_send_email_template').val() == 17){
+	            	$('#appbundle_send_email_subject').val('Bedankt voor uw loyaliteit');
+	            	$('#object').html('Bedankt voor uw loyaliteit');
+	            }      		
+        	});
+        });
+	</script>
+{% endblock %}
