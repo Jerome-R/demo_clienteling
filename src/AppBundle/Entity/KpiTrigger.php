@@ -65,24 +65,68 @@ class KpiTrigger
     /**
      * @var integer
      *
-     * @ORM\Column(name="nb_cli_tocontact_trigger_A", type="integer", nullable=true)
+     * @ORM\Column(name="nb_cli_tocontact_trigger_AA", type="integer", nullable=true)
      */
-    private $nbCliTocontactTriggerA;
+    private $nbCliTocontactTriggerAA;
 
 
     /**
      * @var integer
      *
-     * @ORM\Column(name="nb_cli_contact_trigger_A", type="integer", nullable=true)
+     * @ORM\Column(name="nb_cli_contact_trigger_AA", type="integer", nullable=true)
      */
-    private $nbCliContactTriggerA;
+    private $nbCliContactTriggerAA;
     
     /**
      * @var decimal
      *
-     * @ORM\Column(name="pct_cli_contact_trigger_A", type="decimal", precision=9, scale=2, nullable=true)
+     * @ORM\Column(name="pct_cli_contact_trigger_WB", type="decimal", precision=9, scale=2, nullable=true)
      */
-    private $pctCliContactTriggerA;
+    private $pctCliContactTriggerWB;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="nb_cli_tocontact_trigger_WB", type="integer", nullable=true)
+     */
+    private $nbCliTocontactTriggerWB;
+
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="nb_cli_contact_trigger_WB", type="integer", nullable=true)
+     */
+    private $nbCliContactTriggerWB;
+    
+    /**
+     * @var decimal
+     *
+     * @ORM\Column(name="pct_cli_contact_trigger_WP", type="decimal", precision=9, scale=2, nullable=true)
+     */
+    private $pctCliContactTriggerWP;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="nb_cli_tocontact_trigger_WP", type="integer", nullable=true)
+     */
+    private $nbCliTocontactTriggerWP;
+
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="nb_cli_contact_trigger_WP", type="integer", nullable=true)
+     */
+    private $nbCliContactTriggerWP;
+    
+    /**
+     * @var decimal
+     *
+     * @ORM\Column(name="pct_cli_contact_trigger_AA", type="decimal", precision=9, scale=2, nullable=true)
+     */
+    private $pctCliContactTriggerAA;
 
 
     
@@ -272,5 +316,212 @@ class KpiTrigger
     public function getPctCliContactTriggerA()
     {
         return $this->pctCliContactTriggerA;
+    }
+
+    /**
+     * Set nbCliTocontactTriggerAA
+     *
+     * @param integer $nbCliTocontactTriggerAA
+     * @return KpiTrigger
+     */
+    public function setNbCliTocontactTriggerAA($nbCliTocontactTriggerAA)
+    {
+        $this->nbCliTocontactTriggerAA = $nbCliTocontactTriggerAA;
+
+        return $this;
+    }
+
+    /**
+     * Get nbCliTocontactTriggerAA
+     *
+     * @return integer 
+     */
+    public function getNbCliTocontactTriggerAA()
+    {
+        return $this->nbCliTocontactTriggerAA;
+    }
+
+    /**
+     * Set nbCliContactTriggerAA
+     *
+     * @param integer $nbCliContactTriggerAA
+     * @return KpiTrigger
+     */
+    public function setNbCliContactTriggerAA($nbCliContactTriggerAA)
+    {
+        $this->nbCliContactTriggerAA = $nbCliContactTriggerAA;
+
+        return $this;
+    }
+
+    /**
+     * Get nbCliContactTriggerAA
+     *
+     * @return integer 
+     */
+    public function getNbCliContactTriggerAA()
+    {
+        return $this->nbCliContactTriggerAA;
+    }
+
+    /**
+     * Set pctCliContactTriggerWB
+     *
+     * @param string $pctCliContactTriggerWB
+     * @return KpiTrigger
+     */
+    public function setPctCliContactTriggerWB($pctCliContactTriggerWB)
+    {
+        $this->pctCliContactTriggerWB = $pctCliContactTriggerWB;
+
+        return $this;
+    }
+
+    /**
+     * Get pctCliContactTriggerWB
+     *
+     * @return string 
+     */
+    public function getPctCliContactTriggerWB()
+    {
+        return $this->pctCliContactTriggerWB;
+    }
+
+    /**
+     * Set nbCliTocontactTriggerWB
+     *
+     * @param integer $nbCliTocontactTriggerWB
+     * @return KpiTrigger
+     */
+    public function setNbCliTocontactTriggerWB($nbCliTocontactTriggerWB)
+    {
+        $this->nbCliTocontactTriggerWB = $nbCliTocontactTriggerWB;
+
+        return $this;
+    }
+
+    /**
+     * Get nbCliTocontactTriggerWB
+     *
+     * @return integer 
+     */
+    public function getNbCliTocontactTriggerWB()
+    {
+        return $this->nbCliTocontactTriggerWB;
+    }
+
+    /**
+     * Set nbCliContactTriggerWB
+     *
+     * @param integer $nbCliContactTriggerWB
+     * @return KpiTrigger
+     */
+    public function setNbCliContactTriggerWB($nbCliContactTriggerWB)
+    {
+        $this->nbCliContactTriggerWB = $nbCliContactTriggerWB;
+
+        return $this;
+    }
+
+    /**
+     * Get nbCliContactTriggerWB
+     *
+     * @return integer 
+     */
+    public function getNbCliContactTriggerWB()
+    {
+        return $this->nbCliContactTriggerWB;
+    }
+
+    /**
+     * Set pctCliContactTriggerWP
+     *
+     * @param string $pctCliContactTriggerWP
+     * @return KpiTrigger
+     */
+    public function setPctCliContactTriggerWP($pctCliContactTriggerWP)
+    {
+        $this->pctCliContactTriggerWP = $pctCliContactTriggerWP;
+
+        return $this;
+    }
+
+    /**
+     * Get pctCliContactTriggerWP
+     *
+     * @return string 
+     */
+    public function getPctCliContactTriggerWP()
+    {
+        return $this->pctCliContactTriggerWP;
+    }
+
+    /**
+     * Set nbCliTocontactTriggerWP
+     *
+     * @param integer $nbCliTocontactTriggerWP
+     * @return KpiTrigger
+     */
+    public function setNbCliTocontactTriggerWP($nbCliTocontactTriggerWP)
+    {
+        $this->nbCliTocontactTriggerWP = $nbCliTocontactTriggerWP;
+
+        return $this;
+    }
+
+    /**
+     * Get nbCliTocontactTriggerWP
+     *
+     * @return integer 
+     */
+    public function getNbCliTocontactTriggerWP()
+    {
+        return $this->nbCliTocontactTriggerWP;
+    }
+
+    /**
+     * Set nbCliContactTriggerWP
+     *
+     * @param integer $nbCliContactTriggerWP
+     * @return KpiTrigger
+     */
+    public function setNbCliContactTriggerWP($nbCliContactTriggerWP)
+    {
+        $this->nbCliContactTriggerWP = $nbCliContactTriggerWP;
+
+        return $this;
+    }
+
+    /**
+     * Get nbCliContactTriggerWP
+     *
+     * @return integer 
+     */
+    public function getNbCliContactTriggerWP()
+    {
+        return $this->nbCliContactTriggerWP;
+    }
+
+    /**
+     * Set pctCliContactTriggerAA
+     *
+     * @param string $pctCliContactTriggerAA
+     * @return KpiTrigger
+     */
+    public function setPctCliContactTriggerAA($pctCliContactTriggerAA)
+    {
+        $this->pctCliContactTriggerAA = $pctCliContactTriggerAA;
+
+        return $this;
+    }
+
+    /**
+     * Get pctCliContactTriggerAA
+     *
+     * @return string 
+     */
+    public function getPctCliContactTriggerAA()
+    {
+        return $this->pctCliContactTriggerAA;
     }
 }

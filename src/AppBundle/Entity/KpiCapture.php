@@ -60,603 +60,409 @@ class KpiCapture
      */
     private $date;
 
-
-    /******** MENS_LOC ********/
-
+    /**/
 
     /**
      * @var integer
      *
-     * @ORM\Column(name="nb_cli_m_l", type="integer", nullable=true)
+     * @ORM\Column(name="nb_cli_m", type="integer", nullable=true)
      */
-    private $nbCliML;
+    private $nb_cli_m;
     
     /**
      * @var decimal
      *
-     * @ORM\Column(name="pct_cli_coord_valid_m_l", type="decimal", precision=9, scale=2, nullable=true)
+     * @ORM\Column(name="pct_cli_coord_valid_m", type="decimal", precision=9, scale=2, nullable=true)
      */
-    private $pctCliCoordValidML;
+    private $pct_cli_coord_valid_m;
     
     /**
      * @var decimal
      *
-     * @ORM\Column(name="pct_cli_coord_nonvalid_m_l", type="decimal", precision=9, scale=2, nullable=true)
+     * @ORM\Column(name="pct_cli_email_valid_m", type="decimal", precision=9, scale=2, nullable=true)
      */
-    private $pctCliCoordNonvalidML;
+    private $pct_cli_email_valid_m;
     
     /**
      * @var decimal
      *
-     * @ORM\Column(name="pct_cli_coord_nonrens_m_l", type="decimal", precision=9, scale=2, nullable=true)
+     * @ORM\Column(name="pct_cli_email_nonvalid_m", type="decimal", precision=9, scale=2, nullable=true)
      */
-    private $pctCliCoordNonrensML;
+    private $pct_cli_email_nonvalid_m;
     
     /**
      * @var decimal
      *
-     * @ORM\Column(name="pct_cli_email_valid_m_l", type="decimal", precision=9, scale=2, nullable=true)
+     * @ORM\Column(name="pct_cli_email_nonrens_m", type="decimal", precision=9, scale=2, nullable=true)
      */
-    private $pctCliEmailValidML;
+    private $pct_cli_email_nonrens_m;
     
     /**
      * @var decimal
      *
-     * @ORM\Column(name="pct_cli_email_nonvalid_m_l", type="decimal", precision=9, scale=2, nullable=true)
+     * @ORM\Column(name="pct_cli_tel_valid_m", type="decimal", precision=9, scale=2, nullable=true)
      */
-    private $pctCliEmailNonvalidML;
+    private $pct_cli_tel_valid_m;
     
     /**
      * @var decimal
      *
-     * @ORM\Column(name="pct_cli_email_nonrens_m_l", type="decimal", precision=9, scale=2, nullable=true)
+     * @ORM\Column(name="pct_cli_tel_nonvalid_m", type="decimal", precision=9, scale=2, nullable=true)
      */
-    private $pctCliEmailNonrensML;
+    private $pct_cli_tel_nonvalid_m;
     
     /**
      * @var decimal
      *
-     * @ORM\Column(name="pct_cli_tel_valid_m_l", type="decimal", precision=9, scale=2, nullable=true)
+     * @ORM\Column(name="pct_cli_tel_nonrens_m", type="decimal", precision=9, scale=2, nullable=true)
      */
-    private $pctCliTelValidML;
+    private $pct_cli_tel_nonrens_m;
     
     /**
      * @var decimal
      *
-     * @ORM\Column(name="pct_cli_tel_nonvalid_m_l", type="decimal", precision=9, scale=2, nullable=true)
+     * @ORM\Column(name="pct_cli_add_valid_m", type="decimal", precision=9, scale=2, nullable=true)
      */
-    private $pctCliTelNonvalidML;
+    private $pct_cli_add_valid_m;
     
     /**
      * @var decimal
      *
-     * @ORM\Column(name="pct_cli_tel_nonrens_m_l", type="decimal", precision=9, scale=2, nullable=true)
+     * @ORM\Column(name="pct_cli_add_nonvalid_m", type="decimal", precision=9, scale=2, nullable=true)
      */
-    private $pctCliTelNonrensML;
+    private $pct_cli_add_nonvalid_m;
     
     /**
      * @var decimal
      *
-     * @ORM\Column(name="pct_cli_add_valid_m_l", type="decimal", precision=9, scale=2, nullable=true)
+     * @ORM\Column(name="pct_cli_add_nonrens_m", type="decimal", precision=9, scale=2, nullable=true)
      */
-    private $pctCliAddValidML;
-    
-    /**
-     * @var decimal
-     *
-     * @ORM\Column(name="pct_cli_add_nonrens_m_l", type="decimal", precision=9, scale=2, nullable=true)
-     */
-    private $pctCliAddNonrensML;
-    
-    /**
-     * @var decimal
-     *
-     * @ORM\Column(name="pct_cli_add_nonvalid_m_l", type="decimal", precision=9, scale=2, nullable=true)
-     */
-    private $pctCliAddNonvalidML;
+    private $pct_cli_add_nonrens_m;
     
     /**
      * @var integer
      *
-     * @ORM\Column(name="nb_cli_actifs_m_l", type="integer", nullable=true)
+     * @ORM\Column(name="nb_cli_actifs_m", type="integer", nullable=true)
      */
-    private $nbCliActifsML;
+    private $nb_cli_actifs_m;
     
     /**
      * @var integer
      *
-     * @ORM\Column(name="nb_cli_actifs_new_m_l", type="integer", nullable=true)
+     * @ORM\Column(name="nb_cli_actifs_new_m", type="integer", nullable=true)
      */
-    private $nbCliActifsNewML;
+    private $nb_cli_actifs_new_m;
     
     /**
      * @var integer
      *
-     * @ORM\Column(name="nb_cli_actifs_exist_m_l", type="integer", nullable=true)
+     * @ORM\Column(name="nb_cli_actifs_exist_m", type="integer", nullable=true)
      */
-    private $nbCliActifsExistML;
-
-
-    /******** YEAR_LOC ********/
-
-
-    /**
-     * @var integer
-     *
-     * @ORM\Column(name="nb_cli_y_l", type="integer", nullable=true)
-     */
-    private $nbCliYL;
-    
-    /**
-     * @var decimal
-     *
-     * @ORM\Column(name="pct_cli_coord_valid_y_l", type="decimal", precision=9, scale=2, nullable=true)
-     */
-    private $pctCliCoordValidYL;
-    
-    /**
-     * @var decimal
-     *
-     * @ORM\Column(name="pct_cli_coord_nonvalid_y_l", type="decimal", precision=9, scale=2, nullable=true)
-     */
-    private $pctCliCoordNonvalidYL;
-    
-    /**
-     * @var decimal
-     *
-     * @ORM\Column(name="pct_cli_coord_nonrens_y_l", type="decimal", precision=9, scale=2, nullable=true)
-     */
-    private $pctCliCoordNonrensYL;
-    
-    /**
-     * @var decimal
-     *
-     * @ORM\Column(name="pct_cli_email_valid_y_l", type="decimal", precision=9, scale=2, nullable=true)
-     */
-    private $pctCliEmailValidYL;
-    
-    /**
-     * @var decimal
-     *
-     * @ORM\Column(name="pct_cli_email_nonvalid_y_l", type="decimal", precision=9, scale=2, nullable=true)
-     */
-    private $pctCliEmailNonvalidYL;
-    
-    /**
-     * @var decimal
-     *
-     * @ORM\Column(name="pct_cli_email_nonrens_y_l", type="decimal", precision=9, scale=2, nullable=true)
-     */
-    private $pctCliEmailNonrensYL;
-    
-    /**
-     * @var decimal
-     *
-     * @ORM\Column(name="pct_cli_tel_valid_y_l", type="decimal", precision=9, scale=2, nullable=true)
-     */
-    private $pctCliTelValidYL;
-    
-    /**
-     * @var decimal
-     *
-     * @ORM\Column(name="pct_cli_tel_nonvalid_y_l", type="decimal", precision=9, scale=2, nullable=true)
-     */
-    private $pctCliTelNonvalidYL;
-    
-    /**
-     * @var decimal
-     *
-     * @ORM\Column(name="pct_cli_tel_nonrens_y_l", type="decimal", precision=9, scale=2, nullable=true)
-     */
-    private $pctCliTelNonrensYL;
-    
-    /**
-     * @var decimal
-     *
-     * @ORM\Column(name="pct_cli_add_valid_y_l", type="decimal", precision=9, scale=2, nullable=true)
-     */
-    private $pctCliAddValidYL;
-    
-    /**
-     * @var decimal
-     *
-     * @ORM\Column(name="pct_cli_add_nonrens_y_l", type="decimal", precision=9, scale=2, nullable=true)
-     */
-    private $pctCliAddNonrensYL;
-    
-    /**
-     * @var decimal
-     *
-     * @ORM\Column(name="pct_cli_add_nonvalid_y_l", type="decimal", precision=9, scale=2, nullable=true)
-     */
-    private $pctCliAddNonvalidYL;
+    private $nb_cli_actifs_exist_m;
     
     /**
      * @var integer
      *
-     * @ORM\Column(name="nb_cli_actifs_y_l", type="integer", nullable=true)
+     * @ORM\Column(name="nb_cli_coord_valid_m", type="integer", nullable=true)
      */
-    private $nbCliActifsYL;
+    private $nb_cli_coord_valid_m;
     
     /**
      * @var integer
      *
-     * @ORM\Column(name="nb_cli_actifs_new_y_l", type="integer", nullable=true)
+     * @ORM\Column(name="nb_cli_coord_nonvalid_m", type="integer", nullable=true)
      */
-    private $nbCliActifsNewYL;
+    private $nb_cli_coord_nonvalid_m;
     
     /**
      * @var integer
      *
-     * @ORM\Column(name="nb_cli_actifs_exist_y_l", type="integer", nullable=true)
+     * @ORM\Column(name="nb_cli_email_valid_m", type="integer", nullable=true)
      */
-    private $nbCliActifsExistYL;
-
-    /**
-     * @var integer
-     *
-     * @ORM\Column(name="nb_email_y_l", type="integer", nullable=true)
-     */
-    private $nbEmailYL;
+    private $nb_cli_email_valid_m;
     
     /**
      * @var integer
      *
-     * @ORM\Column(name="nb_tel_y_l", type="integer", nullable=true)
+     * @ORM\Column(name="nb_cli_email_nonvalid_m", type="integer", nullable=true)
      */
-    private $nbTelYL;
+    private $nb_cli_email_nonvalid_m;
     
     /**
      * @var integer
      *
-     * @ORM\Column(name="nb_adr_y_l", type="integer", nullable=true)
+     * @ORM\Column(name="nb_cli_email_nonrens_m", type="integer", nullable=true)
      */
-    private $nbAdrYL;
+    private $nb_cli_email_nonrens_m;
     
     /**
      * @var integer
      *
-     * @ORM\Column(name="pct_cli_donnees_nonvalid_y_l", type="integer", nullable=true)
+     * @ORM\Column(name="nb_cli_tel_valid_m", type="integer", nullable=true)
      */
-    private $pctCliDonneesNonvalidYL;
-
-
-    /*******YL********/
+    private $nb_cli_tel_valid_m;
     
     /**
      * @var integer
      *
-     * @ORM\Column(name="nb_email_nonvalid_y_l", type="integer", nullable=true)
+     * @ORM\Column(name="nb_cli_tel_nonvalid_m", type="integer", nullable=true)
      */
-    private $nbEmailNonvalidYL;
+    private $nb_cli_tel_nonvalid_m;
     
     /**
      * @var integer
      *
-     * @ORM\Column(name="nb_tel_nonvalid_y_l", type="integer", nullable=true)
+     * @ORM\Column(name="nb_cli_tel_nonrens_m", type="integer", nullable=true)
      */
-    private $nbTelNonvalidYL;
+    private $nb_cli_tel_nonrens_m;
     
     /**
      * @var integer
      *
-     * @ORM\Column(name="nb_adr_nonvalid_y_l", type="integer", nullable=true)
+     * @ORM\Column(name="nb_cli_add_valid_m", type="integer", nullable=true)
      */
-    private $nbAdrNonvalidYL;  
-
-
-    /**** TRANSACTIONS  ******/
-
-    /***   YEAR   ****/
-
-     /**
-     * @var integer
-     *
-     * @ORM\Column(name="nb_trans_linked_y", type="integer", nullable=true)
-     */
-    private $nbTransLinkedY;
-    
-     /**
-     * @var integer
-     *
-     * @ORM\Column(name="nb_trans_not_linked_y", type="integer", nullable=true)
-     */
-    private $nbTransNotLinkedY;
+    private $nb_cli_add_valid_m;
     
     /**
-     * @var decimal
-     *
-     * @ORM\Column(name="pct_trans_not_linked_y", type="decimal", precision=9, scale=2, nullable=true)
-     */
-    private $pctTransNotLinkedY;
-    
-    /**
-     * @var decimal
-     *
-     * @ORM\Column(name="pct_trans_linked_y", type="decimal", precision=9, scale=2, nullable=true)
-     */
-    private $pctTransLinkedY;
-    
-     /**
      * @var integer
      *
-     * @ORM\Column(name="nb_trans_tot_y", type="integer", nullable=true)
+     * @ORM\Column(name="nb_cli_add_nonvalid_m", type="integer", nullable=true)
      */
-    private $nbTransTotY;
-    
-
-    /***   MONTH   ****/
-
-     /**
-     * @var integer
-     *
-     * @ORM\Column(name="nb_trans_linked_m", type="integer", nullable=true)
-     */
-    private $nbTransLinkedM;
-    
-     /**
-     * @var integer
-     *
-     * @ORM\Column(name="nb_trans_not_linked_m", type="integer", nullable=true)
-     */
-    private $nbTransNotLinkedM;
+    private $nb_cli_add_nonvalid_m;
     
     /**
-     * @var decimal
+     * @var integer
      *
-     * @ORM\Column(name="pct_trans_not_linked_m", type="decimal", precision=9, scale=2, nullable=true)
+     * @ORM\Column(name="nb_cli_add_nonrens_m", type="integer", nullable=true)
      */
-    private $pctTransNotLinkedM;
-    
-    /**
-     * @var decimal
-     *
-     * @ORM\Column(name="pct_trans_linked_m", type="decimal", precision=9, scale=2, nullable=true)
-     */
-    private $pctTransLinkedM;
+    private $nb_cli_add_nonrens_m;
     
     /**
      * @var integer
      *
      * @ORM\Column(name="nb_trans_tot_m", type="integer", nullable=true)
      */
-    private $nbTransTotM;
-
-
-
-    /***** NOMBRE COMPLEMENT AUX POURCENTAGES *****/
-
-    /* ML */
-
+    private $nb_trans_tot_m;
+    
     /**
      * @var integer
      *
-     * @ORM\Column(name="nb_optin_m_l", type="integer", nullable=true)
+     * @ORM\Column(name="nb_cli_ytd", type="integer", nullable=true)
      */
-    private $nbOptinML;
-
-    /**
-     * @var integer
-     *
-     * @ORM\Column(name="nb_optout_m_l", type="integer", nullable=true)
-     */
-    private $nbOptoutML;
-
+    private $nb_cli_ytd;
+    
     /**
      * @var decimal
      *
-     * @ORM\Column(name="pct_optin_m_l", type="decimal", precision=9, scale=2, nullable=true)
+     * @ORM\Column(name="pct_cli_coord_valid_ytd", type="decimal", precision=9, scale=2, nullable=true)
      */
-    private $pctOptinML;
-
+    private $pct_cli_coord_valid_ytd;
+    
     /**
      * @var decimal
      *
-     * @ORM\Column(name="pct_optout_m_l", type="decimal", precision=9, scale=2, nullable=true)
+     * @ORM\Column(name="pct_cli_coord_nonvalid_ytd", type="decimal", precision=9, scale=2, nullable=true)
      */
-    private $pctOptoutML;
-
-    /**
-     * @var integer
-     *
-     * @ORM\Column(name="nb_cli_coord_valid_m_l", type="integer", nullable=true)
-     */
-    private $nbCliCoordValidML;
-
-    /**
-     * @var integer
-     *
-     * @ORM\Column(name="nb_cli_coord_nonvalid_m_l", type="integer", nullable=true)
-     */
-    private $nbCliCoordNonvalidML;
-
-    /**
-     * @var integer
-     *
-     * @ORM\Column(name="nb_cli_coord_nonrens_m_l", type="integer", nullable=true)
-     */
-    private $nbCliCoordNonrensML;
-
-    /**
-     * @var integer
-     *
-     * @ORM\Column(name="nb_cli_email_valid_m_l", type="integer", nullable=true)
-     */
-    private $nbCliEmailValidML;
-
-    /**
-     * @var integer
-     *
-     * @ORM\Column(name="nb_cli_email_nonvalid_m_l", type="integer", nullable=true)
-     */
-    private $nbCliEmailNonvalidML;
-
-    /**
-     * @var integer
-     *
-     * @ORM\Column(name="nb_cli_email_nonrens_m_l", type="integer", nullable=true)
-     */
-    private $nbCliEmailNonrensML;
-
-    /**
-     * @var integer
-     *
-     * @ORM\Column(name="nb_cli_tel_valid_m_l", type="integer", nullable=true)
-     */
-    private $nbCliTelValidML;
-
-    /**
-     * @var integer
-     *
-     * @ORM\Column(name="nb_cli_tel_nonvalid_m_l", type="integer", nullable=true)
-     */
-    private $nbCliTelNonvalidML;
-
-    /**
-     * @var integer
-     *
-     * @ORM\Column(name="nb_cli_tel_nonrens_m_l", type="integer", nullable=true)
-     */
-    private $nbCliTelNonrensML;
-
-    /**
-     * @var integer
-     *
-     * @ORM\Column(name="nb_cli_add_valid_m_l", type="integer", nullable=true)
-     */
-    private $nbCliAddValidML;
-
-    /**
-     * @var integer
-     *
-     * @ORM\Column(name="nb_cli_add_nonvalid_m_l", type="integer", nullable=true)
-     */
-    private $nbCliAddNonvalidML;
-
-    /**
-     * @var integer
-     *
-     * @ORM\Column(name="nb_cli_add_nonrens_m_l", type="integer", nullable=true)
-     */
-    private $nbCliAddNonrensML;
-
-
-
-    /***** NOMBRE COMPLEMENT AUX POURCENTAGES *****/
-
-    /* YL */
-
-    /**
-     * @var integer
-     *
-     * @ORM\Column(name="nb_optin_y_l", type="integer", nullable=true)
-     */
-    private $nbOptinYL;
-
-    /**
-     * @var integer
-     *
-     * @ORM\Column(name="nb_optout_y_l", type="integer", nullable=true)
-     */
-    private $nbOptoutYL;
-
+    private $pct_cli_coord_nonvalid_ytd;
+    
     /**
      * @var decimal
      *
-     * @ORM\Column(name="pct_optin_y_l", type="decimal", precision=9, scale=2, nullable=true)
+     * @ORM\Column(name="pct_cli_email_valid_ytd", type="decimal", precision=9, scale=2, nullable=true)
      */
-    private $pctOptinYL;
-
+    private $pct_cli_email_valid_ytd;
+    
     /**
      * @var decimal
      *
-     * @ORM\Column(name="pct_optout_y_l", type="decimal", precision=9, scale=2, nullable=true)
+     * @ORM\Column(name="pct_cli_email_nonvalid_ytd", type="decimal", precision=9, scale=2, nullable=true)
      */
-    private $pctOptoutYL;
-
+    private $pct_cli_email_nonvalid_ytd;
+    
+    /**
+     * @var decimal
+     *
+     * @ORM\Column(name="pct_cli_email_nonrens_ytd", type="decimal", precision=9, scale=2, nullable=true)
+     */
+    private $pct_cli_email_nonrens_ytd;
+    
+    /**
+     * @var decimal
+     *
+     * @ORM\Column(name="pct_cli_tel_valid_ytd", type="decimal", precision=9, scale=2, nullable=true)
+     */
+    private $pct_cli_tel_valid_ytd;
+    
+    /**
+     * @var decimal
+     *
+     * @ORM\Column(name="pct_cli_tel_nonvalid_ytd", type="decimal", precision=9, scale=2, nullable=true)
+     */
+    private $pct_cli_tel_nonvalid_ytd;
+    
+    /**
+     * @var decimal
+     *
+     * @ORM\Column(name="pct_cli_tel_nonrens_ytd", type="decimal", precision=9, scale=2, nullable=true)
+     */
+    private $pct_cli_tel_nonrens_ytd;
+    
+    /**
+     * @var decimal
+     *
+     * @ORM\Column(name="pct_cli_add_valid_ytd", type="decimal", precision=9, scale=2, nullable=true)
+     */
+    private $pct_cli_add_valid_ytd;
+    
+    /**
+     * @var decimal
+     *
+     * @ORM\Column(name="pct_cli_add_nonvalid_ytd", type="decimal", precision=9, scale=2, nullable=true)
+     */
+    private $pct_cli_add_nonvalid_ytd;
+    
+    /**
+     * @var decimal
+     *
+     * @ORM\Column(name="pct_cli_add_nonrens_ytd", type="decimal", precision=9, scale=2, nullable=true)
+     */
+    private $pct_cli_add_nonrens_ytd;
+    
     /**
      * @var integer
      *
-     * @ORM\Column(name="nb_cli_coord_valid_y_l", type="integer", nullable=true)
+     * @ORM\Column(name="nb_email_ytd", type="integer", nullable=true)
      */
-    private $nbCliCoordValidYL;
-
+    private $nb_email_ytd;
+    
     /**
      * @var integer
      *
-     * @ORM\Column(name="nb_cli_coord_nonvalid_y_l", type="integer", nullable=true)
+     * @ORM\Column(name="nb_tel_ytd", type="integer", nullable=true)
      */
-    private $nbCliCoordNonvalidYL;
-
+    private $nb_tel_ytd;
+    
     /**
      * @var integer
      *
-     * @ORM\Column(name="nb_cli_coord_nonrens_y_l", type="integer", nullable=true)
+     * @ORM\Column(name="nb_adr_ytd", type="integer", nullable=true)
      */
-    private $nbCliCoordNonrensYL;
-
+    private $nb_adr_ytd;
+    
     /**
      * @var integer
      *
-     * @ORM\Column(name="nb_cli_email_valid_y_l", type="integer", nullable=true)
+     * @ORM\Column(name="nb_cli_actifs_ytd", type="integer", nullable=true)
      */
-    private $nbCliEmailValidYL;
-
+    private $nb_cli_actifs_ytd;
+    
     /**
      * @var integer
      *
-     * @ORM\Column(name="nb_cli_email_nonvalid_y_l", type="integer", nullable=true)
-     */
-    private $nbCliEmailNonvalidYL;
-
+     * @ORM\Column(name="nb_cli_actifs_new_ytd", type="integer", nullable=true)
+     */ 
+    private $nb_cli_actifs_new_ytd;
+    
     /**
      * @var integer
      *
-     * @ORM\Column(name="nb_cli_email_nonrens_y_l", type="integer", nullable=true)
+     * @ORM\Column(name="nb_cli_actifs_exist_ytd", type="integer", nullable=true)
      */
-    private $nbCliEmailNonrensYL;
-
+    private $nb_cli_actifs_exist_ytd;
+    
     /**
      * @var integer
      *
-     * @ORM\Column(name="nb_cli_tel_valid_y_l", type="integer", nullable=true)
+     * @ORM\Column(name="nb_trans_tot_ytd", type="integer", nullable=true)
      */
-    private $nbCliTelValidYL;
-
+    private $nb_trans_tot_ytd;
+    
     /**
      * @var integer
      *
-     * @ORM\Column(name="nb_cli_tel_nonvalid_y_l", type="integer", nullable=true)
+     * @ORM\Column(name="nb_cli_coord_valid_ytd", type="integer", nullable=true)
      */
-    private $nbCliTelNonvalidYL;
-
+    private $nb_cli_coord_valid_ytd;
+    
     /**
      * @var integer
      *
-     * @ORM\Column(name="nb_cli_tel_nonrens_y_l", type="integer", nullable=true)
+     * @ORM\Column(name="nb_cli_coord_nonvalid_ytd", type="integer", nullable=true)
      */
-    private $nbCliTelNonrensYL;
-
+    private $nb_cli_coord_nonvalid_ytd;
+    
     /**
      * @var integer
      *
-     * @ORM\Column(name="nb_cli_add_valid_y_l", type="integer", nullable=true)
+     * @ORM\Column(name="nb_cli_email_valid_ytd", type="integer", nullable=true)
      */
-    private $nbCliAddValidYL;
-
+    private $nb_cli_email_valid_ytd;
+    
     /**
      * @var integer
      *
-     * @ORM\Column(name="nb_cli_add_nonvalid_y_l", type="integer", nullable=true)
-     */
-    private $nbCliAddNonvalidYL;
-
+     * @ORM\Column(name="nb_cli_email_nonvalid_ytd", type="integer", nullable=true)
+     */ 
+    private $nb_cli_email_nonvalid_ytd;
+    
     /**
      * @var integer
      *
-     * @ORM\Column(name="nb_cli_add_nonrens_y_l", type="integer", nullable=true)
+     * @ORM\Column(name="nb_cli_email_nonrens_ytd", type="integer", nullable=true)
      */
-    private $nbCliAddNonrensYL;
+    private $nb_cli_email_nonrens_ytd;
+    
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="nb_cli_tel_valid_ytd", type="integer", nullable=true)
+     */
+    private $nb_cli_tel_valid_ytd;
+    
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="nb_cli_tel_nonvalid_ytd", type="integer", nullable=true)
+     */
+    private $nb_cli_tel_nonvalid_ytd;
+    
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="nb_cli_tel_nonrens_ytd", type="integer", nullable=true)
+     */
+    private $nb_cli_tel_nonrens_ytd;
+    
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="nb_cli_add_valid_ytd", type="integer", nullable=true)
+     */
+    private $nb_cli_add_valid_ytd;
+    
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="nb_cli_add_nonvalid_ytd", type="integer", nullable=true)
+     */
+    private $nb_cli_add_nonvalid_ytd;
+    
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="nb_cli_add_nonrens_ytd", type="integer", nullable=true)
+     */
+    private $nb_cli_add_nonrens_ytd;
+    
+    /**
+     * @var decimal
+     *
+     * @ORM\Column(name="pct_cli_coord_nonvalid_m", type="decimal", precision=9, scale=2, nullable=true)
+     */
+    private $pct_cli_coord_nonvalid_m;
+    
+
+
     
                                    
     
@@ -780,1958 +586,1315 @@ class KpiCapture
         return $this->date;
     }
 
+
     /**
-     * Set nbCliML
+     * Set nb_cli_m
      *
-     * @param integer $nbCliML
+     * @param integer $nbCliM
      * @return KpiCapture
      */
-    public function setNbCliML($nbCliML)
+    public function setNbCliM($nbCliM)
     {
-        $this->nbCliML = $nbCliML;
+        $this->nb_cli_m = $nbCliM;
 
         return $this;
     }
 
     /**
-     * Get nbCliML
+     * Get nb_cli_m
      *
      * @return integer 
      */
-    public function getNbCliML()
+    public function getNbCliM()
     {
-        return $this->nbCliML;
+        return $this->nb_cli_m;
     }
 
     /**
-     * Set pctCliCoordValidML
+     * Set pct_cli_coord_valid_m
      *
-     * @param string $pctCliCoordValidML
+     * @param string $pctCliCoordValidM
      * @return KpiCapture
      */
-    public function setPctCliCoordValidML($pctCliCoordValidML)
+    public function setPctCliCoordValidM($pctCliCoordValidM)
     {
-        $this->pctCliCoordValidML = $pctCliCoordValidML;
+        $this->pct_cli_coord_valid_m = $pctCliCoordValidM;
 
         return $this;
     }
 
     /**
-     * Get pctCliCoordValidML
+     * Get pct_cli_coord_valid_m
      *
      * @return string 
      */
-    public function getPctCliCoordValidML()
+    public function getPctCliCoordValidM()
     {
-        return $this->pctCliCoordValidML;
+        return $this->pct_cli_coord_valid_m;
     }
 
     /**
-     * Set pctCliCoordNonvalidML
+     * Set pct_cli_email_valid_m
      *
-     * @param string $pctCliCoordNonvalidML
+     * @param string $pctCliEmailValidM
      * @return KpiCapture
      */
-    public function setPctCliCoordNonvalidML($pctCliCoordNonvalidML)
+    public function setPctCliEmailValidM($pctCliEmailValidM)
     {
-        $this->pctCliCoordNonvalidML = $pctCliCoordNonvalidML;
+        $this->pct_cli_email_valid_m = $pctCliEmailValidM;
 
         return $this;
     }
 
     /**
-     * Get pctCliCoordNonvalidML
+     * Get pct_cli_email_valid_m
      *
      * @return string 
      */
-    public function getPctCliCoordNonvalidML()
+    public function getPctCliEmailValidM()
     {
-        return $this->pctCliCoordNonvalidML;
+        return $this->pct_cli_email_valid_m;
     }
 
     /**
-     * Set pctCliCoordNonrensML
+     * Set pct_cli_email_nonvalid_m
      *
-     * @param string $pctCliCoordNonrensML
+     * @param string $pctCliEmailNonvalidM
      * @return KpiCapture
      */
-    public function setPctCliCoordNonrensML($pctCliCoordNonrensML)
+    public function setPctCliEmailNonvalidM($pctCliEmailNonvalidM)
     {
-        $this->pctCliCoordNonrensML = $pctCliCoordNonrensML;
+        $this->pct_cli_email_nonvalid_m = $pctCliEmailNonvalidM;
 
         return $this;
     }
 
     /**
-     * Get pctCliCoordNonrensML
+     * Get pct_cli_email_nonvalid_m
      *
      * @return string 
      */
-    public function getPctCliCoordNonrensML()
+    public function getPctCliEmailNonvalidM()
     {
-        return $this->pctCliCoordNonrensML;
+        return $this->pct_cli_email_nonvalid_m;
     }
 
     /**
-     * Set pctCliEmailValidML
+     * Set pct_cli_email_nonrens_m
      *
-     * @param string $pctCliEmailValidML
+     * @param string $pctCliEmailNonrensM
      * @return KpiCapture
      */
-    public function setPctCliEmailValidML($pctCliEmailValidML)
+    public function setPctCliEmailNonrensM($pctCliEmailNonrensM)
     {
-        $this->pctCliEmailValidML = $pctCliEmailValidML;
+        $this->pct_cli_email_nonrens_m = $pctCliEmailNonrensM;
 
         return $this;
     }
 
     /**
-     * Get pctCliEmailValidML
+     * Get pct_cli_email_nonrens_m
      *
      * @return string 
      */
-    public function getPctCliEmailValidML()
+    public function getPctCliEmailNonrensM()
     {
-        return $this->pctCliEmailValidML;
+        return $this->pct_cli_email_nonrens_m;
     }
 
     /**
-     * Set pctCliEmailNonvalidML
+     * Set pct_cli_tel_valid_m
      *
-     * @param string $pctCliEmailNonvalidML
+     * @param string $pctCliTelValidM
      * @return KpiCapture
      */
-    public function setPctCliEmailNonvalidML($pctCliEmailNonvalidML)
+    public function setPctCliTelValidM($pctCliTelValidM)
     {
-        $this->pctCliEmailNonvalidML = $pctCliEmailNonvalidML;
+        $this->pct_cli_tel_valid_m = $pctCliTelValidM;
 
         return $this;
     }
 
     /**
-     * Get pctCliEmailNonvalidML
+     * Get pct_cli_tel_valid_m
      *
      * @return string 
      */
-    public function getPctCliEmailNonvalidML()
+    public function getPctCliTelValidM()
     {
-        return $this->pctCliEmailNonvalidML;
+        return $this->pct_cli_tel_valid_m;
     }
 
     /**
-     * Set pctCliEmailNonrensML
+     * Set pct_cli_tel_nonvalid_m
      *
-     * @param string $pctCliEmailNonrensML
+     * @param string $pctCliTelNonvalidM
      * @return KpiCapture
      */
-    public function setPctCliEmailNonrensML($pctCliEmailNonrensML)
+    public function setPctCliTelNonvalidM($pctCliTelNonvalidM)
     {
-        $this->pctCliEmailNonrensML = $pctCliEmailNonrensML;
+        $this->pct_cli_tel_nonvalid_m = $pctCliTelNonvalidM;
 
         return $this;
     }
 
     /**
-     * Get pctCliEmailNonrensML
+     * Get pct_cli_tel_nonvalid_m
      *
      * @return string 
      */
-    public function getPctCliEmailNonrensML()
+    public function getPctCliTelNonvalidM()
     {
-        return $this->pctCliEmailNonrensML;
+        return $this->pct_cli_tel_nonvalid_m;
     }
 
     /**
-     * Set pctCliTelValidML
+     * Set pct_cli_tel_nonrens_m
      *
-     * @param string $pctCliTelValidML
+     * @param string $pctCliTelNonrensM
      * @return KpiCapture
      */
-    public function setPctCliTelValidML($pctCliTelValidML)
+    public function setPctCliTelNonrensM($pctCliTelNonrensM)
     {
-        $this->pctCliTelValidML = $pctCliTelValidML;
+        $this->pct_cli_tel_nonrens_m = $pctCliTelNonrensM;
 
         return $this;
     }
 
     /**
-     * Get pctCliTelValidML
+     * Get pct_cli_tel_nonrens_m
      *
      * @return string 
      */
-    public function getPctCliTelValidML()
+    public function getPctCliTelNonrensM()
     {
-        return $this->pctCliTelValidML;
+        return $this->pct_cli_tel_nonrens_m;
     }
 
     /**
-     * Set pctCliTelNonvalidML
+     * Set pct_cli_add_valid_m
      *
-     * @param string $pctCliTelNonvalidML
+     * @param string $pctCliAddValidM
      * @return KpiCapture
      */
-    public function setPctCliTelNonvalidML($pctCliTelNonvalidML)
+    public function setPctCliAddValidM($pctCliAddValidM)
     {
-        $this->pctCliTelNonvalidML = $pctCliTelNonvalidML;
+        $this->pct_cli_add_valid_m = $pctCliAddValidM;
 
         return $this;
     }
 
     /**
-     * Get pctCliTelNonvalidML
+     * Get pct_cli_add_valid_m
      *
      * @return string 
      */
-    public function getPctCliTelNonvalidML()
+    public function getPctCliAddValidM()
     {
-        return $this->pctCliTelNonvalidML;
+        return $this->pct_cli_add_valid_m;
     }
 
     /**
-     * Set pctCliTelNonrensML
+     * Set pct_cli_add_nonvalid_m
      *
-     * @param string $pctCliTelNonrensML
+     * @param string $pctCliAddNonvalidM
      * @return KpiCapture
      */
-    public function setPctCliTelNonrensML($pctCliTelNonrensML)
+    public function setPctCliAddNonvalidM($pctCliAddNonvalidM)
     {
-        $this->pctCliTelNonrensML = $pctCliTelNonrensML;
+        $this->pct_cli_add_nonvalid_m = $pctCliAddNonvalidM;
 
         return $this;
     }
 
     /**
-     * Get pctCliTelNonrensML
+     * Get pct_cli_add_nonvalid_m
      *
      * @return string 
      */
-    public function getPctCliTelNonrensML()
+    public function getPctCliAddNonvalidM()
     {
-        return $this->pctCliTelNonrensML;
+        return $this->pct_cli_add_nonvalid_m;
     }
 
     /**
-     * Set pctCliAddValidML
+     * Set pct_cli_add_nonrens_m
      *
-     * @param string $pctCliAddValidML
+     * @param string $pctCliAddNonrensM
      * @return KpiCapture
      */
-    public function setPctCliAddValidML($pctCliAddValidML)
+    public function setPctCliAddNonrensM($pctCliAddNonrensM)
     {
-        $this->pctCliAddValidML = $pctCliAddValidML;
+        $this->pct_cli_add_nonrens_m = $pctCliAddNonrensM;
 
         return $this;
     }
 
     /**
-     * Get pctCliAddValidML
+     * Get pct_cli_add_nonrens_m
      *
      * @return string 
      */
-    public function getPctCliAddValidML()
+    public function getPctCliAddNonrensM()
     {
-        return $this->pctCliAddValidML;
+        return $this->pct_cli_add_nonrens_m;
     }
 
     /**
-     * Set pctCliAddNonrensML
+     * Set nb_cli_actifs_m
      *
-     * @param string $pctCliAddNonrensML
+     * @param integer $nbCliActifsM
      * @return KpiCapture
      */
-    public function setPctCliAddNonrensML($pctCliAddNonrensML)
+    public function setNbCliActifsM($nbCliActifsM)
     {
-        $this->pctCliAddNonrensML = $pctCliAddNonrensML;
+        $this->nb_cli_actifs_m = $nbCliActifsM;
 
         return $this;
     }
 
     /**
-     * Get pctCliAddNonrensML
-     *
-     * @return string 
-     */
-    public function getPctCliAddNonrensML()
-    {
-        return $this->pctCliAddNonrensML;
-    }
-
-    /**
-     * Set pctCliAddNonvalidML
-     *
-     * @param string $pctCliAddNonvalidML
-     * @return KpiCapture
-     */
-    public function setPctCliAddNonvalidML($pctCliAddNonvalidML)
-    {
-        $this->pctCliAddNonvalidML = $pctCliAddNonvalidML;
-
-        return $this;
-    }
-
-    /**
-     * Get pctCliAddNonvalidML
-     *
-     * @return string 
-     */
-    public function getPctCliAddNonvalidML()
-    {
-        return $this->pctCliAddNonvalidML;
-    }
-
-    /**
-     * Set nbCliActifsML
-     *
-     * @param integer $nbCliActifsML
-     * @return KpiCapture
-     */
-    public function setNbCliActifsML($nbCliActifsML)
-    {
-        $this->nbCliActifsML = $nbCliActifsML;
-
-        return $this;
-    }
-
-    /**
-     * Get nbCliActifsML
+     * Get nb_cli_actifs_m
      *
      * @return integer 
      */
-    public function getNbCliActifsML()
+    public function getNbCliActifsM()
     {
-        return $this->nbCliActifsML;
+        return $this->nb_cli_actifs_m;
     }
 
     /**
-     * Set nbCliActifsNewML
+     * Set nb_cli_actifs_new_m
      *
-     * @param integer $nbCliActifsNewML
+     * @param integer $nbCliActifsNewM
      * @return KpiCapture
      */
-    public function setNbCliActifsNewML($nbCliActifsNewML)
+    public function setNbCliActifsNewM($nbCliActifsNewM)
     {
-        $this->nbCliActifsNewML = $nbCliActifsNewML;
+        $this->nb_cli_actifs_new_m = $nbCliActifsNewM;
 
         return $this;
     }
 
     /**
-     * Get nbCliActifsNewML
+     * Get nb_cli_actifs_new_m
      *
      * @return integer 
      */
-    public function getNbCliActifsNewML()
+    public function getNbCliActifsNewM()
     {
-        return $this->nbCliActifsNewML;
+        return $this->nb_cli_actifs_new_m;
     }
 
     /**
-     * Set nbCliActifsExistML
+     * Set nb_cli_actifs_exist_m
      *
-     * @param integer $nbCliActifsExistML
+     * @param integer $nbCliActifsExistM
      * @return KpiCapture
      */
-    public function setNbCliActifsExistML($nbCliActifsExistML)
+    public function setNbCliActifsExistM($nbCliActifsExistM)
     {
-        $this->nbCliActifsExistML = $nbCliActifsExistML;
+        $this->nb_cli_actifs_exist_m = $nbCliActifsExistM;
 
         return $this;
     }
 
     /**
-     * Get nbCliActifsExistML
+     * Get nb_cli_actifs_exist_m
      *
      * @return integer 
      */
-    public function getNbCliActifsExistML()
+    public function getNbCliActifsExistM()
     {
-        return $this->nbCliActifsExistML;
+        return $this->nb_cli_actifs_exist_m;
     }
 
     /**
-     * Set nbCliYL
+     * Set nb_cli_coord_valid_m
      *
-     * @param integer $nbCliYL
+     * @param integer $nbCliCoordValidM
      * @return KpiCapture
      */
-    public function setNbCliYL($nbCliYL)
+    public function setNbCliCoordValidM($nbCliCoordValidM)
     {
-        $this->nbCliYL = $nbCliYL;
+        $this->nb_cli_coord_valid_m = $nbCliCoordValidM;
 
         return $this;
     }
 
     /**
-     * Get nbCliYL
+     * Get nb_cli_coord_valid_m
      *
      * @return integer 
      */
-    public function getNbCliYL()
+    public function getNbCliCoordValidM()
     {
-        return $this->nbCliYL;
+        return $this->nb_cli_coord_valid_m;
     }
 
     /**
-     * Set pctCliCoordValidYL
+     * Set nb_cli_coord_nonvalid_m
      *
-     * @param string $pctCliCoordValidYL
+     * @param integer $nbCliCoordNonvalidM
      * @return KpiCapture
      */
-    public function setPctCliCoordValidYL($pctCliCoordValidYL)
+    public function setNbCliCoordNonvalidM($nbCliCoordNonvalidM)
     {
-        $this->pctCliCoordValidYL = $pctCliCoordValidYL;
+        $this->nb_cli_coord_nonvalid_m = $nbCliCoordNonvalidM;
 
         return $this;
     }
 
     /**
-     * Get pctCliCoordValidYL
-     *
-     * @return string 
-     */
-    public function getPctCliCoordValidYL()
-    {
-        return $this->pctCliCoordValidYL;
-    }
-
-    /**
-     * Set pctCliCoordNonvalidYL
-     *
-     * @param string $pctCliCoordNonvalidYL
-     * @return KpiCapture
-     */
-    public function setPctCliCoordNonvalidYL($pctCliCoordNonvalidYL)
-    {
-        $this->pctCliCoordNonvalidYL = $pctCliCoordNonvalidYL;
-
-        return $this;
-    }
-
-    /**
-     * Get pctCliCoordNonvalidYL
-     *
-     * @return string 
-     */
-    public function getPctCliCoordNonvalidYL()
-    {
-        return $this->pctCliCoordNonvalidYL;
-    }
-
-    /**
-     * Set pctCliCoordNonrensYL
-     *
-     * @param string $pctCliCoordNonrensYL
-     * @return KpiCapture
-     */
-    public function setPctCliCoordNonrensYL($pctCliCoordNonrensYL)
-    {
-        $this->pctCliCoordNonrensYL = $pctCliCoordNonrensYL;
-
-        return $this;
-    }
-
-    /**
-     * Get pctCliCoordNonrensYL
-     *
-     * @return string 
-     */
-    public function getPctCliCoordNonrensYL()
-    {
-        return $this->pctCliCoordNonrensYL;
-    }
-
-    /**
-     * Set pctCliEmailValidYL
-     *
-     * @param string $pctCliEmailValidYL
-     * @return KpiCapture
-     */
-    public function setPctCliEmailValidYL($pctCliEmailValidYL)
-    {
-        $this->pctCliEmailValidYL = $pctCliEmailValidYL;
-
-        return $this;
-    }
-
-    /**
-     * Get pctCliEmailValidYL
-     *
-     * @return string 
-     */
-    public function getPctCliEmailValidYL()
-    {
-        return $this->pctCliEmailValidYL;
-    }
-
-    /**
-     * Set pctCliEmailNonvalidYL
-     *
-     * @param string $pctCliEmailNonvalidYL
-     * @return KpiCapture
-     */
-    public function setPctCliEmailNonvalidYL($pctCliEmailNonvalidYL)
-    {
-        $this->pctCliEmailNonvalidYL = $pctCliEmailNonvalidYL;
-
-        return $this;
-    }
-
-    /**
-     * Get pctCliEmailNonvalidYL
-     *
-     * @return string 
-     */
-    public function getPctCliEmailNonvalidYL()
-    {
-        return $this->pctCliEmailNonvalidYL;
-    }
-
-    /**
-     * Set pctCliEmailNonrensYL
-     *
-     * @param string $pctCliEmailNonrensYL
-     * @return KpiCapture
-     */
-    public function setPctCliEmailNonrensYL($pctCliEmailNonrensYL)
-    {
-        $this->pctCliEmailNonrensYL = $pctCliEmailNonrensYL;
-
-        return $this;
-    }
-
-    /**
-     * Get pctCliEmailNonrensYL
-     *
-     * @return string 
-     */
-    public function getPctCliEmailNonrensYL()
-    {
-        return $this->pctCliEmailNonrensYL;
-    }
-
-    /**
-     * Set pctCliTelValidYL
-     *
-     * @param string $pctCliTelValidYL
-     * @return KpiCapture
-     */
-    public function setPctCliTelValidYL($pctCliTelValidYL)
-    {
-        $this->pctCliTelValidYL = $pctCliTelValidYL;
-
-        return $this;
-    }
-
-    /**
-     * Get pctCliTelValidYL
-     *
-     * @return string 
-     */
-    public function getPctCliTelValidYL()
-    {
-        return $this->pctCliTelValidYL;
-    }
-
-    /**
-     * Set pctCliTelNonvalidYL
-     *
-     * @param string $pctCliTelNonvalidYL
-     * @return KpiCapture
-     */
-    public function setPctCliTelNonvalidYL($pctCliTelNonvalidYL)
-    {
-        $this->pctCliTelNonvalidYL = $pctCliTelNonvalidYL;
-
-        return $this;
-    }
-
-    /**
-     * Get pctCliTelNonvalidYL
-     *
-     * @return string 
-     */
-    public function getPctCliTelNonvalidYL()
-    {
-        return $this->pctCliTelNonvalidYL;
-    }
-
-    /**
-     * Set pctCliTelNonrensYL
-     *
-     * @param string $pctCliTelNonrensYL
-     * @return KpiCapture
-     */
-    public function setPctCliTelNonrensYL($pctCliTelNonrensYL)
-    {
-        $this->pctCliTelNonrensYL = $pctCliTelNonrensYL;
-
-        return $this;
-    }
-
-    /**
-     * Get pctCliTelNonrensYL
-     *
-     * @return string 
-     */
-    public function getPctCliTelNonrensYL()
-    {
-        return $this->pctCliTelNonrensYL;
-    }
-
-    /**
-     * Set pctCliAddValidYL
-     *
-     * @param string $pctCliAddValidYL
-     * @return KpiCapture
-     */
-    public function setPctCliAddValidYL($pctCliAddValidYL)
-    {
-        $this->pctCliAddValidYL = $pctCliAddValidYL;
-
-        return $this;
-    }
-
-    /**
-     * Get pctCliAddValidYL
-     *
-     * @return string 
-     */
-    public function getPctCliAddValidYL()
-    {
-        return $this->pctCliAddValidYL;
-    }
-
-    /**
-     * Set pctCliAddNonrensYL
-     *
-     * @param string $pctCliAddNonrensYL
-     * @return KpiCapture
-     */
-    public function setPctCliAddNonrensYL($pctCliAddNonrensYL)
-    {
-        $this->pctCliAddNonrensYL = $pctCliAddNonrensYL;
-
-        return $this;
-    }
-
-    /**
-     * Get pctCliAddNonrensYL
-     *
-     * @return string 
-     */
-    public function getPctCliAddNonrensYL()
-    {
-        return $this->pctCliAddNonrensYL;
-    }
-
-    /**
-     * Set pctCliAddNonvalidYL
-     *
-     * @param string $pctCliAddNonvalidYL
-     * @return KpiCapture
-     */
-    public function setPctCliAddNonvalidYL($pctCliAddNonvalidYL)
-    {
-        $this->pctCliAddNonvalidYL = $pctCliAddNonvalidYL;
-
-        return $this;
-    }
-
-    /**
-     * Get pctCliAddNonvalidYL
-     *
-     * @return string 
-     */
-    public function getPctCliAddNonvalidYL()
-    {
-        return $this->pctCliAddNonvalidYL;
-    }
-
-    /**
-     * Set nbCliActifsYL
-     *
-     * @param integer $nbCliActifsYL
-     * @return KpiCapture
-     */
-    public function setNbCliActifsYL($nbCliActifsYL)
-    {
-        $this->nbCliActifsYL = $nbCliActifsYL;
-
-        return $this;
-    }
-
-    /**
-     * Get nbCliActifsYL
+     * Get nb_cli_coord_nonvalid_m
      *
      * @return integer 
      */
-    public function getNbCliActifsYL()
+    public function getNbCliCoordNonvalidM()
     {
-        return $this->nbCliActifsYL;
+        return $this->nb_cli_coord_nonvalid_m;
     }
 
     /**
-     * Set nbCliActifsNewYL
+     * Set nb_cli_email_valid_m
      *
-     * @param integer $nbCliActifsNewYL
+     * @param integer $nbCliEmailValidM
      * @return KpiCapture
      */
-    public function setNbCliActifsNewYL($nbCliActifsNewYL)
+    public function setNbCliEmailValidM($nbCliEmailValidM)
     {
-        $this->nbCliActifsNewYL = $nbCliActifsNewYL;
+        $this->nb_cli_email_valid_m = $nbCliEmailValidM;
 
         return $this;
     }
 
     /**
-     * Get nbCliActifsNewYL
+     * Get nb_cli_email_valid_m
      *
      * @return integer 
      */
-    public function getNbCliActifsNewYL()
+    public function getNbCliEmailValidM()
     {
-        return $this->nbCliActifsNewYL;
+        return $this->nb_cli_email_valid_m;
     }
 
     /**
-     * Set nbCliActifsExistYL
+     * Set nb_cli_email_nonvalid_m
      *
-     * @param integer $nbCliActifsExistYL
+     * @param integer $nbCliEmailNonvalidM
      * @return KpiCapture
      */
-    public function setNbCliActifsExistYL($nbCliActifsExistYL)
+    public function setNbCliEmailNonvalidM($nbCliEmailNonvalidM)
     {
-        $this->nbCliActifsExistYL = $nbCliActifsExistYL;
+        $this->nb_cli_email_nonvalid_m = $nbCliEmailNonvalidM;
 
         return $this;
     }
 
     /**
-     * Get nbCliActifsExistYL
+     * Get nb_cli_email_nonvalid_m
      *
      * @return integer 
      */
-    public function getNbCliActifsExistYL()
+    public function getNbCliEmailNonvalidM()
     {
-        return $this->nbCliActifsExistYL;
+        return $this->nb_cli_email_nonvalid_m;
     }
 
     /**
-     * Set nbEmailYL
+     * Set nb_cli_email_nonrens_m
      *
-     * @param integer $nbEmailYL
+     * @param integer $nbCliEmailNonrensM
      * @return KpiCapture
      */
-    public function setNbEmailYL($nbEmailYL)
+    public function setNbCliEmailNonrensM($nbCliEmailNonrensM)
     {
-        $this->nbEmailYL = $nbEmailYL;
+        $this->nb_cli_email_nonrens_m = $nbCliEmailNonrensM;
 
         return $this;
     }
 
     /**
-     * Get nbEmailYL
+     * Get nb_cli_email_nonrens_m
      *
      * @return integer 
      */
-    public function getNbEmailYL()
+    public function getNbCliEmailNonrensM()
     {
-        return $this->nbEmailYL;
+        return $this->nb_cli_email_nonrens_m;
     }
 
     /**
-     * Set nbTelYL
+     * Set nb_cli_tel_valid_m
      *
-     * @param integer $nbTelYL
+     * @param integer $nbCliTelValidM
      * @return KpiCapture
      */
-    public function setNbTelYL($nbTelYL)
+    public function setNbCliTelValidM($nbCliTelValidM)
     {
-        $this->nbTelYL = $nbTelYL;
+        $this->nb_cli_tel_valid_m = $nbCliTelValidM;
 
         return $this;
     }
 
     /**
-     * Get nbTelYL
+     * Get nb_cli_tel_valid_m
      *
      * @return integer 
      */
-    public function getNbTelYL()
+    public function getNbCliTelValidM()
     {
-        return $this->nbTelYL;
+        return $this->nb_cli_tel_valid_m;
     }
 
     /**
-     * Set nbAdrYL
+     * Set nb_cli_tel_nonvalid_m
      *
-     * @param integer $nbAdrYL
+     * @param integer $nbCliTelNonvalidM
      * @return KpiCapture
      */
-    public function setNbAdrYL($nbAdrYL)
+    public function setNbCliTelNonvalidM($nbCliTelNonvalidM)
     {
-        $this->nbAdrYL = $nbAdrYL;
+        $this->nb_cli_tel_nonvalid_m = $nbCliTelNonvalidM;
 
         return $this;
     }
 
     /**
-     * Get nbAdrYL
+     * Get nb_cli_tel_nonvalid_m
      *
      * @return integer 
      */
-    public function getNbAdrYL()
+    public function getNbCliTelNonvalidM()
     {
-        return $this->nbAdrYL;
+        return $this->nb_cli_tel_nonvalid_m;
     }
 
     /**
-     * Set pctCliDonneesNonvalidYL
+     * Set nb_cli_tel_nonrens_m
      *
-     * @param integer $pctCliDonneesNonvalidYL
+     * @param integer $nbCliTelNonrensM
      * @return KpiCapture
      */
-    public function setPctCliDonneesNonvalidYL($pctCliDonneesNonvalidYL)
+    public function setNbCliTelNonrensM($nbCliTelNonrensM)
     {
-        $this->pctCliDonneesNonvalidYL = $pctCliDonneesNonvalidYL;
+        $this->nb_cli_tel_nonrens_m = $nbCliTelNonrensM;
 
         return $this;
     }
 
     /**
-     * Get pctCliDonneesNonvalidYL
+     * Get nb_cli_tel_nonrens_m
      *
      * @return integer 
      */
-    public function getPctCliDonneesNonvalidYL()
+    public function getNbCliTelNonrensM()
     {
-        return $this->pctCliDonneesNonvalidYL;
+        return $this->nb_cli_tel_nonrens_m;
     }
 
     /**
-     * Set nbProspYL
+     * Set nb_cli_add_valid_m
      *
-     * @param integer $nbProspYL
+     * @param integer $nbCliAddValidM
      * @return KpiCapture
      */
-    public function setNbProspYL($nbProspYL)
+    public function setNbCliAddValidM($nbCliAddValidM)
     {
-        $this->nbProspYL = $nbProspYL;
+        $this->nb_cli_add_valid_m = $nbCliAddValidM;
 
         return $this;
     }
 
     /**
-     * Get nbProspYL
+     * Get nb_cli_add_valid_m
      *
      * @return integer 
      */
-    public function getNbProspYL()
+    public function getNbCliAddValidM()
     {
-        return $this->nbProspYL;
+        return $this->nb_cli_add_valid_m;
     }
 
     /**
-     * Set nbEmailNonvalidYL
+     * Set nb_cli_add_nonvalid_m
      *
-     * @param integer $nbEmailNonvalidYL
+     * @param integer $nbCliAddNonvalidM
      * @return KpiCapture
      */
-    public function setNbEmailNonvalidYL($nbEmailNonvalidYL)
+    public function setNbCliAddNonvalidM($nbCliAddNonvalidM)
     {
-        $this->nbEmailNonvalidYL = $nbEmailNonvalidYL;
+        $this->nb_cli_add_nonvalid_m = $nbCliAddNonvalidM;
 
         return $this;
     }
 
     /**
-     * Get nbEmailNonvalidYL
+     * Get nb_cli_add_nonvalid_m
      *
      * @return integer 
      */
-    public function getNbEmailNonvalidYL()
+    public function getNbCliAddNonvalidM()
     {
-        return $this->nbEmailNonvalidYL;
+        return $this->nb_cli_add_nonvalid_m;
     }
 
     /**
-     * Set nbTelNonvalidYL
+     * Set nb_cli_add_nonrens_m
      *
-     * @param integer $nbTelNonvalidYL
+     * @param integer $nbCliAddNonrensM
      * @return KpiCapture
      */
-    public function setNbTelNonvalidYL($nbTelNonvalidYL)
+    public function setNbCliAddNonrensM($nbCliAddNonrensM)
     {
-        $this->nbTelNonvalidYL = $nbTelNonvalidYL;
+        $this->nb_cli_add_nonrens_m = $nbCliAddNonrensM;
 
         return $this;
     }
 
     /**
-     * Get nbTelNonvalidYL
+     * Get nb_cli_add_nonrens_m
      *
      * @return integer 
      */
-    public function getNbTelNonvalidYL()
+    public function getNbCliAddNonrensM()
     {
-        return $this->nbTelNonvalidYL;
+        return $this->nb_cli_add_nonrens_m;
     }
 
     /**
-     * Set nbAdrNonvalidYL
-     *
-     * @param integer $nbAdrNonvalidYL
-     * @return KpiCapture
-     */
-    public function setNbAdrNonvalidYL($nbAdrNonvalidYL)
-    {
-        $this->nbAdrNonvalidYL = $nbAdrNonvalidYL;
-
-        return $this;
-    }
-
-    /**
-     * Get nbAdrNonvalidYL
-     *
-     * @return integer 
-     */
-    public function getNbAdrNonvalidYL()
-    {
-        return $this->nbAdrNonvalidYL;
-    }
-
-    /**
-     * Set nbTransLinkedY
-     *
-     * @param integer $nbTransLinkedY
-     * @return KpiCapture
-     */
-    public function setNbTransLinkedY($nbTransLinkedY)
-    {
-        $this->nbTransLinkedY = $nbTransLinkedY;
-
-        return $this;
-    }
-
-    /**
-     * Get nbTransLinkedY
-     *
-     * @return integer 
-     */
-    public function getNbTransLinkedY()
-    {
-        return $this->nbTransLinkedY;
-    }
-
-    /**
-     * Set nbTransLocalY
-     *
-     * @param integer $nbTransLocalY
-     * @return KpiCapture
-     */
-    public function setNbTransLocalY($nbTransLocalY)
-    {
-        $this->nbTransLocalY = $nbTransLocalY;
-
-        return $this;
-    }
-
-    /**
-     * Get nbTransLocalY
-     *
-     * @return integer 
-     */
-    public function getNbTransLocalY()
-    {
-        return $this->nbTransLocalY;
-    }
-
-    /**
-     * Set pctTransLocalY
-     *
-     * @param string $pctTransLocalY
-     * @return KpiCapture
-     */
-    public function setPctTransLocalY($pctTransLocalY)
-    {
-        $this->pctTransLocalY = $pctTransLocalY;
-
-        return $this;
-    }
-
-    /**
-     * Get pctTransLocalY
-     *
-     * @return string 
-     */
-    public function getPctTransLocalY()
-    {
-        return $this->pctTransLocalY;
-    }
-
-    /**
-     * Set nbTransNlocalY
-     *
-     * @param integer $nbTransNlocalY
-     * @return KpiCapture
-     */
-    public function setNbTransNlocalY($nbTransNlocalY)
-    {
-        $this->nbTransNlocalY = $nbTransNlocalY;
-
-        return $this;
-    }
-
-    /**
-     * Get nbTransNlocalY
-     *
-     * @return integer 
-     */
-    public function getNbTransNlocalY()
-    {
-        return $this->nbTransNlocalY;
-    }
-
-    /**
-     * Set pctTransNlocalY
-     *
-     * @param string $pctTransNlocalY
-     * @return KpiCapture
-     */
-    public function setPctTransNlocalY($pctTransNlocalY)
-    {
-        $this->pctTransNlocalY = $pctTransNlocalY;
-
-        return $this;
-    }
-
-    /**
-     * Get pctTransNlocalY
-     *
-     * @return string 
-     */
-    public function getPctTransNlocalY()
-    {
-        return $this->pctTransNlocalY;
-    }
-
-    /**
-     * Set nbTransNotLinkedY
-     *
-     * @param integer $nbTransNotLinkedY
-     * @return KpiCapture
-     */
-    public function setNbTransNotLinkedY($nbTransNotLinkedY)
-    {
-        $this->nbTransNotLinkedY = $nbTransNotLinkedY;
-
-        return $this;
-    }
-
-    /**
-     * Get nbTransNotLinkedY
-     *
-     * @return integer 
-     */
-    public function getNbTransNotLinkedY()
-    {
-        return $this->nbTransNotLinkedY;
-    }
-
-    /**
-     * Set pctTransNotLinkedY
-     *
-     * @param string $pctTransNotLinkedY
-     * @return KpiCapture
-     */
-    public function setPctTransNotLinkedY($pctTransNotLinkedY)
-    {
-        $this->pctTransNotLinkedY = $pctTransNotLinkedY;
-
-        return $this;
-    }
-
-    /**
-     * Get pctTransNotLinkedY
-     *
-     * @return string 
-     */
-    public function getPctTransNotLinkedY()
-    {
-        return $this->pctTransNotLinkedY;
-    }
-
-    /**
-     * Set nbTransTotY
-     *
-     * @param integer $nbTransTotY
-     * @return KpiCapture
-     */
-    public function setNbTransTotY($nbTransTotY)
-    {
-        $this->nbTransTotY = $nbTransTotY;
-
-        return $this;
-    }
-
-    /**
-     * Get nbTransTotY
-     *
-     * @return integer 
-     */
-    public function getNbTransTotY()
-    {
-        return $this->nbTransTotY;
-    }
-
-    /**
-     * Set nbTransLinkedM
-     *
-     * @param integer $nbTransLinkedM
-     * @return KpiCapture
-     */
-    public function setNbTransLinkedM($nbTransLinkedM)
-    {
-        $this->nbTransLinkedM = $nbTransLinkedM;
-
-        return $this;
-    }
-
-    /**
-     * Get nbTransLinkedM
-     *
-     * @return integer 
-     */
-    public function getNbTransLinkedM()
-    {
-        return $this->nbTransLinkedM;
-    }
-
-    /**
-     * Set nbTransNotLinkedM
-     *
-     * @param integer $nbTransNotLinkedM
-     * @return KpiCapture
-     */
-    public function setNbTransNotLinkedM($nbTransNotLinkedM)
-    {
-        $this->nbTransNotLinkedM = $nbTransNotLinkedM;
-
-        return $this;
-    }
-
-    /**
-     * Get nbTransNotLinkedM
-     *
-     * @return integer 
-     */
-    public function getNbTransNotLinkedM()
-    {
-        return $this->nbTransNotLinkedM;
-    }
-
-    /**
-     * Set pctTransNotLinkedM
-     *
-     * @param string $pctTransNotLinkedM
-     * @return KpiCapture
-     */
-    public function setPctTransNotLinkedM($pctTransNotLinkedM)
-    {
-        $this->pctTransNotLinkedM = $pctTransNotLinkedM;
-
-        return $this;
-    }
-
-    /**
-     * Get pctTransNotLinkedM
-     *
-     * @return string 
-     */
-    public function getPctTransNotLinkedM()
-    {
-        return $this->pctTransNotLinkedM;
-    }
-
-    /**
-     * Set pctTransLinkedM
-     *
-     * @param string $pctTransLinkedM
-     * @return KpiCapture
-     */
-    public function setPctTransLinkedM($pctTransLinkedM)
-    {
-        $this->pctTransLinkedM = $pctTransLinkedM;
-
-        return $this;
-    }
-
-    /**
-     * Get pctTransLinkedM
-     *
-     * @return string 
-     */
-    public function getPctTransLinkedM()
-    {
-        return $this->pctTransLinkedM;
-    }
-
-    /**
-     * Set nbTransTotM
+     * Set nb_trans_tot_m
      *
      * @param integer $nbTransTotM
      * @return KpiCapture
      */
     public function setNbTransTotM($nbTransTotM)
     {
-        $this->nbTransTotM = $nbTransTotM;
+        $this->nb_trans_tot_m = $nbTransTotM;
 
         return $this;
     }
 
     /**
-     * Get nbTransTotM
+     * Get nb_trans_tot_m
      *
      * @return integer 
      */
     public function getNbTransTotM()
     {
-        return $this->nbTransTotM;
+        return $this->nb_trans_tot_m;
     }
 
     /**
-     * Set nbOptinML
+     * Set nb_cli_ytd
      *
-     * @param integer $nbOptinML
+     * @param integer $nbCliYtd
      * @return KpiCapture
      */
-    public function setNbOptinML($nbOptinML)
+    public function setNbCliYtd($nbCliYtd)
     {
-        $this->nbOptinML = $nbOptinML;
+        $this->nb_cli_ytd = $nbCliYtd;
 
         return $this;
     }
 
     /**
-     * Get nbOptinML
+     * Get nb_cli_ytd
      *
      * @return integer 
      */
-    public function getNbOptinML()
+    public function getNbCliYtd()
     {
-        return $this->nbOptinML;
+        return $this->nb_cli_ytd;
     }
 
     /**
-     * Set nbOptoutML
+     * Set pct_cli_coord_valid_ytd
      *
-     * @param integer $nbOptoutML
+     * @param string $pctCliCoordValidYtd
      * @return KpiCapture
      */
-    public function setNbOptoutML($nbOptoutML)
+    public function setPctCliCoordValidYtd($pctCliCoordValidYtd)
     {
-        $this->nbOptoutML = $nbOptoutML;
+        $this->pct_cli_coord_valid_ytd = $pctCliCoordValidYtd;
 
         return $this;
     }
 
     /**
-     * Get nbOptoutML
-     *
-     * @return integer 
-     */
-    public function getNbOptoutML()
-    {
-        return $this->nbOptoutML;
-    }
-
-    /**
-     * Set pctOptinML
-     *
-     * @param string $pctOptinML
-     * @return KpiCapture
-     */
-    public function setPctOptinML($pctOptinML)
-    {
-        $this->pctOptinML = $pctOptinML;
-
-        return $this;
-    }
-
-    /**
-     * Get pctOptinML
+     * Get pct_cli_coord_valid_ytd
      *
      * @return string 
      */
-    public function getPctOptinML()
+    public function getPctCliCoordValidYtd()
     {
-        return $this->pctOptinML;
+        return $this->pct_cli_coord_valid_ytd;
     }
 
     /**
-     * Set pctOptoutML
+     * Set pct_cli_coord_nonvalid_ytd
      *
-     * @param string $pctOptoutML
+     * @param string $pctCliCoordNonvalidYtd
      * @return KpiCapture
      */
-    public function setPctOptoutML($pctOptoutML)
+    public function setPctCliCoordNonvalidYtd($pctCliCoordNonvalidYtd)
     {
-        $this->pctOptoutML = $pctOptoutML;
+        $this->pct_cli_coord_nonvalid_ytd = $pctCliCoordNonvalidYtd;
 
         return $this;
     }
 
     /**
-     * Get pctOptoutML
+     * Get pct_cli_coord_nonvalid_ytd
      *
      * @return string 
      */
-    public function getPctOptoutML()
+    public function getPctCliCoordNonvalidYtd()
     {
-        return $this->pctOptoutML;
+        return $this->pct_cli_coord_nonvalid_ytd;
     }
 
     /**
-     * Set nbCliCoordValidML
+     * Set pct_cli_email_valid_ytd
      *
-     * @param integer $nbCliCoordValidML
+     * @param string $pctCliEmailValidYtd
      * @return KpiCapture
      */
-    public function setNbCliCoordValidML($nbCliCoordValidML)
+    public function setPctCliEmailValidYtd($pctCliEmailValidYtd)
     {
-        $this->nbCliCoordValidML = $nbCliCoordValidML;
+        $this->pct_cli_email_valid_ytd = $pctCliEmailValidYtd;
 
         return $this;
     }
 
     /**
-     * Get nbCliCoordValidML
-     *
-     * @return integer 
-     */
-    public function getNbCliCoordValidML()
-    {
-        return $this->nbCliCoordValidML;
-    }
-
-    /**
-     * Set nbCliCoordNonvalidML
-     *
-     * @param integer $nbCliCoordNonvalidML
-     * @return KpiCapture
-     */
-    public function setNbCliCoordNonvalidML($nbCliCoordNonvalidML)
-    {
-        $this->nbCliCoordNonvalidML = $nbCliCoordNonvalidML;
-
-        return $this;
-    }
-
-    /**
-     * Get nbCliCoordNonvalidML
-     *
-     * @return integer 
-     */
-    public function getNbCliCoordNonvalidML()
-    {
-        return $this->nbCliCoordNonvalidML;
-    }
-
-    /**
-     * Set nbCliCoordNonrensML
-     *
-     * @param integer $nbCliCoordNonrensML
-     * @return KpiCapture
-     */
-    public function setNbCliCoordNonrensML($nbCliCoordNonrensML)
-    {
-        $this->nbCliCoordNonrensML = $nbCliCoordNonrensML;
-
-        return $this;
-    }
-
-    /**
-     * Get nbCliCoordNonrensML
-     *
-     * @return integer 
-     */
-    public function getNbCliCoordNonrensML()
-    {
-        return $this->nbCliCoordNonrensML;
-    }
-
-    /**
-     * Set nbCliEmailValidML
-     *
-     * @param integer $nbCliEmailValidML
-     * @return KpiCapture
-     */
-    public function setNbCliEmailValidML($nbCliEmailValidML)
-    {
-        $this->nbCliEmailValidML = $nbCliEmailValidML;
-
-        return $this;
-    }
-
-    /**
-     * Get nbCliEmailValidML
-     *
-     * @return integer 
-     */
-    public function getNbCliEmailValidML()
-    {
-        return $this->nbCliEmailValidML;
-    }
-
-    /**
-     * Set nbCliEmailNonvalidML
-     *
-     * @param integer $nbCliEmailNonvalidML
-     * @return KpiCapture
-     */
-    public function setNbCliEmailNonvalidML($nbCliEmailNonvalidML)
-    {
-        $this->nbCliEmailNonvalidML = $nbCliEmailNonvalidML;
-
-        return $this;
-    }
-
-    /**
-     * Get nbCliEmailNonvalidML
-     *
-     * @return integer 
-     */
-    public function getNbCliEmailNonvalidML()
-    {
-        return $this->nbCliEmailNonvalidML;
-    }
-
-    /**
-     * Set nbCliEmailNonrensML
-     *
-     * @param integer $nbCliEmailNonrensML
-     * @return KpiCapture
-     */
-    public function setNbCliEmailNonrensML($nbCliEmailNonrensML)
-    {
-        $this->nbCliEmailNonrensML = $nbCliEmailNonrensML;
-
-        return $this;
-    }
-
-    /**
-     * Get nbCliEmailNonrensML
-     *
-     * @return integer 
-     */
-    public function getNbCliEmailNonrensML()
-    {
-        return $this->nbCliEmailNonrensML;
-    }
-
-    /**
-     * Set nbCliTelValidML
-     *
-     * @param integer $nbCliTelValidML
-     * @return KpiCapture
-     */
-    public function setNbCliTelValidML($nbCliTelValidML)
-    {
-        $this->nbCliTelValidML = $nbCliTelValidML;
-
-        return $this;
-    }
-
-    /**
-     * Get nbCliTelValidML
-     *
-     * @return integer 
-     */
-    public function getNbCliTelValidML()
-    {
-        return $this->nbCliTelValidML;
-    }
-
-    /**
-     * Set nbCliTelNonvalidML
-     *
-     * @param integer $nbCliTelNonvalidML
-     * @return KpiCapture
-     */
-    public function setNbCliTelNonvalidML($nbCliTelNonvalidML)
-    {
-        $this->nbCliTelNonvalidML = $nbCliTelNonvalidML;
-
-        return $this;
-    }
-
-    /**
-     * Get nbCliTelNonvalidML
-     *
-     * @return integer 
-     */
-    public function getNbCliTelNonvalidML()
-    {
-        return $this->nbCliTelNonvalidML;
-    }
-
-    /**
-     * Set nbCliTelNonrensML
-     *
-     * @param integer $nbCliTelNonrensML
-     * @return KpiCapture
-     */
-    public function setNbCliTelNonrensML($nbCliTelNonrensML)
-    {
-        $this->nbCliTelNonrensML = $nbCliTelNonrensML;
-
-        return $this;
-    }
-
-    /**
-     * Get nbCliTelNonrensML
-     *
-     * @return integer 
-     */
-    public function getNbCliTelNonrensML()
-    {
-        return $this->nbCliTelNonrensML;
-    }
-
-    /**
-     * Set nbCliAddValidML
-     *
-     * @param integer $nbCliAddValidML
-     * @return KpiCapture
-     */
-    public function setNbCliAddValidML($nbCliAddValidML)
-    {
-        $this->nbCliAddValidML = $nbCliAddValidML;
-
-        return $this;
-    }
-
-    /**
-     * Get nbCliAddValidML
-     *
-     * @return integer 
-     */
-    public function getNbCliAddValidML()
-    {
-        return $this->nbCliAddValidML;
-    }
-
-    /**
-     * Set nbCliAddNonvalidML
-     *
-     * @param integer $nbCliAddNonvalidML
-     * @return KpiCapture
-     */
-    public function setNbCliAddNonvalidML($nbCliAddNonvalidML)
-    {
-        $this->nbCliAddNonvalidML = $nbCliAddNonvalidML;
-
-        return $this;
-    }
-
-    /**
-     * Get nbCliAddNonvalidML
-     *
-     * @return integer 
-     */
-    public function getNbCliAddNonvalidML()
-    {
-        return $this->nbCliAddNonvalidML;
-    }
-
-    /**
-     * Set nbCliAddNonrensML
-     *
-     * @param integer $nbCliAddNonrensML
-     * @return KpiCapture
-     */
-    public function setNbCliAddNonrensML($nbCliAddNonrensML)
-    {
-        $this->nbCliAddNonrensML = $nbCliAddNonrensML;
-
-        return $this;
-    }
-
-    /**
-     * Get nbCliAddNonrensML
-     *
-     * @return integer 
-     */
-    public function getNbCliAddNonrensML()
-    {
-        return $this->nbCliAddNonrensML;
-    }
-
-    /**
-     * Set nbOptinYL
-     *
-     * @param integer $nbOptinYL
-     * @return KpiCapture
-     */
-    public function setNbOptinYL($nbOptinYL)
-    {
-        $this->nbOptinYL = $nbOptinYL;
-
-        return $this;
-    }
-
-    /**
-     * Get nbOptinYL
-     *
-     * @return integer 
-     */
-    public function getNbOptinYL()
-    {
-        return $this->nbOptinYL;
-    }
-
-    /**
-     * Set nbOptoutYL
-     *
-     * @param integer $nbOptoutYL
-     * @return KpiCapture
-     */
-    public function setNbOptoutYL($nbOptoutYL)
-    {
-        $this->nbOptoutYL = $nbOptoutYL;
-
-        return $this;
-    }
-
-    /**
-     * Get nbOptoutYL
-     *
-     * @return integer 
-     */
-    public function getNbOptoutYL()
-    {
-        return $this->nbOptoutYL;
-    }
-
-    /**
-     * Set pctOptinYL
-     *
-     * @param string $pctOptinYL
-     * @return KpiCapture
-     */
-    public function setPctOptinYL($pctOptinYL)
-    {
-        $this->pctOptinYL = $pctOptinYL;
-
-        return $this;
-    }
-
-    /**
-     * Get pctOptinYL
+     * Get pct_cli_email_valid_ytd
      *
      * @return string 
      */
-    public function getPctOptinYL()
+    public function getPctCliEmailValidYtd()
     {
-        return $this->pctOptinYL;
+        return $this->pct_cli_email_valid_ytd;
     }
 
     /**
-     * Set pctOptoutYL
+     * Set pct_cli_email_nonvalid_ytd
      *
-     * @param string $pctOptoutYL
+     * @param string $pctCliEmailNonvalidYtd
      * @return KpiCapture
      */
-    public function setPctOptoutYL($pctOptoutYL)
+    public function setPctCliEmailNonvalidYtd($pctCliEmailNonvalidYtd)
     {
-        $this->pctOptoutYL = $pctOptoutYL;
+        $this->pct_cli_email_nonvalid_ytd = $pctCliEmailNonvalidYtd;
 
         return $this;
     }
 
     /**
-     * Get pctOptoutYL
+     * Get pct_cli_email_nonvalid_ytd
      *
      * @return string 
      */
-    public function getPctOptoutYL()
+    public function getPctCliEmailNonvalidYtd()
     {
-        return $this->pctOptoutYL;
+        return $this->pct_cli_email_nonvalid_ytd;
     }
 
     /**
-     * Set nbCliCoordValidYL
+     * Set pct_cli_email_nonrens_ytd
      *
-     * @param integer $nbCliCoordValidYL
+     * @param string $pctCliEmailNonrensYtd
      * @return KpiCapture
      */
-    public function setNbCliCoordValidYL($nbCliCoordValidYL)
+    public function setPctCliEmailNonrensYtd($pctCliEmailNonrensYtd)
     {
-        $this->nbCliCoordValidYL = $nbCliCoordValidYL;
+        $this->pct_cli_email_nonrens_ytd = $pctCliEmailNonrensYtd;
 
         return $this;
     }
 
     /**
-     * Get nbCliCoordValidYL
+     * Get pct_cli_email_nonrens_ytd
      *
-     * @return integer 
+     * @return string 
      */
-    public function getNbCliCoordValidYL()
+    public function getPctCliEmailNonrensYtd()
     {
-        return $this->nbCliCoordValidYL;
+        return $this->pct_cli_email_nonrens_ytd;
     }
 
     /**
-     * Set nbCliCoordNonvalidYL
+     * Set pct_cli_tel_valid_ytd
      *
-     * @param integer $nbCliCoordNonvalidYL
+     * @param string $pctCliTelValidYtd
      * @return KpiCapture
      */
-    public function setNbCliCoordNonvalidYL($nbCliCoordNonvalidYL)
+    public function setPctCliTelValidYtd($pctCliTelValidYtd)
     {
-        $this->nbCliCoordNonvalidYL = $nbCliCoordNonvalidYL;
+        $this->pct_cli_tel_valid_ytd = $pctCliTelValidYtd;
 
         return $this;
     }
 
     /**
-     * Get nbCliCoordNonvalidYL
+     * Get pct_cli_tel_valid_ytd
      *
-     * @return integer 
+     * @return string 
      */
-    public function getNbCliCoordNonvalidYL()
+    public function getPctCliTelValidYtd()
     {
-        return $this->nbCliCoordNonvalidYL;
+        return $this->pct_cli_tel_valid_ytd;
     }
 
     /**
-     * Set nbCliCoordNonrensYL
+     * Set pct_cli_tel_nonvalid_ytd
      *
-     * @param integer $nbCliCoordNonrensYL
+     * @param string $pctCliTelNonvalidYtd
      * @return KpiCapture
      */
-    public function setNbCliCoordNonrensYL($nbCliCoordNonrensYL)
+    public function setPctCliTelNonvalidYtd($pctCliTelNonvalidYtd)
     {
-        $this->nbCliCoordNonrensYL = $nbCliCoordNonrensYL;
+        $this->pct_cli_tel_nonvalid_ytd = $pctCliTelNonvalidYtd;
 
         return $this;
     }
 
     /**
-     * Get nbCliCoordNonrensYL
+     * Get pct_cli_tel_nonvalid_ytd
      *
-     * @return integer 
+     * @return string 
      */
-    public function getNbCliCoordNonrensYL()
+    public function getPctCliTelNonvalidYtd()
     {
-        return $this->nbCliCoordNonrensYL;
+        return $this->pct_cli_tel_nonvalid_ytd;
     }
 
     /**
-     * Set nbCliEmailValidYL
+     * Set pct_cli_tel_nonrens_ytd
      *
-     * @param integer $nbCliEmailValidYL
+     * @param string $pctCliTelNonrensYtd
      * @return KpiCapture
      */
-    public function setNbCliEmailValidYL($nbCliEmailValidYL)
+    public function setPctCliTelNonrensYtd($pctCliTelNonrensYtd)
     {
-        $this->nbCliEmailValidYL = $nbCliEmailValidYL;
+        $this->pct_cli_tel_nonrens_ytd = $pctCliTelNonrensYtd;
 
         return $this;
     }
 
     /**
-     * Get nbCliEmailValidYL
+     * Get pct_cli_tel_nonrens_ytd
      *
-     * @return integer 
+     * @return string 
      */
-    public function getNbCliEmailValidYL()
+    public function getPctCliTelNonrensYtd()
     {
-        return $this->nbCliEmailValidYL;
+        return $this->pct_cli_tel_nonrens_ytd;
     }
 
     /**
-     * Set nbCliEmailNonvalidYL
+     * Set pct_cli_add_valid_ytd
      *
-     * @param integer $nbCliEmailNonvalidYL
+     * @param string $pctCliAddValidYtd
      * @return KpiCapture
      */
-    public function setNbCliEmailNonvalidYL($nbCliEmailNonvalidYL)
+    public function setPctCliAddValidYtd($pctCliAddValidYtd)
     {
-        $this->nbCliEmailNonvalidYL = $nbCliEmailNonvalidYL;
+        $this->pct_cli_add_valid_ytd = $pctCliAddValidYtd;
 
         return $this;
     }
 
     /**
-     * Get nbCliEmailNonvalidYL
+     * Get pct_cli_add_valid_ytd
      *
-     * @return integer 
+     * @return string 
      */
-    public function getNbCliEmailNonvalidYL()
+    public function getPctCliAddValidYtd()
     {
-        return $this->nbCliEmailNonvalidYL;
+        return $this->pct_cli_add_valid_ytd;
     }
 
     /**
-     * Set nbCliEmailNonrensYL
+     * Set pct_cli_add_nonvalid_ytd
      *
-     * @param integer $nbCliEmailNonrensYL
+     * @param string $pctCliAddNonvalidYtd
      * @return KpiCapture
      */
-    public function setNbCliEmailNonrensYL($nbCliEmailNonrensYL)
+    public function setPctCliAddNonvalidYtd($pctCliAddNonvalidYtd)
     {
-        $this->nbCliEmailNonrensYL = $nbCliEmailNonrensYL;
+        $this->pct_cli_add_nonvalid_ytd = $pctCliAddNonvalidYtd;
 
         return $this;
     }
 
     /**
-     * Get nbCliEmailNonrensYL
+     * Get pct_cli_add_nonvalid_ytd
      *
-     * @return integer 
+     * @return string 
      */
-    public function getNbCliEmailNonrensYL()
+    public function getPctCliAddNonvalidYtd()
     {
-        return $this->nbCliEmailNonrensYL;
+        return $this->pct_cli_add_nonvalid_ytd;
     }
 
     /**
-     * Set nbCliTelValidYL
+     * Set pct_cli_add_nonrens_ytd
      *
-     * @param integer $nbCliTelValidYL
+     * @param string $pctCliAddNonrensYtd
      * @return KpiCapture
      */
-    public function setNbCliTelValidYL($nbCliTelValidYL)
+    public function setPctCliAddNonrensYtd($pctCliAddNonrensYtd)
     {
-        $this->nbCliTelValidYL = $nbCliTelValidYL;
+        $this->pct_cli_add_nonrens_ytd = $pctCliAddNonrensYtd;
 
         return $this;
     }
 
     /**
-     * Get nbCliTelValidYL
+     * Get pct_cli_add_nonrens_ytd
      *
-     * @return integer 
+     * @return string 
      */
-    public function getNbCliTelValidYL()
+    public function getPctCliAddNonrensYtd()
     {
-        return $this->nbCliTelValidYL;
+        return $this->pct_cli_add_nonrens_ytd;
     }
 
     /**
-     * Set nbCliTelNonvalidYL
+     * Set nb_email_ytd
      *
-     * @param integer $nbCliTelNonvalidYL
+     * @param integer $nbEmailYtd
      * @return KpiCapture
      */
-    public function setNbCliTelNonvalidYL($nbCliTelNonvalidYL)
+    public function setNbEmailYtd($nbEmailYtd)
     {
-        $this->nbCliTelNonvalidYL = $nbCliTelNonvalidYL;
+        $this->nb_email_ytd = $nbEmailYtd;
 
         return $this;
     }
 
     /**
-     * Get nbCliTelNonvalidYL
+     * Get nb_email_ytd
      *
      * @return integer 
      */
-    public function getNbCliTelNonvalidYL()
+    public function getNbEmailYtd()
     {
-        return $this->nbCliTelNonvalidYL;
+        return $this->nb_email_ytd;
     }
 
     /**
-     * Set nbCliTelNonrensYL
+     * Set nb_tel_ytd
      *
-     * @param integer $nbCliTelNonrensYL
+     * @param integer $nbTelYtd
      * @return KpiCapture
      */
-    public function setNbCliTelNonrensYL($nbCliTelNonrensYL)
+    public function setNbTelYtd($nbTelYtd)
     {
-        $this->nbCliTelNonrensYL = $nbCliTelNonrensYL;
+        $this->nb_tel_ytd = $nbTelYtd;
 
         return $this;
     }
 
     /**
-     * Get nbCliTelNonrensYL
+     * Get nb_tel_ytd
      *
      * @return integer 
      */
-    public function getNbCliTelNonrensYL()
+    public function getNbTelYtd()
     {
-        return $this->nbCliTelNonrensYL;
+        return $this->nb_tel_ytd;
     }
 
     /**
-     * Set nbCliAddValidYL
+     * Set nb_adr_ytd
      *
-     * @param integer $nbCliAddValidYL
+     * @param integer $nbAdrYtd
      * @return KpiCapture
      */
-    public function setNbCliAddValidYL($nbCliAddValidYL)
+    public function setNbAdrYtd($nbAdrYtd)
     {
-        $this->nbCliAddValidYL = $nbCliAddValidYL;
+        $this->nb_adr_ytd = $nbAdrYtd;
 
         return $this;
     }
 
     /**
-     * Get nbCliAddValidYL
+     * Get nb_adr_ytd
      *
      * @return integer 
      */
-    public function getNbCliAddValidYL()
+    public function getNbAdrYtd()
     {
-        return $this->nbCliAddValidYL;
+        return $this->nb_adr_ytd;
     }
 
     /**
-     * Set nbCliAddNonvalidYL
+     * Set nb_cli_actifs_ytd
      *
-     * @param integer $nbCliAddNonvalidYL
+     * @param integer $nbCliActifsYtd
      * @return KpiCapture
      */
-    public function setNbCliAddNonvalidYL($nbCliAddNonvalidYL)
+    public function setNbCliActifsYtd($nbCliActifsYtd)
     {
-        $this->nbCliAddNonvalidYL = $nbCliAddNonvalidYL;
+        $this->nb_cli_actifs_ytd = $nbCliActifsYtd;
 
         return $this;
     }
 
     /**
-     * Get nbCliAddNonvalidYL
+     * Get nb_cli_actifs_ytd
      *
      * @return integer 
      */
-    public function getNbCliAddNonvalidYL()
+    public function getNbCliActifsYtd()
     {
-        return $this->nbCliAddNonvalidYL;
+        return $this->nb_cli_actifs_ytd;
     }
 
     /**
-     * Set nbCliAddNonrensYL
+     * Set nb_cli_actifs_new_ytd
      *
-     * @param integer $nbCliAddNonrensYL
+     * @param integer $nbCliActifsNewYtd
      * @return KpiCapture
      */
-    public function setNbCliAddNonrensYL($nbCliAddNonrensYL)
+    public function setNbCliActifsNewYtd($nbCliActifsNewYtd)
     {
-        $this->nbCliAddNonrensYL = $nbCliAddNonrensYL;
+        $this->nb_cli_actifs_new_ytd = $nbCliActifsNewYtd;
 
         return $this;
     }
 
     /**
-     * Get nbCliAddNonrensYL
+     * Get nb_cli_actifs_new_ytd
      *
      * @return integer 
      */
-    public function getNbCliAddNonrensYL()
+    public function getNbCliActifsNewYtd()
     {
-        return $this->nbCliAddNonrensYL;
+        return $this->nb_cli_actifs_new_ytd;
+    }
+
+    /**
+     * Set nb_cli_actifs_exist_ytd
+     *
+     * @param integer $nbCliActifsExistYtd
+     * @return KpiCapture
+     */
+    public function setNbCliActifsExistYtd($nbCliActifsExistYtd)
+    {
+        $this->nb_cli_actifs_exist_ytd = $nbCliActifsExistYtd;
+
+        return $this;
+    }
+
+    /**
+     * Get nb_cli_actifs_exist_ytd
+     *
+     * @return integer 
+     */
+    public function getNbCliActifsExistYtd()
+    {
+        return $this->nb_cli_actifs_exist_ytd;
+    }
+
+    /**
+     * Set nb_trans_tot_ytd
+     *
+     * @param integer $nbTransTotYtd
+     * @return KpiCapture
+     */
+    public function setNbTransTotYtd($nbTransTotYtd)
+    {
+        $this->nb_trans_tot_ytd = $nbTransTotYtd;
+
+        return $this;
+    }
+
+    /**
+     * Get nb_trans_tot_ytd
+     *
+     * @return integer 
+     */
+    public function getNbTransTotYtd()
+    {
+        return $this->nb_trans_tot_ytd;
+    }
+
+    /**
+     * Set nb_cli_coord_valid_ytd
+     *
+     * @param integer $nbCliCoordValidYtd
+     * @return KpiCapture
+     */
+    public function setNbCliCoordValidYtd($nbCliCoordValidYtd)
+    {
+        $this->nb_cli_coord_valid_ytd = $nbCliCoordValidYtd;
+
+        return $this;
+    }
+
+    /**
+     * Get nb_cli_coord_valid_ytd
+     *
+     * @return integer 
+     */
+    public function getNbCliCoordValidYtd()
+    {
+        return $this->nb_cli_coord_valid_ytd;
+    }
+
+    /**
+     * Set nb_cli_coord_nonvalid_ytd
+     *
+     * @param integer $nbCliCoordNonvalidYtd
+     * @return KpiCapture
+     */
+    public function setNbCliCoordNonvalidYtd($nbCliCoordNonvalidYtd)
+    {
+        $this->nb_cli_coord_nonvalid_ytd = $nbCliCoordNonvalidYtd;
+
+        return $this;
+    }
+
+    /**
+     * Get nb_cli_coord_nonvalid_ytd
+     *
+     * @return integer 
+     */
+    public function getNbCliCoordNonvalidYtd()
+    {
+        return $this->nb_cli_coord_nonvalid_ytd;
+    }
+
+    /**
+     * Set nb_cli_email_valid_ytd
+     *
+     * @param integer $nbCliEmailValidYtd
+     * @return KpiCapture
+     */
+    public function setNbCliEmailValidYtd($nbCliEmailValidYtd)
+    {
+        $this->nb_cli_email_valid_ytd = $nbCliEmailValidYtd;
+
+        return $this;
+    }
+
+    /**
+     * Get nb_cli_email_valid_ytd
+     *
+     * @return integer 
+     */
+    public function getNbCliEmailValidYtd()
+    {
+        return $this->nb_cli_email_valid_ytd;
+    }
+
+    /**
+     * Set nb_cli_email_nonvalid_ytd
+     *
+     * @param integer $nbCliEmailNonvalidYtd
+     * @return KpiCapture
+     */
+    public function setNbCliEmailNonvalidYtd($nbCliEmailNonvalidYtd)
+    {
+        $this->nb_cli_email_nonvalid_ytd = $nbCliEmailNonvalidYtd;
+
+        return $this;
+    }
+
+    /**
+     * Get nb_cli_email_nonvalid_ytd
+     *
+     * @return integer 
+     */
+    public function getNbCliEmailNonvalidYtd()
+    {
+        return $this->nb_cli_email_nonvalid_ytd;
+    }
+
+    /**
+     * Set nb_cli_email_nonrens_ytd
+     *
+     * @param integer $nbCliEmailNonrensYtd
+     * @return KpiCapture
+     */
+    public function setNbCliEmailNonrensYtd($nbCliEmailNonrensYtd)
+    {
+        $this->nb_cli_email_nonrens_ytd = $nbCliEmailNonrensYtd;
+
+        return $this;
+    }
+
+    /**
+     * Get nb_cli_email_nonrens_ytd
+     *
+     * @return integer 
+     */
+    public function getNbCliEmailNonrensYtd()
+    {
+        return $this->nb_cli_email_nonrens_ytd;
+    }
+
+    /**
+     * Set nb_cli_tel_valid_ytd
+     *
+     * @param integer $nbCliTelValidYtd
+     * @return KpiCapture
+     */
+    public function setNbCliTelValidYtd($nbCliTelValidYtd)
+    {
+        $this->nb_cli_tel_valid_ytd = $nbCliTelValidYtd;
+
+        return $this;
+    }
+
+    /**
+     * Get nb_cli_tel_valid_ytd
+     *
+     * @return integer 
+     */
+    public function getNbCliTelValidYtd()
+    {
+        return $this->nb_cli_tel_valid_ytd;
+    }
+
+    /**
+     * Set nb_cli_tel_nonvalid_ytd
+     *
+     * @param integer $nbCliTelNonvalidYtd
+     * @return KpiCapture
+     */
+    public function setNbCliTelNonvalidYtd($nbCliTelNonvalidYtd)
+    {
+        $this->nb_cli_tel_nonvalid_ytd = $nbCliTelNonvalidYtd;
+
+        return $this;
+    }
+
+    /**
+     * Get nb_cli_tel_nonvalid_ytd
+     *
+     * @return integer 
+     */
+    public function getNbCliTelNonvalidYtd()
+    {
+        return $this->nb_cli_tel_nonvalid_ytd;
+    }
+
+    /**
+     * Set nb_cli_tel_nonrens_ytd
+     *
+     * @param integer $nbCliTelNonrensYtd
+     * @return KpiCapture
+     */
+    public function setNbCliTelNonrensYtd($nbCliTelNonrensYtd)
+    {
+        $this->nb_cli_tel_nonrens_ytd = $nbCliTelNonrensYtd;
+
+        return $this;
+    }
+
+    /**
+     * Get nb_cli_tel_nonrens_ytd
+     *
+     * @return integer 
+     */
+    public function getNbCliTelNonrensYtd()
+    {
+        return $this->nb_cli_tel_nonrens_ytd;
+    }
+
+    /**
+     * Set nb_cli_add_valid_ytd
+     *
+     * @param integer $nbCliAddValidYtd
+     * @return KpiCapture
+     */
+    public function setNbCliAddValidYtd($nbCliAddValidYtd)
+    {
+        $this->nb_cli_add_valid_ytd = $nbCliAddValidYtd;
+
+        return $this;
+    }
+
+    /**
+     * Get nb_cli_add_valid_ytd
+     *
+     * @return integer 
+     */
+    public function getNbCliAddValidYtd()
+    {
+        return $this->nb_cli_add_valid_ytd;
+    }
+
+    /**
+     * Set nb_cli_add_nonvalid_ytd
+     *
+     * @param integer $nbCliAddNonvalidYtd
+     * @return KpiCapture
+     */
+    public function setNbCliAddNonvalidYtd($nbCliAddNonvalidYtd)
+    {
+        $this->nb_cli_add_nonvalid_ytd = $nbCliAddNonvalidYtd;
+
+        return $this;
+    }
+
+    /**
+     * Get nb_cli_add_nonvalid_ytd
+     *
+     * @return integer 
+     */
+    public function getNbCliAddNonvalidYtd()
+    {
+        return $this->nb_cli_add_nonvalid_ytd;
+    }
+
+    /**
+     * Set nb_cli_add_nonrens_ytd
+     *
+     * @param integer $nbCliAddNonrensYtd
+     * @return KpiCapture
+     */
+    public function setNbCliAddNonrensYtd($nbCliAddNonrensYtd)
+    {
+        $this->nb_cli_add_nonrens_ytd = $nbCliAddNonrensYtd;
+
+        return $this;
+    }
+
+    /**
+     * Get nb_cli_add_nonrens_ytd
+     *
+     * @return integer 
+     */
+    public function getNbCliAddNonrensYtd()
+    {
+        return $this->nb_cli_add_nonrens_ytd;
+    }
+
+    /**
+     * Set pct_cli_coord_nonvalid_m
+     *
+     * @param string $pctCliCoordNonvalidM
+     * @return KpiCapture
+     */
+    public function setPctCliCoordNonvalidM($pctCliCoordNonvalidM)
+    {
+        $this->pct_cli_coord_nonvalid_m = $pctCliCoordNonvalidM;
+
+        return $this;
+    }
+
+    /**
+     * Get pct_cli_coord_nonvalid_m
+     *
+     * @return string 
+     */
+    public function getPctCliCoordNonvalidM()
+    {
+        return $this->pct_cli_coord_nonvalid_m;
     }
 }

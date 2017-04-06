@@ -31,45 +31,17 @@ class ImportKpiCronCommand extends ContainerAwareCommand
 		$date = new \DateTime();
         $date = $date->format("Ymd");
 
+        $output->writeln("ip :" . $ip);
+
         if($ip == "127.0.0.1")
         {
-            $filename1 = "D:\\wamp\\www\\StoreApp\\web\\imports\\kpis\\tdb_boutiques_trigger_".$date.".csv";
-            $filename2 = "D:\\wamp\\www\\StoreApp\\web\\imports\\kpis\\tdb_boutiques_capture_".$date.".csv";
+            $filename1 = "D:\\wamp\\www\\demo\\web\\imports\\KPI_CAPTURE.csv";
+            $filename2 = "D:\\wamp\\www\\demo\\web\\imports\\KPI_Triggers.csv";
         }
         else{
-            $filename1 = "/data/ftp/imports/kpis/tdb_boutiques_trigger_".$date.".csv";
-            $filename2 = "/data/ftp/imports/kpis/tdb_boutiques_capture_".$date.".csv";
+            $filename1 = "/data/ftp/imports/KPI_CAPTURE.csv";
+            $filename2 = "/data/ftp/imports/KPI_Triggers.csv";
         }
-
-		/*if ( file_exists($filename1) && file_exists($filename2) ) {
-		    $text = $this->getDescription();
-			$output->writeln($text);
-
-			$import = $this->getContainer()->get('cron.import.kpi');
-
-			$output->writeln("Configuration du separateur");
-			$import->setSeparator($input->getArgument('separator'));
-
-			$output->writeln("Import des Kpi Trigger");
-			$import->importKpiTriggerCSVFile($input, $output);
-
-			$output->writeln("Import des Kpi Capture");
-			$import->importKpiCaptureCSVFile($input, $output);
-		*/
-			/*$files = $import->scanDir();
-			$i = 1;
-			foreach ($files as $csv) {
-				if(substr($csv, -4) == ".csv" ){
-					$output->writeln('Ouverture du fichier '.$i.' : '.$csv);
-					$import->importKpiCaptureCSVFile($input, $output, $csv);
-					$i++;
-				}
-			}*/
-		/*
-			$import->moveUploadedFile();
-		} else {
-		    $output->writeln("Aucun fichier, annulation de l'import");
-		}*/
 
 		
 	    $text = $this->getDescription();
@@ -80,18 +52,10 @@ class ImportKpiCronCommand extends ContainerAwareCommand
 		$output->writeln("Configuration du separateur");
 		$import->setSeparator($input->getArgument('separator'));
 
-		$output->writeln("Import des Kpi Capture");
-		$files = $import->scanDir();
-		$i = 1;
-		foreach ($files as $csv) {
-			if(substr($csv, -4) == ".csv" ){
-				$output->writeln('Ouverture du fichier '.$i.' : '.$csv);
-				$import->importKpiCaptureCSVFile($input, $output, $csv);
-				$i++;
-			}
-		}
-
-		//$import->moveUploadedFile();
+		$output->writeln("Import des Kpi Capture 1/2");
+		$import->importKpiCaptureCSVFile($input, $output, $filename1);
+		//$output->writeln("Import des Kpi Trigger 2/2");
+		//$import->importKpiTriggerCSVFile($input, $output, $filename2);
 
 		$date2 = new \DateTime();
 		$date2 = $date2->format('H:i:s');
