@@ -23,16 +23,16 @@
         {# On charge le CSS de bootstrap depuis le site directement #}
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css?v=20170222" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
 
-        {% stylesheets
+        {#% stylesheets
             filter="cssrewrite,compass"
             output="css/all.css"
             "sass/main.scss"
-        %}
-            <link rel="stylesheet" href="{{ asset_url }}">
+        %#}
+            <!--link rel="stylesheet" href="{{ asset_url }}"-->
             <link rel="stylesheet" href="{{ asset('web/css/font-awesome.min.css') }}?v=20170222">
             <link rel="stylesheet" href="{{ asset('web/css/all.css') }}?v=20170222">
             <link rel="stylesheet" href="{{ asset('web/css/jquery.multiselect.css') }}?v=20170222">
-        {% endstylesheets %}
+        {#% endstylesheets %#}
 
         <script src="{{ asset('web/js/ckeditor/ckeditor.js') }}?v=20170222"></script>
         <script type="text/javascript">
