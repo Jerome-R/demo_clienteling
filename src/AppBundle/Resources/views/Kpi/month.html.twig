@@ -20,21 +20,11 @@
 
 			<div class="inside col-xs-12 col-md-4">
 				<h3 class="text-uppercase text-center gris">Identification des clients</h3>
-
-				<figure class="col-xs-12">
-					<div id="chartContainer0" class="col-xs-12" style="height: 194px;"></div>
-				</figure>
 				
 				<div class="spacer"></div>
 				<div class="col-xs-12">
 					<p class="col-xs-12 text-center text-uppercase"><br />
-						<strong>{{ kpiCurrentMonth.nbTransTotM|number_format(0, ',', ' ') }} Transactions enregistrées, dont {{ kpiCurrentMonth.nbTransLocalM|number_format(0, ',', ' ') }} au niveau local</strong>
-					</p>
-					<h5 class="gris">Transactions :</h5>
-					<p class="small col-xs-12">
-						<i class="fa fa-square fa-lg blue" aria-hidden="true"></i> Reliées à une fiche client - locaux<br />
-						<i  class="fa fa-square fa-lg orange" aria-hidden="true"></i> Reliées à une fiche client - non locaux<br />				
-						<i class="fa fa-square fa-lg gray2" aria-hidden="true"></i> Non reliées à une fiche client
+						<strong>{{ kpiCurrentMonth.nbTransTotM|number_format(0, ',', ' ') }} Transactions enregistrées<br />Sur le mois {{ getMonthWording(month, "de") }} {{ kpiCurrentMonth.date|date("Y") }}</strong>
 					</p>
 				</div>
 
@@ -57,7 +47,7 @@
 			</div>
 
 			<div class="inside col-xs-12 bordered-top">
-				<h3 class="text-uppercase text-center gris">Contactabilité des {{ kpiCurrentMonth.nbCliActifsML|number_format(0, ',', ' ') }} Clients actifs<br/>au global et par canal</h3>
+				<h3 class="text-uppercase text-center gris">Contactabilité des {{ kpiCurrentMonth.nbCliActifsM|number_format(0, ',', ' ') }} Clients actifs<br/>au global et par canal</h3>
 
 				<div class="col-xs-12 col-md-9">
 					<figure class="col-xs-3">
@@ -81,8 +71,8 @@
 					<figure class="col-xs-12">
 						<h4 class="text-center bg-white gris" style="height:55px;">Données non-valides sur le total des données collectées</h4>
 						<div id="chartContainer5" style="height: 150px; box-sizing: border-box;padding-top:35px;">
-							{% set data_nv = ( (( kpiCurrentMonth.nbCliEmailNonvalidML + kpiCurrentMonth.nbCliTelNonvalidML + kpiCurrentMonth.nbCliAddNonvalidML) / (kpiCurrentMonth.nbCliEmailNonvalidML + kpiCurrentMonth.nbCliTelNonvalidML + kpiCurrentMonth.nbCliAddNonvalidML + 
-								kpiCurrentMonth.nbCliEmailValidML + kpiCurrentMonth.nbCliTelValidML + kpiCurrentMonth.nbCliAddValidML)) * 100 )|number_format('0','.','') %}
+							{% set data_nv = ( (( kpiCurrentMonth.nbCliEmailNonvalidM + kpiCurrentMonth.nbCliTelNonvalidM + kpiCurrentMonth.nbCliAddNonvalidM) / (kpiCurrentMonth.nbCliEmailNonvalidM + kpiCurrentMonth.nbCliTelNonvalidM + kpiCurrentMonth.nbCliAddNonvalidM + 
+								kpiCurrentMonth.nbCliEmailValidM + kpiCurrentMonth.nbCliTelValidM + kpiCurrentMonth.nbCliAddValidM)) * 100 )|number_format('0','.','') %}
 							<p class="text-center {% if data_nv > 5 %}red{% else %}green{% endif %}" style="font-weight:bold; font-size:42px;color:#aaaaaa">
 								{{ data_nv }} %
 							</p>
@@ -100,20 +90,18 @@
 					<p class="small col-xs-12">
 						<i class="fa fa-square fa-lg blue" aria-hidden="true"></i> Clients contactables : données valides et optin<br />
 						<i class="fa fa-square fa-lg orange" aria-hidden="true"></i> Clients optin mais données non renseignées<br />
-						<i  class="fa fa-square fa-lg yellow" aria-hidden="true"></i> Clients optin mais données invalides<br />
-						<i class="fa fa-square fa-lg gray2" aria-hidden="true"></i> Clients optout
+						<i  class="fa fa-square fa-lg yellow" aria-hidden="true"></i> Clients optin mais données invalides
 					</p>
 				</div>
 
 				<div class="col-xs-12 col-md-8">
 					<h5 class="gris">Clés de lecture :</h5>
 					<p class="small col-xs-12">
-						Sur les {{ kpiCurrentMonth.nbCliML|number_format(0,'',' ') }} clients actifs et identifiés du mois {{ getMonthWording(month, "de") }} {{ kpiCurrentMonth.date|date("Y") }}<br />
+						Sur les {{ kpiCurrentMonth.nbCliM|number_format(0,'',' ') }} clients actifs et identifiés du mois {{ getMonthWording(month, "de") }} {{ kpiCurrentMonth.date|date("Y") }}<br />
 						<strong>Au global :</strong>
-						{{ kpiCurrentMonth.pctCliCoordValidML|number_format(1, ',', ' ') }}% sont contactables (sont optin et ont au moins une donnée de contact renseignée et valide)<br />
-						{{ (100.00 - kpiCurrentMonth.pctCliCoordValidML)|number_format(1, ',', ' ') }}% sont non contactables dont {{  kpiCurrentMonth.pctOptoutML|number_format(1, ',', ' ') }}% de clients optout / {{ kpiCurrentMonth.pctCliCoordNonrensML|number_format(1, ',', ' ') }}% optin mais sans donnée renseignée / {{kpiCurrentMonth.pctCliCoordNonvalidML|number_format(1, ',', ' ')}}% optin mais sans donnée donnée valide<br />
+						{{ kpiCurrentMonth.pctCliCoordValidM|number_format(0, ',', ' ') }}% sont contactables<br />
 						<strong>Par canal :</strong>
-						{{ kpiCurrentMonth.pctCliEmailValidML|number_format(1, ',', ' ') }}% sont contactables email / {{ kpiCurrentMonth.pctCliTelValidML|number_format(1, ',', ' ') }}% sont contactables téléphone / {{ kpiCurrentMonth.pctCliAddValidML|number_format(1, ',', ' ') }}% sont contactables print
+						{{ kpiCurrentMonth.pctCliEmailValidM|number_format(0, ',', ' ') }}% sont contactables email / {{ kpiCurrentMonth.pctCliTelValidM|number_format(0, ',', ' ') }}% sont contactables téléphone / {{ kpiCurrentMonth.pctCliAddValidM|number_format(0, ',', ' ') }}% sont contactables print
 					</p>
 				</div>
 			</div>
@@ -127,32 +115,32 @@
 		<div class="col-xs-12 kpi-box">
 
 			<div class="inside col-xs-12">
-				<h3 class="text-uppercase text-center gris">{{ kpiCurrentMonth.nbCliActifsML|number_format(0, ',', ' ') }} Clients actifs<br />sur le mois {{ getMonthWording(month, "de") }} {{ kpiCurrentMonth.date|date("Y") }} dont</h3>
+				<h3 class="text-uppercase text-center gris">{{ kpiCurrentMonth.nbCliActifsM|number_format(0, ',', ' ') }} Clients actifs<br />sur le mois {{ getMonthWording(month, "de") }} {{ kpiCurrentMonth.date|date("Y") }} dont</h3>
 				
 				<div class="col-xs-6">
 					<h3 class="text-uppercase" style="color: #E8810C;"><i class="fa fa-square fa-lg " aria-hidden="true"></i> 
-						{% if  kpiCurrentMonth.nbCliActifsML > 0 %}
-							{{  kpiCurrentMonth.nbCliActifsNewML|number_format("0",",", " ") }}
+						{% if  kpiCurrentMonth.nbCliActifsM > 0 %}
+							{{  kpiCurrentMonth.nbCliActifsNewM|number_format("0",",", " ") }}
 						{% endif %} clients recrutés en {{ getMonthWording(month, "") }} {{ kpiCurrentMonth.date|date("Y") }}
 					</h3>
 					{% if kpiLastYear is not null %}
-						{% set pct_evol_new = ((( kpiCurrentMonth.nbCliActifsNewML - kpiLastYear.nbCliActifsNewML) / kpiLastYear.nbCliActifsNewML) * 100)|number_format(0, ',', ' ') %}
+						{% set pct_evol_new = ((( kpiCurrentMonth.nbCliActifsNewM - kpiLastYear.nbCliActifsNewM) / kpiLastYear.nbCliActifsNewM) * 100)|number_format(0, ',', ' ') %}
 						<p class="{% if pct_evol_new > 0 %}green{% else %}red{% endif %} big"><i class="fa fa-arrow-{% if pct_evol_new > 0 %}up{% else %}down{% endif %}" aria-hidden="true"></i>
-							{% if kpiLastYear.nbCliActifsNewML > 0 %}
+							{% if kpiLastYear.nbCliActifsNewM > 0 %}
 								{% if  pct_evol_new > 0 %}+{% endif %}{{ pct_evol_new }}%
 							{% endif %}
 						versus {{ getMonthWording(month, "") }} {{ kpiCurrentMonth.date|date("Y") - 1 }}</p>
 					{% endif %}
 
 					<h3 class="text-uppercase" style="color: #2D64AB;"><i class="fa fa-square fa-lg " aria-hidden="true"></i> 
-						{% if  kpiCurrentMonth.nbCliActifsML > 0 %}
-							{{  kpiCurrentMonth.nbCliActifsExistML|number_format("0",",", " ") }}
+						{% if  kpiCurrentMonth.nbCliActifsM > 0 %}
+							{{  kpiCurrentMonth.nbCliActifsExistM|number_format("0",",", " ") }}
 						{% endif %} clients existants en {{ getMonthWording(month, "") }} {{ kpiCurrentMonth.date|date("Y") }}
 					</h3>
 					{% if kpiLastYear is not null %}
-						{% set pct_evol_exist = ((( kpiCurrentMonth.nbCliActifsExistML - kpiLastYear.nbCliActifsExistML) / kpiLastYear.nbCliActifsExistML) * 100)|number_format(0, ',', ' ') %}
+						{% set pct_evol_exist = ((( kpiCurrentMonth.nbCliActifsExistM - kpiLastYear.nbCliActifsExistM) / kpiLastYear.nbCliActifsExistM) * 100)|number_format(0, ',', ' ') %}
 						<p class="{% if pct_evol_exist > 0 %}green{% else %}red{% endif %} big"><i class="fa fa-arrow-{% if pct_evol_exist > 0 %}up{% else %}down{% endif %}" aria-hidden="true"></i>
-							{% if kpiLastYear.nbCliActifsExistML > 0 %}
+							{% if kpiLastYear.nbCliActifsExistM > 0 %}
 								{% if  pct_evol_exist > 0 %}+{% endif %}{{ pct_evol_exist }}%
 							{% endif %}
 							versus {{ getMonthWording(month, "") }} {{ kpiCurrentMonth.date|date("Y") - 1 }}
@@ -259,7 +247,7 @@
 			colorSet: "set6",
 			animationEnabled: true,
 			title:{
-				text: {{ (kpiCurrentMonth.pctCliCoordValidML)|number_format }} + "%",
+				text: {{ (kpiCurrentMonth.pctCliCoordValidM)|number_format }} + "%",
 				fontSize: 22,
 				verticalAlign: "center", // "top", "center", "bottom"
 				horizontalAlign: "center", // "left", "right", "center"
@@ -279,10 +267,8 @@
 				highlightEnabled: false,
 				innerRadius: "75%",
 				dataPoints: [
-					{  y: {{ (kpiCurrentMonth.pctCliCoordValidML) }}, toolTipContent: "{{ (kpiCurrentMonth.pctCliCoordValidML)|number_format("0",",", "") }} %<br/>{{ (kpiCurrentMonth.nbCliCoordValidML)|number_format(0,'',' ') }} clients"},
-					{  y: {{ (kpiCurrentMonth.pctCliCoordNonrensML) }}, indexLabel: "", indexLabelFontWeight: "bold", indexLabelFontColor: "white", indexLabelFontSize: 10, toolTipContent: "{{ (kpiCurrentMonth.pctCliCoordNonrensML)|number_format("0",",", "") }} %<br/>{{ (kpiCurrentMonth.nbCliCoordNonrensML)|number_format(0,'',' ') }} clients"},
-					{  y: {{ (kpiCurrentMonth.pctCliCoordNonvalidML) }}, indexLabel: "", indexLabelFontWeight: "bold", indexLabelFontColor: "black", indexLabelFontSize: 8, toolTipContent: "{{ (kpiCurrentMonth.pctCliCoordNonvalidML)|number_format("0",",", "") }} %<br/>{{ (kpiCurrentMonth.nbCliCoordNonvalidML)|number_format(0,'',' ') }} clients"},
-					{  y: {{ (kpiCurrentMonth.pctOptoutML) }}, indexLabel: "", indexLabelFontWeight: "bold", indexLabelFontColor: "black", indexLabelFontSize: 8, toolTipContent: "{{ (kpiCurrentMonth.pctOptoutML)|number_format("0",",", "") }} %<br/>{{ (kpiCurrentMonth.nbOptoutML)|number_format(0,'',' ') }} clients"},
+					{  y: {{ (kpiCurrentMonth.nbCliCoordValidM) }}, toolTipContent: "{{ (kpiCurrentMonth.nbCliCoordValidM)|number_format(0,'',' ') }} clients"},
+					{  y: {{ (kpiCurrentMonth.nbCliCoordNonvalidM) }}, indexLabel: "", indexLabelFontWeight: "bold", indexLabelFontColor: "black", indexLabelFontSize: 8, toolTipContent: "{{ (kpiCurrentMonth.nbCliCoordNonvalidM)|number_format(0,'',' ') }} clients"},
 				]
 			}
 			]
@@ -295,7 +281,7 @@
 			colorSet: "set6",
 			animationEnabled: true,
 			title:{
-				text: {{ (kpiCurrentMonth.pctCliEmailValidML)|number_format }} + "%",
+				text: {{ (kpiCurrentMonth.pctCliEmailValidM)|number_format }} + "%",
 				fontSize: 22,
 				verticalAlign: "center", // "top", "center", "bottom"
 				horizontalAlign: "center", // "left", "right", "center"
@@ -316,10 +302,9 @@
 				highlightEnabled: false,
 				innerRadius: "75%",
 				dataPoints: [
-					{  y: {{ (kpiCurrentMonth.pctCliEmailValidML) }}, indexLabel: "", indexLabelFontWeight: "bold", toolTipContent: "{{ (kpiCurrentMonth.pctCliEmailValidML)|number_format("0",",", "") }} %<br/>{{ (kpiCurrentMonth.nbCliEmailValidML)|number_format(0,'',' ') }} clients"},
-					{  y: {{ (kpiCurrentMonth.pctCliEmailNonrensML) }}, indexLabel: "", indexLabelFontSize: 10,indexLabelFontColor: "white",indexLabelFontWeight: "bold",toolTipContent: "{{ (kpiCurrentMonth.pctCliEmailNonrensML)|number_format("0",",", "") }} %<br/>{{ (kpiCurrentMonth.nbCliEmailNonrensML)|number_format(0,'',' ') }} clients"},
-					{  y: {{ (kpiCurrentMonth.pctCliEmailNonvalidML) }}, indexLabel: "", indexLabelFontWeight: "bold", indexLabelFontColor: "black", indexLabelFontSize: 10, toolTipContent: "{{ (kpiCurrentMonth.pctCliEmailNonvalidML)|number_format("0",",", "") }} %<br/>{{ (kpiCurrentMonth.nbCliEmailNonvalidML)|number_format(0,'',' ') }} clients"},
-					{  y: {{ (kpiCurrentMonth.pctOptoutML) }}, indexLabel: "", indexLabelFontWeight: "bold", indexLabelFontColor: "black", indexLabelFontSize: 8, toolTipContent: "{{ (kpiCurrentMonth.pctOptoutML)|number_format("0",",", "") }} %<br/>{{ (kpiCurrentMonth.nbOptoutML)|number_format(0,'',' ') }} clients"},
+					{  y: {{ (kpiCurrentMonth.nbCliEmailValidM) }}, indexLabel: "", indexLabelFontWeight: "bold", toolTipContent: "{{ (kpiCurrentMonth.nbCliEmailValidM)|number_format(0,'',' ') }} clients"},
+					{  y: {{ (kpiCurrentMonth.nbCliEmailNonRensM) }}, indexLabel: "", indexLabelFontWeight: "bold", toolTipContent: "{{ (kpiCurrentMonth.nbCliEmailNonRensM)|number_format(0,'',' ') }} clients"},
+					{  y: {{ (kpiCurrentMonth.nbCliEmailNonvalidM) }}, indexLabel: "", indexLabelFontWeight: "bold", indexLabelFontColor: "black", indexLabelFontSize: 10, toolTipContent: "{{ (kpiCurrentMonth.nbCliEmailNonvalidM)|number_format(0,'',' ') }} clients"},
 				]
 			}
 			]
@@ -332,7 +317,7 @@
 			colorSet: "set6",
 			animationEnabled: true,
 			title:{
-				text: {{ (kpiCurrentMonth.pctCliTelValidML)|number_format }} + "%",
+				text: {{ (kpiCurrentMonth.pctCliTelValidM)|number_format }} + "%",
 				fontSize: 22,
 				verticalAlign: "center", // "top", "center", "bottom"
 				horizontalAlign: "center", // "left", "right", "center"
@@ -353,10 +338,9 @@
 				highlightEnabled: false,
 				innerRadius: "75%",
 				dataPoints: [
-					{  y: {{ (kpiCurrentMonth.pctCliTelValidML) }}, indexLabel: "",indexLabelFontSize: 10, indexLabelFontWeight: "bold", toolTipContent: "{{ (kpiCurrentMonth.pctCliTelValidML)|number_format("0",",", "") }} %<br/>{{ (kpiCurrentMonth.nbCliTelValidML)|number_format(0,'',' ') }} clients"},
-					{  y: {{ (kpiCurrentMonth.pctCliTelNonrensML) }}, indexLabel: "",indexLabelFontSize: 10,indexLabelFontColor: "white", indexLabelFontWeight: "bold",toolTipContent: "{{ (kpiCurrentMonth.pctCliTelNonrensML)|number_format("0",",", "") }} %<br/>{{ (kpiCurrentMonth.nbCliTelNonrensML)|number_format(0,'',' ') }} clients"},
-					{  y: {{ (kpiCurrentMonth.pctCliTelNonvalidML) }}, indexLabel: "", indexLabelFontWeight: "bold", indexLabelFontColor: "black", indexLabelFontSize: 10, toolTipContent: "{{ (kpiCurrentMonth.pctCliTelNonvalidML)|number_format("0",",", "") }} %<br/>{{ (kpiCurrentMonth.nbCliTelNonvalidML)|number_format(0,'',' ') }} clients"},
-					{  y: {{ (kpiCurrentMonth.pctOptoutML) }}, indexLabel: "", indexLabelFontWeight: "bold", indexLabelFontColor: "black", indexLabelFontSize: 8, toolTipContent: "{{ (kpiCurrentMonth.pctOptoutML)|number_format("0",",", "") }} %<br/>{{ (kpiCurrentMonth.nbOptoutML)|number_format(0,'',' ') }} clients"},
+					{  y: {{ (kpiCurrentMonth.nbCliTelValidM) }}, indexLabel: "",indexLabelFontSize: 10, indexLabelFontWeight: "bold", toolTipContent: "{{ (kpiCurrentMonth.nbCliTelValidM)|number_format(0,'',' ') }} clients"},
+					{  y: {{ (kpiCurrentMonth.nbCliTelNonRensM) }}, indexLabel: "",indexLabelFontSize: 10, indexLabelFontWeight: "bold", toolTipContent: "{{ (kpiCurrentMonth.nbCliTelNonRensM)|number_format(0,'',' ') }} clients"},
+					{  y: {{ (kpiCurrentMonth.nbCliTelNonvalidM) }}, indexLabel: "", indexLabelFontWeight: "bold", indexLabelFontColor: "black", indexLabelFontSize: 10, toolTipContent: "{{ (kpiCurrentMonth.nbCliTelNonvalidM)|number_format(0,'',' ') }} clients"},
 				]
 			}
 			]
@@ -369,7 +353,7 @@
 			colorSet: "set6",
 			animationEnabled: true,
 			title:{
-				text: {{ (kpiCurrentMonth.pctCliAddValidML)|number_format }} + "%",
+				text: {{ (kpiCurrentMonth.pctCliAddValidM)|number_format }} + "%",
 				fontSize: 22,
 				verticalAlign: "center", // "top", "center", "bottom"
 				horizontalAlign: "center", // "left", "right", "center"
@@ -390,10 +374,9 @@
 				highlightEnabled: false,
 				innerRadius: "75%",
 				dataPoints: [
-					{  y: {{ (kpiCurrentMonth.pctCliAddValidML) }}, indexLabel: "",indexLabelFontSize: 12, indexLabelFontWeight: "bold", toolTipContent: "{{ (kpiCurrentMonth.pctCliAddValidML)|number_format("0",",", "") }} %<br/>{{ (kpiCurrentMonth.nbCliAddValidML)|number_format(0,'',' ') }} clients"},
-					{  y: {{ (kpiCurrentMonth.pctCliAddNonrensML) }}, indexLabel: "",indexLabelFontSize: 12,indexLabelFontColor: "white", indexLabelFontWeight: "bold",toolTipContent: "{{ (kpiCurrentMonth.pctCliAddNonrensML)|number_format("0",",", "") }} %<br/>{{ (kpiCurrentMonth.nbCliAddNonrensML)|number_format(0,'',' ') }} clients"},
-					{  y: {{ (kpiCurrentMonth.pctCliAddNonvalidML) }}, indexLabel: "", indexLabelFontWeight: "bold", indexLabelFontColor: "black", indexLabelFontSize: 10, toolTipContent: "{{ (kpiCurrentMonth.pctCliAddNonvalidML)|number_format("0",",", "") }} %<br/>{{ (kpiCurrentMonth.nbCliAddNonvalidML)|number_format(0,'',' ') }} clients"},
-					{  y: {{ (kpiCurrentMonth.pctOptoutML) }}, indexLabel: "", indexLabelFontWeight: "bold", indexLabelFontColor: "black", indexLabelFontSize: 8, toolTipContent: "{{ (kpiCurrentMonth.pctOptoutML)|number_format("0",",", "") }} %<br/>{{ (kpiCurrentMonth.nbOptoutML)|number_format(0,'',' ') }} clients"},
+					{  y: {{ (kpiCurrentMonth.nbCliAddValidM) }}, indexLabel: "",indexLabelFontSize: 12, indexLabelFontWeight: "bold", toolTipContent: "{{ (kpiCurrentMonth.nbCliAddValidM)|number_format(0,'',' ') }} clients"},
+					{  y: {{ (kpiCurrentMonth.nbCliAddNonRensM) }}, indexLabel: "",indexLabelFontSize: 12, indexLabelFontWeight: "bold", toolTipContent: "{{ (kpiCurrentMonth.nbCliAddNonRensM)|number_format(0,'',' ') }} clients"},
+					{  y: {{ (kpiCurrentMonth.nbCliAddNonvalidM) }}, indexLabel: "", indexLabelFontWeight: "bold", indexLabelFontColor: "black", indexLabelFontSize: 10, toolTipContent: "{{ (kpiCurrentMonth.pctCliAddNonvalidM)|number_format("0",",", "") }} %<br/>{{ (kpiCurrentMonth.nbCliAddNonvalidM)|number_format(0,'',' ') }} clients"},
 				]
 			}
 			]
@@ -441,7 +424,7 @@
 					showInLegend: true,
 					dataPoints: [
 						{% for kpi in kpis %}
-							{ y: {{ (kpi.pctCliCoordValidML)|number_format }}, x: new Date( {{ kpi.date|date("Y") }}, {{ kpi.date|date("m") - 1 }} ) },
+							{ y: {{ (kpi.pctCliCoordValidM)|number_format }}, x: new Date( {{ kpi.date|date("Y") }}, {{ kpi.date|date("m") - 1 }} ) },
 						{% endfor %}
 					]
 				},
@@ -456,7 +439,7 @@
 					showInLegend: true,
 					dataPoints: [
 						{% for kpi in kpis %}
-							{ y: {{ (kpi.pctCliEmailValidML)|number_format }}, x: new Date( {{ kpi.date|date("Y") }}, {{ kpi.date|date("m") - 1 }} ) },
+							{ y: {{ (kpi.pctCliEmailValidM)|number_format }}, x: new Date( {{ kpi.date|date("Y") }}, {{ kpi.date|date("m") - 1 }} ) },
 						{% endfor %}
 					]
 				},
@@ -471,7 +454,7 @@
 					showInLegend: true,
 					dataPoints: [
 						{% for kpi in kpis %}
-							{ y: {{ (kpi.pctCliTelValidML)|number_format }}, x: new Date( {{ kpi.date|date("Y") }}, {{ kpi.date|date("m") - 1 }} ) },
+							{ y: {{ (kpi.pctCliTelValidM)|number_format }}, x: new Date( {{ kpi.date|date("Y") }}, {{ kpi.date|date("m") - 1 }} ) },
 						{% endfor %}
 					]
 				},
@@ -486,7 +469,7 @@
 					showInLegend: true,
 					dataPoints: [
 						{% for kpi in kpis %}
-							{ y: {{ (kpi.pctCliAddValidML)|number_format }}, x: new Date( {{ kpi.date|date("Y") }}, {{ kpi.date|date("m") - 1 }} ) },
+							{ y: {{ (kpi.pctCliAddValidM)|number_format }}, x: new Date( {{ kpi.date|date("Y") }}, {{ kpi.date|date("m") - 1 }} ) },
 						{% endfor %}
 					]
 				},
@@ -518,8 +501,8 @@
 
 				type: "pie",
 				dataPoints: [
-					{  y: {{ kpiCurrentMonth.nbCliActifsExistML }}, indexLabel: "{{  ((kpiCurrentMonth.nbCliActifsExistML /  kpiCurrentMonth.nbCliActifsML) * 100 )|number_format("0",",", "") }} %",toolTipContent: "{{  ((kpiCurrentMonth.nbCliActifsExistML /  kpiCurrentMonth.nbCliActifsML) * 100 )|number_format("0",",", "") }}%<br />{{ kpiCurrentMonth.nbCliActifsExistML }} clients", exploded: true},
-					{  y: {{ kpiCurrentMonth.nbCliActifsNewML }}, indexLabel: "{{  ((kpiCurrentMonth.nbCliActifsNewML /  kpiCurrentMonth.nbCliActifsML) * 100 )|number_format("0",",", "") }} %", toolTipContent: "{{  ((kpiCurrentMonth.nbCliActifsNewML /  kpiCurrentMonth.nbCliActifsML) * 100 )|number_format("0",",", "") }}%<br />{{ kpiCurrentMonth.nbCliActifsNewML }} clients"},
+					{  y: {{ kpiCurrentMonth.nbCliActifsExistM }}, indexLabel: "{{  ((kpiCurrentMonth.nbCliActifsExistM /  kpiCurrentMonth.nbCliActifsM) * 100 )|number_format("0",",", "") }} %",toolTipContent: "{{  ((kpiCurrentMonth.nbCliActifsExistM /  kpiCurrentMonth.nbCliActifsM) * 100 )|number_format("0",",", "") }}%<br />{{ kpiCurrentMonth.nbCliActifsExistM }} clients", exploded: true},
+					{  y: {{ kpiCurrentMonth.nbCliActifsNewM }}, indexLabel: "{{  ((kpiCurrentMonth.nbCliActifsNewM /  kpiCurrentMonth.nbCliActifsM) * 100 )|number_format("0",",", "") }} %", toolTipContent: "{{  ((kpiCurrentMonth.nbCliActifsNewM /  kpiCurrentMonth.nbCliActifsM) * 100 )|number_format("0",",", "") }}%<br />{{ kpiCurrentMonth.nbCliActifsNewM }} clients"},
 				]
 			}
 			]
@@ -527,45 +510,7 @@
 		});
 		chart.render();
 		
-		var chart = new CanvasJS.Chart("chartContainer0",
-		{
-			colorSet: "set8",
-			animationEnabled: true,
-			toolTip:{  
-				enabled: true
-			},
-			data: [
-			{
-				startAngle: -90, 
-				indexLabelPlacement: "outside", 
-				indexLabelFontColor: "black",
-				//indexLabelFontColor: "white",
-				indexLabelFontWeight: "bold",
-				indexLabelFontSize: 14,
-				explodeOnClick: false,
-				highlightEnabled: false,
-
-				type: "pie",
-				dataPoints: [
-					{  y: {{ kpiCurrentMonth.pctTransLocalM }}, 
-						indexLabel: 	"{{ kpiCurrentMonth.pctTransLocalM|number_format(0,'','') }} %",
-						toolTipContent: "{{ kpiCurrentMonth.pctTransLocalM|number_format(0,'','') }} %<br />{{ kpiCurrentMonth.nbTransLocalM|number_format(0,'',' ') }} transactions",
-						exploded: false},
-					{  y: {{ kpiCurrentMonth.pctTransNlocalM }}, 
-						indexLabel: 	"{{ kpiCurrentMonth.pctTransNlocalM|number_format(0,'','') }} %",
-						toolTipContent: "{{ kpiCurrentMonth.pctTransNlocalM|number_format(0,'','') }} %<br />{{ kpiCurrentMonth.nbTransNlocalM|number_format(0,'',' ') }} transactions",
-						exploded: false},
-					{  y: {{ kpiCurrentMonth.pctTransNotLinkedM }}, 
-						indexLabel: 	"{{ kpiCurrentMonth.pctTransNotLinkedM|number_format(0,'','') }} %",
-						toolTipContent: "{{ kpiCurrentMonth.pctTransNotLinkedM|number_format(0,'','') }} %<br />{{ kpiCurrentMonth.nbTransNotLinkedM|number_format(0,'',' ') }} transactions",
-						exploded: true},
-
-				]
-			}
-			]
-
-		});
-		chart.render();
+		
 	}
 	{% endif %}
 

@@ -61,9 +61,6 @@
 							<figure class="col-xs-3">
 								<h4 class="text-center bg-white black" style="height:55px;">{% if kpiTriggersMonth.nbCliToContactTriggerWB != 0 %}{{ kpiTriggersMonth.nbCliContactTriggerWB }} sur {{ kpiTriggersMonth.nbCliToContactTriggerWB }}{% endif %}</h4>
 							</figure>
-							<!--figure class="col-xs-3">
-								<h4 class="text-center bg-white black" style="height:55px;">{{ kpiTriggersMonth.nbCliContactTriggerWS }} sur {{ kpiTriggersMonth.nbCliToContactTriggerWS }}</h4>
-							</figure-->
 						</div>
 						
 					</div>
@@ -124,9 +121,6 @@
 										<figure class="col-xs-3">
 											<h4 class="text-center bg-white black" style="height:55px;">{% if kpiVDR.nbCliToContactTriggerWB != 0 %}{{ kpiVDR.nbCliContactTriggerWB }} sur {{ kpiVDR.nbCliToContactTriggerWB }}{% endif %}</h4>
 										</figure>
-										<!--figure class="col-xs-3">
-											<h4 class="text-center bg-white black" style="height:55px;">{{ kpiVDR.nbCliContactTriggerWS }} sur {{ kpiVDR.nbCliToContactTriggerWS }}</h4>
-										</figure-->
 									</div>
 								</div>
 							{% endif %}
@@ -331,39 +325,6 @@
 		});
 
 		chart.render();
-		/*var chart = new CanvasJS.Chart("chartContainer_4",
-		{
-			colorSet: "set4",
-			animationEnabled: true,
-			title:{
-				text: {{ kpiTriggersMonth.pctCliContactTriggerWS|number_format  }} + "%",
-				fontSize: 22,
-				verticalAlign: "center", // "top", "center", "bottom"
-				horizontalAlign: "center", // "left", "right", "center"
-				fontColor: "#2D89FF",
-			},
-			toolTip:{  
-				enabled: true
-			},
-			data: [
-			{
-				startAngle: -90,  
-				indexLabelFontColor: "black",
-				indexLabelLineColor: "#4c4c4c",
-
-				indexLabelPlacement: "inside",
-				type: "doughnut",
-				innerRadius: "60%",
-				dataPoints: [
-					{  y: {{ kpiTriggersMonth.pctCliContactTriggerWS|number_format }}, indexLabel: "",indexLabelFontSize: 12, indexLabelFontWeight: "bold", toolTipContent: "{y}% réalisés"},
-					{  y: {{ (100 - (kpiTriggersMonth.pctCliContactTriggerWS|number_format) ) }}, indexLabel: "", indexLabelFontWeight: "bold", indexLabelFontColor: "black", indexLabelFontSize: 10, toolTipContent: "{y}% à contacter"}
-				]
-			}
-			]
-
-		});
-
-		chart.render();*/
 
 
 		{% for kpi in kpiTriggersMonthVDR %}
@@ -482,41 +443,6 @@
 		});
 
 		chart.render();
-		/*var chart = new CanvasJS.Chart("chartContainerVDR_{{loop.index}}_4",
-		{
-			colorSet: "set4",
-			width: 165,
-			height: 150,
-			animationEnabled: true,
-			title:{
-				text: {{ kpiTriggersMonth.pctCliContactTriggerWS|number_format  }} + "%",
-				fontSize: 22,
-				verticalAlign: "center", // "top", "center", "bottom"
-				horizontalAlign: "center", // "left", "right", "center"
-				fontColor: "#2D89FF",
-			},
-			toolTip:{  
-				enabled: true
-			},
-			data: [
-			{
-				startAngle: -90,  
-				indexLabelFontColor: "black",
-				indexLabelLineColor: "#4c4c4c",
-
-				indexLabelPlacement: "inside",
-				type: "doughnut",
-				innerRadius: "60%",
-				dataPoints: [
-					{  y: {{ kpiTriggersMonth.pctCliContactTriggerWS|number_format }}, indexLabel: "",indexLabelFontSize: 12, indexLabelFontWeight: "bold", toolTipContent: "{y}% réalisés"},
-					{  y: {{ (100 - (kpiTriggersMonth.pctCliContactTriggerWS|number_format) ) }}, indexLabel: "", indexLabelFontWeight: "bold", indexLabelFontColor: "black", indexLabelFontSize: 10, toolTipContent: "{y}% à contacter"}
-				]
-			}
-			]
-
-		});
-
-		chart.render();*/
 		{% endfor %}
 	{% endif %}
 	};	
