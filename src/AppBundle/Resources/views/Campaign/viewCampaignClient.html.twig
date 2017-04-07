@@ -68,21 +68,6 @@
 					</div>
 					<div class="col-xs-9">
 						{{ client.email }}
-						{% if ( not client.isEmailvalide or client.isHardBounce ) and client.email is not null and client.email != "" %}
-							<span class="text-danger">
-								<i class="fa fa-warning fa-1" aria-hidden="true"></i>
-							</span>
-						{% endif %}
-						{% if not client.isEmailValide and client.email is not null and client.email != "" %}
-							<span class="text-danger">
-								invalide
-							</span>
-						{% endif %}
-						{% if client.isHardBounce and client.email is not null and client.email != "" %}
-							<span class="text-danger">
-							hard bounce
-							</span>
-						{% endif %}
 					</div>
 				</li>
 				<li class="list-group-item">
@@ -112,11 +97,6 @@
 					</div>
 					<div class="col-xs-9">
 						{{ client.adresse1 }}
-						{% if client.isAdresseValide == 0 and client.adresse1 is not null and client.adresse1 != "" %}
-							<span class="text-danger">
-							<i class="fa fa-warning fa-1" aria-hidden="true"></i>
-							invalide
-						{% endif %}
 					</div>
 				</li>
 				<li class="list-group-item">
@@ -219,15 +199,11 @@
 			<div class="col-xs-12 data">
 				<ul class="list-group col-xs-6">
 					<li class="list-group-item"><strong>SKU : </strong>{% if recipient.dataRecipient.skuDesc %}{{ recipient.dataRecipient.skuDesc }}{% else %}<span class="small">n/a</span>{% endif %}</li>
-					<li class="list-group-item"><strong>Genre : </strong>{% if recipient.dataRecipient.genreDesc %}{{ recipient.dataRecipient.genreDesc }}{% else %}<span class="small">n/a</span>{% endif %}</li>
-					<li class="list-group-item"><strong>Code UVC : </strong>{% if recipient.dataRecipient.codeUvc %}{{ recipient.dataRecipient.codeUvc }}{% else %}<span class="small">n/a</span>{% endif %}</li>
-					<li class="list-group-item"><strong>Motif de l'achat : </strong>{% if recipient.dataRecipient.motifAchat %}<span class="text-uppercase">{{ recipient.dataRecipient.motifAchat }}</span>{% else %}<span class="small">n/a</span>{% endif %}</li>
+					<li class="list-group-item"><strong>Catégorie : </strong>{% if recipient.dataRecipient.categorie %}{{ recipient.dataRecipient.categorie }}{% else %}<span class="small">n/a</span>{% endif %}</li>
 				</ul>
 				<ul class="list-group col-xs-6">
-					<li class="list-group-item"><strong>Ligne : </strong>{% if recipient.dataRecipient.ligneDesc %}{{ recipient.dataRecipient.ligneDesc }}{% else %}<span class="small">n/a</span>{% endif %}</li>
-					<li class="list-group-item"><strong>Prix TTC : </strong>{% if recipient.dataRecipient.prixPaye %}{{ recipient.dataRecipient.prixPaye|number_format(0,'',' ') }} €{% else %}<span class="small">n/a</span>{% endif %}</li>
-					<li class="list-group-item"><strong>Vendeur : </strong>{% if recipient.dataRecipient.codevendeur %}{{ recipient.dataRecipient.codevendeur }}{% else %}<span class="small">n/a</span>{% endif %}</li>
-				</ul>
+					<li class="list-group-item"><strong>Prix TTC : </strong>{% if recipient.dataRecipient.prix %}{{ recipient.dataRecipient.prix|number_format(0,'',' ') }} €{% else %}<span class="small">n/a</span>{% endif %}</li>
+					<li class="list-group-item"><strong>Sous-catégorie : </strong>{% if recipient.dataRecipient.sousCategorie %}{{ recipient.dataRecipient.sousCategorie }}{% else %}<span class="small">n/a</span>{% endif %}</li>
 			</div>
 		
 		{% endif %}
