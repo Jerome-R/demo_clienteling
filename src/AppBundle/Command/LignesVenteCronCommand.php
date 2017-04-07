@@ -49,21 +49,13 @@ class LignesVenteCronCommand extends ContainerAwareCommand
 
         if($ip == "127.0.0.1")
         {
-            $filename1 = "D:\\wamp\\www\\StoreApp\\web\\imports\\topclients\\lignes_vente_top_clients_clienteling_".$date.".csv";
-			$filename2 = "D:\\wamp\\www\\StoreApp\\web\\imports\\topclients\\lignes_vente_SAV_top_clients_clienteling_".$date.".csv";
-			$filename3 = "D:\\wamp\\www\\StoreApp\\web\\imports\\topclients\\lignes_vente_top_clients_sortants_clienteling_".$date.".csv";
-			$filename4 = "D:\\wamp\\www\\StoreApp\\web\\imports\\topclients\\lignes_vente_SAV_top_clients_sortants_clienteling_".$date.".csv";
-			$filename5 = "D:\\wamp\\www\\StoreApp\\web\\imports\\doublonSuspect\\lignes_vente_doublons_suspects_clienteling_".$date.".csv";
+            $filename1 = "D:\\wamp\\www\\demo\\web\\imports\\TOP_CLIENT_LIGNES.csv";
         }
         else{
-            $filename1 = "/data/ftp/imports/topclients/lignes_vente_top_clients_clienteling_".$date.".csv";
-			$filename2 = "/data/ftp/imports/topclients/lignes_vente_SAV_top_clients_clienteling_".$date.".csv";
-            $filename3 = "/data/ftp/imports/topclients/lignes_vente_top_clients_sortants_clienteling_".$date.".csv";
-            $filename4 = "/data/ftp/imports/topclients/lignes_vente_SAV_top_clients_sortants_clienteling_".$date.".csv";
-			$filename5 = "/data/ftp/imports/doublonSuspect/lignes_vente_doublons_suspects_clienteling_".$date.".csv";
+            $filename1 = "/data/ftp/imports/TOP_CLIENT_LIGNES.csv";
         }
 
-        if ( (file_exists($filename1) && file_exists($filename2) && file_exists($filename3) && file_exists($filename4)) || file_exists($filename5) ) {
+        if  ( file_exists($filename1) ) {
 
 			//$output->writeln("Reset des lignes de ventes");
 			//$import->resetLignesVentes( $input, $output);
@@ -89,19 +81,8 @@ class LignesVenteCronCommand extends ContainerAwareCommand
 			if($type == "topClient"){
 				$output->writeln("Creation des tickets et des lignes de ventes topclients");
 				$import->createTickets($filename1, $input, $output);
-				$output->writeln("Creation des tickets et des lignes de ventes topclients sortants");
-				$import->createTicketsSortants($filename3, $input, $output);
-
-				$output->writeln("Creation des tickets et des lignes de ventes SAV topclients");
-				$import->createTickets($filename2, $input, $output);
-				$output->writeln("Creation des tickets et des lignes de ventes SAV topclients sortants");
-				$import->createTicketsSortants($filename4, $input, $output);
 			}
 			elseif($type == "doublonSuspect"){
-				$output->writeln("Creation des tickets et des lignes de ventes doublons suspects");
-				$import->createTickets($filename1, $input, $output);
-				$output->writeln("Creation des tickets et des lignes de ventes doublons suspects");
-				$import->createTicketsSortants($filename3, $input, $output);
 			}
 
 			//$output->writeln("Archivage des fichiers");

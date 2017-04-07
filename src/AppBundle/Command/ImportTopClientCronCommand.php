@@ -32,16 +32,14 @@ class ImportTopClientCronCommand extends ContainerAwareCommand
 
         if($ip == "127.0.0.1")
         {
-            $filename1 = "D:\\wamp\\www\\StoreApp\\web\\imports\\topclients\\liste_top_clients_clienteling_".$date.".csv";
-            $filename2 = "D:\\wamp\\www\\StoreApp\\web\\imports\\topclients\\archive_top_clients_sortants_clienteling_".$date.".csv";
+            $filename1 = "D:\\wamp\\www\\demo\\web\\imports\\TOP_CLIENT_CLIENTS_V2.csv";
         }
         else{
-            $filename1 = "/data/ftp/imports/topclients/liste_top_clients_clienteling_".$date.".csv";
-            $filename2 = "/data/ftp/imports/topclients/archive_top_clients_sortants_clienteling_".$date.".csv";
+            $filename1 = "/data/ftp/imports/TOP_CLIENT_CLIENTS_V2.csv";
         }
 
 
-        if ( file_exists($filename1) && file_exists($filename2) ) {
+        if ( file_exists($filename1)) {
 			$text = $this->getDescription();
 			$output->writeln($text);
 
@@ -64,10 +62,10 @@ class ImportTopClientCronCommand extends ContainerAwareCommand
 			$import->resetTopClients($input, $output);		
 
 			$output->writeln('Import des top Clients');
-			$import->importTopClientCSVFile($input, $output);
+			$import->importTopClientCSVFile($input, $output, $filename1);
 
-			$output->writeln('Import des top Clients sortants');
-			$import->importTopClientSortantCSVFile($input, $output);
+			//$output->writeln('Import des top Clients sortants');
+			//$import->importTopClientSortantCSVFile($input, $output);
 
 
 			/*$output->writeln("Mise a jour TopClient Boutique");
@@ -78,7 +76,7 @@ class ImportTopClientCronCommand extends ContainerAwareCommand
 
 
 			$output->writeln("Archivage du fichier");
-			$import->moveUploadedFile();
+			//$import->moveUploadedFile();
 
 		} else {
 		    $output->writeln("Aucun fichier, annulation de l'import");

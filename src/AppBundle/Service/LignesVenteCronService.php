@@ -71,13 +71,13 @@ class LignesVenteCronService
         
 
         //colonnes du la requete $sql à mettre à jour
-        $header2 = "ticket_id,codeuvc,type_vente,cattc,remise_ttc,quantite,code_vendeur,date_modif,super_ligne_desc,sku_desc,date_facture,client_id,point_vente_id";
+        $header2 = "ticket_id,sku_desc,prix,quantite,categorie,sous_categorie,date_facture,client_id,point_vente_id";
        
         $headers2 = explode(",", $header2);
 
         $sql2 = "INSERT INTO app_ligne_vente ( ".$header2.",  ticket_uniq_id)
                 VALUES ( (SELECT id from app_ticket t WHERE t.ticket_uniq_id = :ticket_id ), 
-                    :codeuvc, :type_vente, :cattc, :remise_ttc, :quantite, :code_vendeur, :date_modif, :super_ligne_desc, :sku_desc, :date_facture, :client_id, :point_vente_id, :ticket_id)
+                    :sku_desc,:prix, :quantite, :categorie, :sous_categorie, :date_facture, :client_id, :point_vente_id, :ticket_id)
                 ON DUPLICATE KEY UPDATE ticket_uniq_id = ticket_uniq_id
             ";
 
@@ -92,8 +92,8 @@ class LignesVenteCronService
             $stmt2 = $this->pdo->prepare($sql2);
 
             $stmt->bindValue(':ticket_id', $csvfilelines[0], \PDO::PARAM_STR);
-            $stmt->bindValue(':client_id', $csvfilelines[11], \PDO::PARAM_STR);
-            $stmt->bindValue(':date_facture', $csvfilelines[10], \PDO::PARAM_STR);
+            $stmt->bindValue(':client_id', $csvfilelines[7], \PDO::PARAM_STR);
+            $stmt->bindValue(':date_facture', $csvfilelines[6], \PDO::PARAM_STR);
 
             
             foreach ($headers2 as $key => $col) {
