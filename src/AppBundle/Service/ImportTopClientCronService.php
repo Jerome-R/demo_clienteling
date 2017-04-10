@@ -131,8 +131,15 @@ class ImportTopClientCronService
             $stmt = $this->pdo->prepare($sql);
 
             foreach ($headers as $key => $col) {
-                if($key != 32)
+                if($key != 32){
                     $stmt->bindValue(':'.$col, $csvfilelines[$key], \PDO::PARAM_STR);
+                    if($col == "date_dernier_achat" && $csvfilelines[$key] == ""){
+                        $stmt->bindValue(':'.$col, null, \PDO::PARAM_STR);
+                    }
+                    if($col == "date_1erachat" && $csvfilelines[$key] == ""){
+                        $stmt->bindValue(':'.$col, null, \PDO::PARAM_STR);
+                    }
+                }                    
                 else
                 {
                     if( $csvfilelines[$key] == 0)
