@@ -88,16 +88,17 @@ class ImportRecipientCronService
         {
             if($this->ip == "127.0.0.1")
             {
-                $file = fopen("D:\wamp\www\StoreApp\web\imports\ciblage_clienteling_".$date.".csv", "r");
+                $file = fopen("D:\wamp\www\demo\web\imports\TRIGGER_V3.csv", "r");
             }
+            
             else{
-                $file = fopen("/data/ftp/imports/ciblage_clienteling_".$date.".csv", "r");
+                $file = fopen("/data/ftp/imports/TRIGGER_V3.csv", "r");
             }
         }
         else{
             if($this->ip == "127.0.0.1")
             {
-                $file = fopen("D:\wamp\www\StoreApp\web\imports\ciblage_ad_hoc_".$filename.".csv", "r");
+                $file = fopen("D:\wamp\www\demo\web\imports\ciblage_ad_hoc_".$filename.".csv", "r");
             }
             else{
                 $file = fopen("/data/ftp/imports/ciblage_ad_hoc_".$filename.".csv", "r");
@@ -105,7 +106,7 @@ class ImportRecipientCronService
         }
 
         //colonnes du la requete $sql à mettre à jour
-        $header =   "id_client,nom,prenom,civilite,email,telephone1,telephone2,local,pays,ville,code_postal,adresse1,adresse2,adresse3,nationalite,ca_3_ans,ca_12_mois,frequence_3_ans,frequence_12_mois,prix_max_3_ans,prix_max_12_mois,prix_max_article_histo,panier_moyen_histo,date_1erachat,date_dernier_achat,segment,is_contactable_email,is_contactable_tel,is_contactable_adresse,is_email_valide,is_tel_valide,is_adresse_valide,is_hard_bounce,optin,created_at";
+        $header =   "id_client,nom,prenom,civilite,email,telephone1,telephone2,nationalite,pays,ville,code_postal,adresse1,adresse2,adresse3,ca_3_ans,ca_12_mois,frequence_3_ans,frequence_12_mois,prix_max_3_ans,prix_max_12_mois,prix_max_article_histo,panier_moyen_histo,date_1erachat,date_dernier_achat,segment,optin,created_at";
         //valeurs de la requêtes (correspond au header du fichier)
         $values = ":".str_replace(",", ",:", $header);
         //tableau des headers à mettre à jours pour la boucle
@@ -127,7 +128,7 @@ class ImportRecipientCronService
 
 
         //colonnes du la requete $sql2 à mettre à jour
-        $header2 = "id_client,id_campagne_name,libelle_boutique_achat,date_entree,canal,code_uvc,sku_desc,genre_desc,ligne_desc,prix_paye,code_vendeur,motif_achat,vide_1,vide_2,vide_3,vide_4,vide_5,vide_6,vide_7,vide_8,vide_9,vide_10";
+        $header2 = "id_client,id_campagne_name,libelle_boutique_achat,date_entree,canal,sku_desc,categorie,sous_categorie,prix";
         //valeurs de la requête (correspond au header du fichier)
         $values2 = ":".str_replace(",", ",:", $header2);
         //tableau des headers à mettre à jours pour la boucle
@@ -177,50 +178,29 @@ class ImportRecipientCronService
             $stmt->bindValue(':email', $csvfilelines[8], \PDO::PARAM_STR);
             $stmt->bindValue(':telephone1', $csvfilelines[9], \PDO::PARAM_STR);
             $stmt->bindValue(':telephone2', $csvfilelines[10], \PDO::PARAM_STR);
-            $stmt->bindValue(':local', $csvfilelines[11], \PDO::PARAM_STR);
+            $stmt->bindValue(':nationalite', $csvfilelines[11], \PDO::PARAM_STR);
             $stmt->bindValue(':pays', $csvfilelines[12], \PDO::PARAM_STR);
             $stmt->bindValue(':ville', $csvfilelines[13], \PDO::PARAM_STR);
             $stmt->bindValue(':code_postal', $csvfilelines[14], \PDO::PARAM_STR);
             $stmt->bindValue(':adresse1', $csvfilelines[15], \PDO::PARAM_STR);
             $stmt->bindValue(':adresse2', $csvfilelines[16], \PDO::PARAM_STR);
             $stmt->bindValue(':adresse3', $csvfilelines[17], \PDO::PARAM_STR);
-            $stmt->bindValue(':nationalite', $csvfilelines[18], \PDO::PARAM_STR);
-            $stmt->bindValue(':ca_3_ans', $csvfilelines[19], \PDO::PARAM_STR);
-            $stmt->bindValue(':ca_12_mois', $csvfilelines[20], \PDO::PARAM_STR);
-            $stmt->bindValue(':frequence_3_ans', $csvfilelines[21], \PDO::PARAM_STR);
-            $stmt->bindValue(':frequence_12_mois', $csvfilelines[22], \PDO::PARAM_STR);
-            $stmt->bindValue(':prix_max_3_ans', $csvfilelines[23], \PDO::PARAM_STR);
-            $stmt->bindValue(':prix_max_12_mois', $csvfilelines[24], \PDO::PARAM_STR);
-            $stmt->bindValue(':prix_max_article_histo', $csvfilelines[25], \PDO::PARAM_STR);
-            $stmt->bindValue(':panier_moyen_histo', $csvfilelines[26], \PDO::PARAM_STR);
-            $stmt->bindValue(':date_1erachat', $csvfilelines[27], \PDO::PARAM_STR);
-            $stmt->bindValue(':date_dernier_achat', $csvfilelines[28], \PDO::PARAM_STR);
-            $stmt->bindValue(':segment', $csvfilelines[29], \PDO::PARAM_STR);
-            $stmt2->bindValue(':code_uvc', $csvfilelines[30], \PDO::PARAM_STR);
-            $stmt2->bindValue(':sku_desc', $csvfilelines[31], \PDO::PARAM_STR);
-            $stmt2->bindValue(':genre_desc', $csvfilelines[32], \PDO::PARAM_STR);
-            $stmt2->bindValue(':ligne_desc', $csvfilelines[33], \PDO::PARAM_STR);
-            $stmt2->bindValue(':prix_paye', $csvfilelines[34], \PDO::PARAM_STR);
-            $stmt2->bindValue(':code_vendeur', $csvfilelines[35], \PDO::PARAM_STR);
-            $stmt->bindValue(':is_contactable_email', $csvfilelines[36], \PDO::PARAM_STR);
-            $stmt->bindValue(':is_contactable_tel', $csvfilelines[37], \PDO::PARAM_STR);
-            $stmt->bindValue(':is_contactable_adresse', $csvfilelines[38], \PDO::PARAM_STR);
-            $stmt->bindValue(':is_email_valide', $csvfilelines[39], \PDO::PARAM_STR);
-            $stmt->bindValue(':is_tel_valide', $csvfilelines[40], \PDO::PARAM_STR);
-            $stmt->bindValue(':is_adresse_valide', $csvfilelines[41], \PDO::PARAM_STR);
-            $stmt->bindValue(':is_hard_bounce', $csvfilelines[42], \PDO::PARAM_STR);
-            $stmt->bindValue(':optin', $csvfilelines[43], \PDO::PARAM_STR);
-            $stmt2->bindValue(':motif_achat', $csvfilelines[44], \PDO::PARAM_STR);
-            $stmt2->bindValue(':vide_1', $csvfilelines[45], \PDO::PARAM_STR);
-            $stmt2->bindValue(':vide_2', $csvfilelines[46], \PDO::PARAM_STR);
-            $stmt2->bindValue(':vide_3', $csvfilelines[47], \PDO::PARAM_STR);
-            $stmt2->bindValue(':vide_4', $csvfilelines[48], \PDO::PARAM_STR);
-            $stmt2->bindValue(':vide_5', $csvfilelines[49], \PDO::PARAM_STR);
-            $stmt2->bindValue(':vide_6', $csvfilelines[50], \PDO::PARAM_STR);
-            $stmt2->bindValue(':vide_7', $csvfilelines[51], \PDO::PARAM_STR);
-            $stmt2->bindValue(':vide_8', $csvfilelines[52], \PDO::PARAM_STR);
-            $stmt2->bindValue(':vide_9', $csvfilelines[53], \PDO::PARAM_STR);
-            $stmt2->bindValue(':vide_10', $csvfilelines[54], \PDO::PARAM_STR);
+            $stmt->bindValue(':ca_3_ans', $csvfilelines[18], \PDO::PARAM_STR);
+            $stmt->bindValue(':ca_12_mois', $csvfilelines[19], \PDO::PARAM_STR);
+            $stmt->bindValue(':frequence_3_ans', $csvfilelines[20], \PDO::PARAM_STR);
+            $stmt->bindValue(':frequence_12_mois', $csvfilelines[21], \PDO::PARAM_STR);
+            $stmt->bindValue(':prix_max_3_ans', $csvfilelines[22], \PDO::PARAM_STR);
+            $stmt->bindValue(':prix_max_12_mois', $csvfilelines[23], \PDO::PARAM_STR);
+            $stmt->bindValue(':prix_max_article_histo', $csvfilelines[24], \PDO::PARAM_STR);
+            $stmt->bindValue(':panier_moyen_histo', $csvfilelines[25], \PDO::PARAM_STR);
+            $stmt->bindValue(':date_1erachat', $csvfilelines[26], \PDO::PARAM_STR);
+            $stmt->bindValue(':date_dernier_achat', $csvfilelines[27], \PDO::PARAM_STR);
+            $stmt->bindValue(':segment', $csvfilelines[28], \PDO::PARAM_STR);
+            $stmt2->bindValue(':sku_desc', $csvfilelines[29], \PDO::PARAM_STR);
+            $stmt2->bindValue(':categorie', $csvfilelines[30], \PDO::PARAM_STR);
+            $stmt2->bindValue(':sous_categorie', $csvfilelines[31], \PDO::PARAM_STR);
+            $stmt2->bindValue(':prix', $csvfilelines[32], \PDO::PARAM_STR);
+            $stmt->bindValue(':optin', $csvfilelines[33], \PDO::PARAM_STR);
             $stmt->bindValue(':created_at', $created_at->format('Y-m-d H:i:s'), \PDO::PARAM_STR);
 
 
@@ -475,10 +455,10 @@ class ImportRecipientCronService
 
         if($this->ip == "127.0.0.1")
         {
-            rename ('D:\wamp\www\StoreApp\web\imports\ciblage_clienteling_'.$date.'.csv' , 'D:\wamp\www\StoreApp\web\imports\imported\ciblage_clienteling_'.$date.'.csv' );
+            //rename ('D:\wamp\www\demo\web\imports\TRIGGER_V3.csv.csv' , 'D:\wamp\www\demo\web\imports\imported\TRIGGER_V3.csv.csv' );
         }
         else{
-            rename ('/data/ftp/imports/ciblage_clienteling_'.$date.'.csv' , '/data/ftp/imports/imported/ciblage_clienteling_'.$date.'.csv' );
+            //rename ('/data/ftp/imports/TRIGGER_V3.csv.csv' , '/data/ftp/imports/imported/TRIGGER_V3.csv.csv' );
         }
     }
 

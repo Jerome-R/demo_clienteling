@@ -30,6 +30,13 @@ class LigneVente
     private $id;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(name="sku_desc", type="string", length=255, nullable=true)
+     */
+    private $sku_desc;
+
+    /**
      * @var integer
      *
      * @ORM\Column(name="quantite", type="integer", nullable=true)
@@ -179,6 +186,29 @@ class LigneVente
     public function getPrix()
     {
         return $this->prix;
+    }
+
+    /**
+     * Set sku_desc
+     *
+     * @param string $sku_desc
+     * @return LigneVente
+     */
+    public function setSkuDesc($sku_desc)
+    {
+        $this->sku_desc = $sku_desc;
+
+        return $this;
+    }
+
+    /**
+     * Get sku_desc
+     *
+     * @return string 
+     */
+    public function getSkuDesc()
+    {
+        return $this->sku_desc;
     }
 
     /**

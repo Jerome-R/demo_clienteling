@@ -29,7 +29,7 @@ class EmailDefaultDatasService
         if ( $template_number == null )
         {
             switch($this->id){
-                case "Trigger_AA_Boutique_1_E":
+                case "trigger_A_E":
                     if($eshop == null)
                     {
                         $this->session->set('template_number', 0);
@@ -43,7 +43,7 @@ class EmailDefaultDatasService
                         $this->session->set('email_language', 'fr');
                     }
                 break;
-                case "Trigger_WP_Boutique_1_E":
+                case "trigger_B_E":
                     if($eshop == null)
                     {
                         $this->session->set('template_number', 3);
@@ -57,7 +57,7 @@ class EmailDefaultDatasService
                         $this->session->set('email_language', 'fr');
                     }
                 break;
-                case "Trigger_WB_Boutique_1_E":
+                case "trigger_C_E":
                     if($eshop == null)
                     {
                         $this->session->set('template_number', 6);
@@ -71,7 +71,7 @@ class EmailDefaultDatasService
                         $this->session->set('email_language', 'fr');
                     }
                 break;
-                case "Trigger_AA_Boutique_1_P":
+                case "trigger_D_P":
                     if($eshop == null)
                     {
                         $this->session->set('template_number', 0);
@@ -85,7 +85,7 @@ class EmailDefaultDatasService
                         $this->session->set('email_language', 'fr');
                     }
                 break;
-                case "Trigger_WP_Boutique_1_P":
+                case "trigger_E_P":
                     if($eshop == null)
                     {
                         $this->session->set('template_number', 3);
@@ -96,20 +96,6 @@ class EmailDefaultDatasService
                     {
                         $this->session->set('template_number', 12);
                         $this->session->set('email_subject', "Merci pour votre confiance");
-                        $this->session->set('email_language', 'fr');
-                    }
-                break;
-                case "Trigger_WB_Boutique_1_P":
-                    if($eshop == null)
-                    {
-                        $this->session->set('template_number', 6);
-                        $this->session->set('email_subject', "Merci pour votre fidélité");
-                        $this->session->set('email_language', 'fr');
-                    }
-                    else
-                    {
-                        $this->session->set('template_number', 15);
-                        $this->session->set('email_subject', "Merci pour votre fidélité");
                         $this->session->set('email_language', 'fr');
                     }
                 break;

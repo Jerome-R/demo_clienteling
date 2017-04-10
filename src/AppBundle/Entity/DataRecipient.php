@@ -54,6 +54,13 @@ class DataRecipient
     private $idCampagneName;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(name="sku_desc", type="string", length=255, nullable=true)
+     */
+    private $sku_desc;
+
+    /**
      * @var \DateTime
      *
      * @ORM\Column(name="date_entree", type="datetime", nullable=true)
@@ -248,6 +255,29 @@ class DataRecipient
     public function setIdCampagneName($idCampagneName)
     {
         $this->idCampagneName = $idCampagneName;
+
+        return $this;
+    }
+
+    /**
+     * Get sku_desc
+     *
+     * @return string 
+     */
+    public function getSkuDesc()
+    {
+        return $this->sku_desc;
+    }
+
+    /**
+     * Set sku_desc
+     *
+     * @param string $sku_desc
+     * @return DataRecipient
+     */
+    public function setSkuDesc($sku_desc)
+    {
+        $this->sku_desc = $sku_desc;
 
         return $this;
     }

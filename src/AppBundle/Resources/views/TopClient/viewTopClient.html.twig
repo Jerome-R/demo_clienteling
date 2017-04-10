@@ -82,21 +82,6 @@
 					</div>
 					<div class="col-xs-9">
 						{{ topClient.email }}
-						{% if ( not topClient.isEmailValide or topClient.isHardBounce ) and topClient.email is not null and topClient.email != "" %}
-							<span class="text-danger">
-								<i class="fa fa-warning fa-1" aria-hidden="true"></i>
-							</span>
-						{% endif %}
-						{% if not topClient.isEmailValide and topClient.email is not null and topClient.email != "" %}
-							<span class="text-danger">
-								invalide
-							</span>
-						{% endif %}
-						{% if topClient.isHardBounce and topClient.email is not null and topClient.email != "" %}
-							<span class="text-danger">
-							hard bounce
-							</span>
-						{% endif %}
 					</div>
 				</li>
 				<li class="list-group-item">
@@ -105,11 +90,6 @@
 					</div>
 					<div class="col-xs-9">
 						{{ topClient.telephone1 }}
-						{% if not topClient.isTelValide and topClient.telephone1 is not null and topClient.telephone1 != "" %}
-							<span class="text-danger">
-							<i class="fa fa-warning fa-1" aria-hidden="true"></i>
-							invalide
-						{% endif %}
 					</div>
 				</li>
 				<li class="list-group-item">
@@ -126,11 +106,6 @@
 					</div>
 					<div class="col-xs-9">
 						{{ topClient.adresse1 }}
-						{% if topClient.isAdresseValide == 0 and topClient.adresse1 is not null and topClient.adresse1 != "" %}
-							<span class="text-danger">
-							<i class="fa fa-warning fa-1" aria-hidden="true"></i>
-							invalide
-						{% endif %}
 					</div>
 				</li>
 				<li class="list-group-item">
@@ -272,22 +247,20 @@
 								<table class="table">
 									<tr>
 										<th>#</th>
-										<th>Collection</th>
-										<th>Code UVC</th>
+										<th>Catégorie</th>
+										<th>Sous-catégorie</th>
 										<th>SKU</th>
-										<th>Vendeur</th>
 										<th class="text-center">Quantité</th>
 										<th class="text-center">Montant dépensé</th>
 									</tr>
 								{% for ligneVente in ticket.ligneVentes %}
 									<tr>
 										<td>{{loop.index}}</td>
-										<td>{{ ligneVente.superLigneDesc }}</td>
-										<td>{{ ligneVente.codeuvc }}</td>
+										<td>{{ ligneVente.categorie }}</td>
+										<td>{{ ligneVente.sousCategorie }}</td>
 										<td>{{ ligneVente.skuDesc }}</td>
-										<td>{{ ligneVente.codevendeur }}</td>
 										<td class="text-center">{{ ligneVente.quantite }}</td>
-										<td class="text-center">{{ ligneVente.cattc }} €</td>										
+										<td class="text-center">{{ ligneVente.prix }} €</td>										
 									</tr>
 								{% endfor %}
 								</table>

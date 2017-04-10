@@ -90,22 +90,17 @@ class ImportTopClientCronService
 
     //////////////////////////////////////////
     #top client Lncl
-    public function importTopClientCSVFile( InputInterface $input, OutputInterface $output)
+    public function importTopClientCSVFile( InputInterface $input, OutputInterface $output, $filename)
     {        
        
         $date = new \DateTime();
         $date = $date->format('Ymd');
 
-        if($this->ip == "127.0.0.1")
-        {
-            $file = fopen("D:\\wamp\\www\\StoreApp\\web\\imports\\topclients\\liste_top_clients_clienteling_".$date.".csv", "r");
-        }
-        else{
-            $file = fopen("/data/ftp/imports/topclients/liste_top_clients_clienteling_".$date.".csv", "r");
-        }
+        
+        $file = fopen($filename, "r");
 
         //colonnes du la requete $sql à mettre à jour
-        $header = "id_client,optin,email,telephone1,telephone2,telephone3,portable1,portable2,portable3,local,pays,ville,code_postal,adresse1,adresse2,adresse3,civilite,nationalite,nom,prenom,ca_3_ans,ca_12_mois,frequence_12_mois,frequence_3_ans,panier_moyen_histo,prix_max_article_histo,date_1erachat,date_dernier_achat,segment,boutique_rattachement_topclient,libelle_boutique_rattachement_topclient,pays_boutique_rattachement,is_nouveau_topclient,ca_histo,is_contactable_email,is_contactable_tel,is_contactable_adresse,is_email_valide,is_tel_valide,is_adresse_valide,is_hard_bounce";
+        $header = "id_client,nom,prenom,civilite,libelle_boutique_rattachement_topclient,email,telephone1,telephone2,nationalite,pays,ville,code_postal,adresse1,adresse2,adresse3,ca_3_ans,ca_12_mois,frequence_3_ans,frequence_12_mois,prix_max_3_ans,prix_max_12_mois,prix_max_article_histo,panier_moyen_histo,date_1erachat,date_dernier_achat,segment,optin";
         //valeurs de la requêtes (correspond au header du fichier)
         $values = ":".str_replace(",", ",:", $header);
         //tableau des headers à mettre à jours pour la boucle
@@ -121,9 +116,9 @@ class ImportTopClientCronService
         }
 
         
-        $sql = "INSERT INTO app_client ( user_id_topclient, ".$header.", is_topclient ) 
-                VALUES ( ( SELECT u.id FROM `fos_user_user` u WHERE u.libelle = :libelle_boutique_rattachement_topclient ), ".$values.", 1)
-                ON DUPLICATE KEY UPDATE user_id_topclient = ( SELECT u.id FROM `fos_user_user` u WHERE u.libelle = :libelle_boutique_rattachement_topclient ),".$update.", is_topclient = 1";
+        $sql = "INSERT INTO app_client ( user_id_topclient, ".$header.", local,is_topclient ) 
+                VALUES ( ( SELECT u.id FROM `fos_user_user` u WHERE u.libelle = :libelle_boutique_rattachement_topclient ), ".$values.", 't',1)
+                ON DUPLICATE KEY UPDATE user_id_topclient = ( SELECT u.id FROM `fos_user_user` u WHERE u.libelle = :libelle_boutique_rattachement_topclient ),".$update.", local = 't',is_topclient = 1";
         
         $i = 0;
         $flag = true;
@@ -385,12 +380,10 @@ class ImportTopClientCronService
 
         if($this->ip == "127.0.0.1")
         {
-            rename ('D:\wamp\www\StoreApp\web\imports\topclients\liste_top_clients_clienteling_'.$date.'.csv', 'D:\wamp\www\StoreApp\web\imports\topclients\archives\liste_top_clients_clienteling_'.$date.'.csv' );
-            rename ('D:\wamp\www\StoreApp\web\imports\topclients\archive_top_clients_sortants_clienteling_'.$date.'.csv', 'D:\wamp\www\StoreApp\web\imports\topclients\archives\archive_top_clients_sortants_clienteling_'.$date.'.csv' );
+            rename ('D:\wamp\www\StoreApp\web\imports\TOP_CLIENT_CLIENTS_V2.csv', 'D:\wamp\www\StoreApp\web\imports\archives\TOP_CLIENT_CLIENTS_V2.csv' );
         }
         else{
-            rename ('/data/ftp/imports/topclients/liste_top_clients_clienteling_'.$date.'.csv', '/data/ftp/imports/topclients/archives/liste_top_clients_clienteling_'.$date.'.csv' );
-            rename ('/data/ftp/imports/topclients/archive_top_clients_sortants_clienteling_'.$date.'.csv', '/data/ftp/imports/topclients/archives/archive_top_clients_sortants_clienteling_'.$date.'.csv' );
+            rename ('/data/ftp/imports/TOP_CLIENT_CLIENTS_V2.csv', '/data/ftp/imports/archives/TOP_CLIENT_CLIENTS_V2.csv' );
         }
     }
 }
