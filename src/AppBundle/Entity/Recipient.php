@@ -66,7 +66,7 @@ class Recipient
     /**
      * @var string
      *
-     * @ORM\Column(name="optout_autre", type="string")
+     * @ORM\Column(name="optout_autre", type="string", nullable=true)
      */
     private $optoutAutre;
 
