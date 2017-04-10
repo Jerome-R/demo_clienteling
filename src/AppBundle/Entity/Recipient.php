@@ -108,14 +108,14 @@ class Recipient
     /**
      * @var boolean
      *
-     * @ORM\Column(name="optout_non_pertinent", type="boolean")
+     * @ORM\Column(name="optout_non_pertinent", type="boolean", nullable=true)
      */
     private $optoutNonPertinent;
 
     /**
      * @var boolean
      *
-     * @ORM\Column(name="optin", type="boolean")
+     * @ORM\Column(name="optin", type="boolean", nullable=true)
      */
     private $optin = 1;
 
@@ -129,7 +129,7 @@ class Recipient
     /**
      * @var boolean
      *
-     * @ORM\Column(name="in_last_import", type="boolean")
+     * @ORM\Column(name="in_last_import", type="boolean", nullable=true)
      */
     private $inLastImport;
 
@@ -150,7 +150,7 @@ class Recipient
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="created_at", type="datetime")
+     * @ORM\Column(name="created_at", type="datetime", nullable=true)
      * @Gedmo\Timestampable(on="create")
      */
     private $createdAt;
