@@ -90,6 +90,7 @@ class ImportRecipientCronService
             {
                 $file = fopen("D:\wamp\www\demo\web\imports\TRIGGER_V3.csv", "r");
             }
+            
             else{
                 $file = fopen("/data/ftp/imports/TRIGGER_V3.csv", "r");
             }
