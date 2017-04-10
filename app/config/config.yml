@@ -10,7 +10,7 @@ imports:
 parameters:
     locale: fr
     sonata.user.admin.user.class: Application\Sonata\UserBundle\Admin\UserAdmin
-    local_ip:  127.0.0.1 #online
+    local_ip:  online #127.0.0.1
     maintenance: false #turn it to true to enable maintenance
     underMaintenanceUntil: 02/11 - 15H00 environ - Mise à jour des Top Clients et Kpis en cours
 
