@@ -5,262 +5,163 @@
 {% endblock %}
 
 {% block content %}	
+	{% block clientsFilter %}
+		{% include 'AppBundle:Commons:kpiFilter.html.twig' %}
+	{% endblock %}
+
+	<div class="col-xs-9">
+		<h3 class="text-uppercase gris">Classement des boutiques pour la réalisation des campagnes automatisées {{ getMonthWording(month, "de") }}&nbsp;{{ year }}</h3>
+	</div>
+	<div class="col-xs-3">
+		<br />
+		<a class="btn big-action-gray-btn hidden-print" style="font-size:14px;" onclick="window.print();"><i class="fa fa-print" aria-hidden="true"></i> Imprimer la page</a>
+	</div>
 
 	<div class="col-xs-12">
-		<h3 class="text-uppercase gris">{{ getMonthWording(month) }} {{ year }}</h3>
-	</div>
-	<div class="col-xs-12">
-		<h3 class="text-uppercase gris">Classement des meilleures boutiques pour les actions campagnes</h3>
-	</div>
+		<div>
 
-	<div class="col-xs-12">
-		<div id="1" class="">
-			<table class="table">
-				<thead>
-					<tr><th class="text-center" colspan=6>Campagne Anniversaire d'achat</th></tr>
-					<tr>
-						<th class="col-xs-2">Classement</th>
-						<th class="col-xs-2">#1</th>
-						<th class="col-xs-2">#2</th>
-						<th class="col-xs-2">#3</th>
-						<th class="col-xs-2">#4</th>
-						<th class="col-xs-2">#5</th>
-					</tr>
-					<tr>
-						<th>Clients contactés</th>
+		  <!-- Nav tabs -->
+		  <ul class="nav nav-tabs" role="tablist">
+		    	<li role="presentation" class="active"><a href="#Global" aria-controls="WB" role="tab" data-toggle="tab">Capture</a></li>
+		    	<li role="presentation"><a href="#AA" aria-controls="AA" role="tab" data-toggle="tab">Anniversaire d'achat</a></li>
+		    	<li role="presentation"><a href="#WP" aria-controls="WP" role="tab" data-toggle="tab">Remerciement nouveau client</a></li>
+		    	<li role="presentation"><a href="#WB" aria-controls="WB" role="tab" data-toggle="tab">Remerciement déjà client</a></li>
+		  </ul>
+
+		  <!-- Tab panes -->
+		  <div class="tab-content">
+
+		    <div role="tabpanel" class="tab-pane active" id="Global">
+		    	<table class="table table-striped datatables">
+					<thead>
+						<tr>
+							<th class="col-xs-2">Rang</i></th>
+							<th class="col-xs-7 text-center">Boutiques</i></th>
+							<th class="col-xs-3 text-center">% de capture valide</i></th>
+						</tr>
+					</thead>
+					<tbody>
+							{% for top in topGlobal %}
+								<tr>
+									<td class="col-xs-2">
+										<strong>#{{ loop.index }}</strong>
+									</td>
+									<td class="col-xs-7">
+										<ul>
+											{% set boutiques = top.list|split(',') %}
+											{% for boutique in boutiques %}
+												<li class="col-xs-4">{% if boutique == "Pop Up Store A" %}G.L Rennes{% else %}{{ boutique }}{% endif %}</li>
+											{% endfor %}
+										</ul>
+									</td>
+									<td class="col-xs-3 text-center"><strong>{{ top.pct|number_format('1',',',' ') }} %</strong></td>
+								</tr>
+							{% endfor %}
+						</tbody>
+				</table>
+		    </div>
+		    <div role="tabpanel" class="tab-pane" id="AA">
+
+				<table class="table table-striped datatables">
+					<thead>
+						<tr>
+							<th class="col-xs-2">Rang</i></th>
+							<th class="col-xs-7 text-center">Boutiques</i></th>
+							<th class="col-xs-3 text-center">% de clients contactés</i></th>
+						</tr>
+					</thead>
+					<tbody>
 						{% for top in topAA %}
-							<th>
-								{{ top.pct }} %
-							</th>
-						{% endfor %}
-					</tr>
-				</thead>
-				<tbody>
-					<tr>
-						<td><strong>Boutiques</strong></td>
-						{% for top in topAA %}
-							{% set boutiques = top.list|split(',') %}
-								<td class="">
+							<tr>
+								<td class="col-xs-2">
+									<strong>#{{ loop.index }}
+								</td>
+								<td class="col-xs-7">
 									<ul>
+										{% set boutiques = top.list|split(',') %}
 										{% for boutique in boutiques %}
-											<li>{{ boutique }}</li>
+											<li class="col-xs-4">{% if boutique == "Pop Up Store A" %}G.L Rennes{% else %}{{ boutique }}{% endif %}</li>
 										{% endfor %}
 									</ul>
 								</td>
+								<td class="col-xs-3 text-center"><strong>{{ top.pct|number_format('1',',',' ') }} %</strong></td>
+							</tr>
 						{% endfor %}
-					</tr>
-				</tbody>
-			</table>
-		</div>
-		
-		<div id="2" class="">
-			<table class="table">
-				<thead>
-					<tr><th class="text-center" colspan=6>Campagne Remerciement nouveau client</th></tr>
-					<tr>
-						<th class="col-xs-2">Classement</th>
-						<th class="col-xs-2">#1</th>
-						<th class="col-xs-2">#2</th>
-						<th class="col-xs-2">#3</th>
-						<th class="col-xs-2">#4</th>
-						<th class="col-xs-2">#5</th>
-					</tr>
-					<tr>
-						<th>Clients contactés</th>
-						{% for top in topWP %}
-							<th>
-								{{ top.pct }} %
-							</th>
-						{% endfor %}
-					</tr>
-				</thead>
-				<tbody>
-					<tr>
-						<td><strong>Boutiques</strong></td>
-						{% for top in topWP %}
-							{% set boutiques = top.list|split(',') %}
-								<td class="">
-									<ul>
-										{% for boutique in boutiques %}
-											<li>{{ boutique }}</li>
-										{% endfor %}
-									</ul>
-								</td>
-						{% endfor %}
-					</tr>
-				</tbody>
-			</table>
-		</div>
-	
-		<div id="3" class="">
-			<table class="table">
-				<thead>
-					<tr><th class="text-center" colspan=6>Campagne Remerciement déjà client</th></tr>
-					<tr>
-						<th class="col-xs-2">Classement</th>
-						<th class="col-xs-2">#1</th>
-						<th class="col-xs-2">#2</th>
-						<th class="col-xs-2">#3</th>
-						<th class="col-xs-2">#4</th>
-						<th class="col-xs-2">#5</th>
-					</tr>
-					<tr>
-						<th>Clients contactés</th>
-						{% for top in topWB %}
-							<th>
-								{{ top.pct }} %
-							</th>
-						{% endfor %}
-					</tr>
-				</thead>
-				<tbody>
-					<tr>
-						<td><strong>Boutiques</strong></td>
-						{% for top in topWB %}
-							{% set boutiques = top.list|split(',') %}
-								<td class="">
-									<ul>
-										{% for boutique in boutiques %}
-											<li>{{ boutique }}</li>
-										{% endfor %}
-									</ul>
-								</td>
-						{% endfor %}
-					</tr>
-				</tbody>
-			</table>
-		</div>
-	</div>
-	
+					</tbody>
+				</table>
+		    </div>
+		    <div role="tabpanel" class="tab-pane" id="WP">
 
-	<div class="col-xs-12">
-		<h3 class="text-uppercase gris">Classement des boutiques où des efforts restent à faire</h3>
-	</div>
+				<table class="table table-striped datatables">
+					<thead>
+						<tr>
+							<th class="col-xs-2">Rang</i></th>
+							<th class="col-xs-7 text-center">Boutiques</i></th>
+							<th class="col-xs-3 text-center">% de clients contactés</i></th>
+						</tr>
+					</thead>
+					<tbody>
+						{% for top in topWP %}
+							<tr>
+								<td class="col-xs-2">
+									<strong>#{{ loop.index }}
+								</td>
+								<td class="col-xs-7">
+									<ul>
+										{% set boutiques = top.list|split(',') %}
+										{% for boutique in boutiques %}
+											<li class="col-xs-4">{% if boutique == "Pop Up Store A" %}G.L Rennes{% else %}{{ boutique }}{% endif %}</li>
+										{% endfor %}
+									</ul>
+								</td>
+								<td class="col-xs-3 text-center"><strong>{{ top.pct|number_format('1',',',' ') }} %</strong></td>
+							</tr>
+						{% endfor %}
+					</tbody>
+				</table>
+		    </div>
+		    <div role="tabpanel" class="tab-pane" id="WB">
+		    	<table class="table table-striped datatables">
+					<thead>
+						<tr>
+							<th class="col-xs-2">Rang</i></th>
+							<th class="col-xs-7 text-center">Boutiques</i></th>
+							<th class="col-xs-3 text-center">% de clients contactés</i></th>
+						</tr>
+					</thead>
+					<tbody>
+							{% for top in topWB %}
+								<tr>
+									<td class="col-xs-2">
+										<strong>#{{ loop.index }}
+									</td>
+									<td class="col-xs-7">
+										<ul>
+											{% set boutiques = top.list|split(',') %}
+											{% for boutique in boutiques %}
+												<li class="col-xs-4">{% if boutique == "Pop Up Store A" %}G.L Rennes{% else %}{{ boutique }}{% endif %}</li>
+											{% endfor %}
+										</ul>
+									</td>
+									<td class="col-xs-3 text-center"><strong>{{ top.pct|number_format('1',',',' ') }} %</strong></td>
+								</tr>
+							{% endfor %}
+						</tbody>
+				</table>
+		    </div>
+		  </div>
 
-	<div class="col-xs-12">
-		<div id="4" class="">
-			<table class="table">
-				<thead>
-					<tr><th class="text-center" colspan=6>Campagne Anniversaire d'achat</th></tr>
-					<tr>
-						<th class="col-xs-2">Classement</th>
-						<th class="col-xs-2">#1</th>
-						<th class="col-xs-2">#2</th>
-						<th class="col-xs-2">#3</th>
-						<th class="col-xs-2">#4</th>
-						<th class="col-xs-2">#5</th>
-					</tr>
-					<tr>
-						<th>Clients contactés</th>
-						{% for top in bottomAA %}
-							<th>
-								{{ top.pct }} %
-							</th>
-						{% endfor %}
-					</tr>
-				</thead>
-				<tbody>
-					<tr>
-						<td><strong>Boutiques</strong></td>
-						{% for top in bottomAA %}
-							{% set boutiques = top.list|split(',') %}
-								<td class="">
-									<ul>
-										{% for boutique in boutiques %}
-											<li>{{ boutique }}</li>
-										{% endfor %}
-									</ul>
-								</td>
-						{% endfor %}
-					</tr>
-				</tbody>
-			</table>
 		</div>
-		
-		<div id="5" class="">
-			<table class="table">
-				<thead>
-					<tr><th class="text-center" colspan=6>Campagne Remerciement nouveau client</th></tr>
-					<tr>
-						<th class="col-xs-2">Classement</th>
-						<th class="col-xs-2">#1</th>
-						<th class="col-xs-2">#2</th>
-						<th class="col-xs-2">#3</th>
-						<th class="col-xs-2">#4</th>
-						<th class="col-xs-2">#5</th>
-					</tr>
-					<tr>
-						<th>Clients contactés</th>
-						{% for top in bottomWP %}
-							<th>
-								{{ top.pct }} %
-							</th>
-						{% endfor %}
-					</tr>
-				</thead>
-				<tbody>
-					<tr>
-						<td><strong>Boutiques</strong></td>
-						{% for top in bottomWP %}
-							{% set boutiques = top.list|split(',') %}
-								<td class="">
-									<ul>
-										{% for boutique in boutiques %}
-											<li>{{ boutique }}</li>
-										{% endfor %}
-									</ul>
-								</td>
-						{% endfor %}
-					</tr>
-				</tbody>
-			</table>
-		</div>
-		
-		<div id="6" class="">
-			<table class="table">
-				<thead>
-					<tr><th class="text-center" colspan=6>Campagne Remerciement déjà client</th></tr>
-					<tr>
-						<th class="col-xs-2">Classement</th>
-						<th class="col-xs-2">#1</th>
-						<th class="col-xs-2">#2</th>
-						<th class="col-xs-2">#3</th>
-						<th class="col-xs-2">#4</th>
-						<th class="col-xs-2">#5</th>
-					</tr>
-					<tr>
-						<th>Clients contactés</th>
-						{% for top in bottomWB %}
-							<th>
-								{{ top.pct }} %
-							</th>
-						{% endfor %}
-					</tr>
-				</thead>
-				<tbody>
-					<tr>
-						<td><strong>Boutiques</strong></td>
-						{% for top in bottomWB %}
-							{% set boutiques = top.list|split(',') %}
-								<td class="">
-									<ul>
-										{% for boutique in boutiques %}
-											<li>{{ boutique }}</li>
-										{% endfor %}
-									</ul>
-								</td>
-						{% endfor %}
-					</tr>
-				</tbody>
-			</table>
-		</div>
+
 	</div>
+	<div class="spacer" style="height:20px;"></div>
 
 {% endblock %}
 
 {% block javascripts %}
 	{{ parent() }}
 
+    <script type="text/javascript" src="{{ asset('web/js/datatables/datatables.min.js') }}"></script>
 	<script type="text/javascript">
 		 $(function(){
 		 	$("a.btn-collapse").on("click", function(){
@@ -273,6 +174,42 @@
 		 			$(this).attr('data','close')
 		 		}
 		 	});
+
+
+			$('.datatables').dataTable(
+			{
+				"paging":   true,
+		        "info":     false,
+		        "lengthMenu": [ 10, 20, 30, 40, 50, 60, 70, 80 ],
+		        "order": [[ 2, "desc" ]],
+		        "language": {
+	                "sProcessing":     "Traitement en cours...",
+				    "sSearch":         "Rechercher&nbsp;:",
+				    "sLengthMenu":     "Afficher _MENU_ &eacute;l&eacute;ments",
+				    "sInfo":           "Affichage de l'&eacute;l&eacute;ment _START_ &agrave; _END_ sur _TOTAL_ &eacute;l&eacute;ments",
+				    "sInfoEmpty":      "Affichage de l'&eacute;l&eacute;ment 0 &agrave; 0 sur 0 &eacute;l&eacute;ment",
+				    "sInfoFiltered":   "(filtr&eacute; de _MAX_ &eacute;l&eacute;ments au total)",
+				    "sInfoPostFix":    "",
+				    "sLoadingRecords": "Chargement en cours...",
+				    "sZeroRecords":    "Aucun &eacute;l&eacute;ment &agrave; afficher",
+				    "sEmptyTable":     "Aucune donn&eacute;e disponible dans le tableau",
+				    "oPaginate": {
+				        "sFirst":      "Premier",
+				        "sPrevious":   "Pr&eacute;c&eacute;dent",
+				        "sNext":       "Suivant",
+				        "sLast":       "Dernier"
+				    },
+				    "oAria": {
+				        "sSortAscending":  ": activer pour trier la colonne par ordre croissant",
+				        "sSortDescending": ": activer pour trier la colonne par ordre d&eacute;croissant"
+				    }
+	            },
+	            "columnDefs": [
+				    { "searchable": false, "targets": [0,2] },
+				    { "sortable": false, "targets": [0,1] },
+				]
+			}
+				);
 		 });
 	</script>
 {% endblock %}

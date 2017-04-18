@@ -27,11 +27,6 @@
 
 				{{ form_end(form2) }}
 				{% endif %}
-				<form class="form-horizontal">
-					<div class="form-group col-md-12 col-xs-8 pull-right">
-						<a class="btn big-action-orange-btn" href="{{path( 'app_top_client_sortant' )}}">Archives top clients</a>
-					</div>
-				</form>
 
 				<p class="text-right">Dernière mise à jour de la liste le : {{dateImport.dateImport|date("d/m/Y")}}</p>
 			</div>
@@ -52,7 +47,7 @@
 					<p class="small hidden">{{ topClient.codeVendeur }}</p>
 				</div>
 				<div class="data col-md-6 col-xs-4">
-					<h2 class="col-xs-12" style="max-width:600px;">
+					<h2 class="col-xs-12" style="max-width:600px;text-transform:capitalize;">
 						<a class="black" href="{{ path('app_top_client_view', { 'top_client_id': topClient.id } ) }}" {% if topClient.isNouveauTopClient %}style="color: #d35400 !important;"{% endif %}>{{ topClient.civilite }} {{ topClient.getFullName()|length > 20 ?  topClient.getFullName()|slice(0, 20) ~ '...' :  topClient.getFullName() }}</a>
 					</h2>
 					<div class="col-xs-12">

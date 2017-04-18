@@ -686,44 +686,199 @@ class KpiController extends Controller
         );
 	}
 
-	public function topBoutiqueAction(Request $request) {
+	public function topBoutiqueAction(Request $request){
 		$em = $this->getDoctrine()->getManager();
-
 		$user = $this->get('security.context')->getToken()->getUser();
 
-		$date = new \DateTime();
+		$session = $request->getSession();
 
-		$dateMonth 	= $date->format('m');
-		$dateYear 	= $date->format('Y');
+		if($user->getRole() == 'ROLE_RETAIL_MANAGER'){
+			$firstboutique = $user;
+		}
+
+		if($user->getRole() == 'ROLE_DIRECTEUR'){
+			$firstboutique = $em->getRepository('ApplicationSonataUserBundle:User')->findOneBy(array('directeur' => $user->getLibelle(), 'role' => "ROLE_BOUTIQUE"), array('libelle' => 'ASC'));
+		}
 
 		$lastKpiTrigger = $em->getRepository('AppBundle:KpiTrigger')->findOneBy(array(), array('date' => "DESC"));
 
 		$lastKpiDate = $lastKpiTrigger->getDate();
+
+		$date = $lastKpiTrigger->getDate();
+
+		//la derniere date est toujours celle du dernier kpicapture en base, la premiere varie de -12 à -24 mois
+		//Affichage des données du dernier mois / mois selectionné de l'année en cours de puis le début de l'année
+		if($session->get('kpi_boutique_filtre') == null && $session->get('kpi_month_filtre') == null && $session->get('kpi_year_filtre') == null) {
+
+			$month = $date->format('m');
+			$year = $date->format('Y');
+
+			$date2 = new \DateTime($date->format('Y-m-d'));
+			$date2->modify('last day of this month');
+			$date2 = $date2->format("Y-m-d");
+		}
+		//si on a une recherche active
+		else{
+			$month = $session->get('kpi_month_filtre');
+			$year = $session->get('kpi_year_filtre');
+
+			$date2 = $date2 = new \DateTime($year."-".$month."-01");
+			$date2->modify('last day of this month');
+			$date2 = $date2->format("Y-m-d");
+
+			$date_check = new \DateTime($date2);
+			if($date_check > $date) {
+				$month = $date->format('m');
+				$year = $date->format('Y');
+				$session->set('kpi_month_filtre', $month);
+				$session->set('kpi_year_filtre', $year);
+
+				$date2 = new \DateTime($date->format('Y-m-d'));
+				$date2->modify('last day of this month');
+				$date2 = $date2->format("Y-m-d");
+			}
+		}
+
+
+		$date1 = new \DateTime($date2);
+		$date1->modify('-12 months')->modify('first day of this month');
+		$date1 = $date1->format("Y-m-d");
+
+
+		if($session->get('kpi_year_filtre') != null)
+			$form = $this->createForm(new KpiFilterType($em, $user, $month, $session->get('kpi_year_filtre')));
+		else
+			$form = $this->createForm(new KpiFilterType($em, $user, $month, $year));
+		
+        $form->handleRequest($request);        
+
+        $data = $form->getData();
+
 		$lastKpiTrigger = null;
 
-		$month = $lastKpiDate->format('m');
-		$year = $lastKpiDate->format('Y');
+		if ( $request->getMethod() == 'POST' ) {
+			if($data['boutique'] == '' ){
+				$session->remove('kpi_boutique_filtre');
+			}
+			else{
+				$session->set('kpi_boutique_filtre', $data['boutique']->getLibelle());
+			}
 
-        $session = $request->getSession();
+			if($data['year'] == '' ){
+				$session->remove('kpi_year_filtre');
+			}
+			else{
+				$session->set('kpi_year_filtre', $data['year']);
+			}
+			if($data['month'] == '' ){
+				$session->remove('kpi_month_filtre');
+			}
+			else{
+				$session->set('kpi_month_filtre', $data['month']);
+			}
 
-		$topAA =  $em->getRepository('AppBundle:KpiTrigger')->getKpiTopBoutiqueNative($month, $year, "AA", "DESC", $this->container);		
-		$topWP =  $em->getRepository('AppBundle:KpiTrigger')->getKpiTopBoutiqueNative($month, $year, "WP", "DESC", $this->container);
-		$topWB =  $em->getRepository('AppBundle:KpiTrigger')->getKpiTopBoutiqueNative($month, $year, "WB", "DESC", $this->container);
+			$month = $data['month'];
+			$year = $data['year'];
 
-		$bottomAA =  $em->getRepository('AppBundle:KpiTrigger')->getKpiTopBoutiqueNative($month, $year, "AA", "ASC", $this->container);
-		$bottomWP =  $em->getRepository('AppBundle:KpiTrigger')->getKpiTopBoutiqueNative($month, $year, "WP", "ASC", $this->container);
-		$bottomWB =  $em->getRepository('AppBundle:KpiTrigger')->getKpiTopBoutiqueNative($month, $year, "WB", "ASC", $this->container);
+			$date2 = $date2 = new \DateTime($year."-".$month."-01");
+			$date2->modify('last day of this month');
+			$date2 = $date2->format("Y-m-d");
+
+			//vérification si date > à la dernière ligne en base
+			$date_check = new \DateTime($date2);
+			if($date_check > $date) {
+				$month = $date->format('m');
+				$year = $date->format('Y');
+				$session->set('kpi_month_filtre', $data['month']);
+				$session->set('kpi_year_filtre', $data['year']);
+
+				$date2 = new \DateTime($date->format('Y-m-d'));
+				$date2->modify('last day of this month');
+				$date2 = $date2->format("Y-m-d");
+			}
+			
+			$date1 = new \DateTime($date2);
+			$date1->modify('first day of this month');
+			$date1 = $date1->format("Y-m-d");		
+		}
+		else{
+		}
+
+		if ( $user->getRole() == 'ROLE_SIEGE' OR $user->getRole() == 'ROLE_ADMIN' ) {
+			if ($session->get('kpi_boutique_filtre') == null) {
+				$topAA 		=  $em->getRepository('AppBundle:KpiTrigger')->getKpiTopBoutiqueNative($month, $year, "AA", 	"DESC", $this->container);		
+				$topWP 		=  $em->getRepository('AppBundle:KpiTrigger')->getKpiTopBoutiqueNative($month, $year, "WP", 	"DESC", $this->container);
+				$topWB 		=  $em->getRepository('AppBundle:KpiTrigger')->getKpiTopBoutiqueNative($month, $year, "WB", 	"DESC", $this->container);
+				$topGlobal 	=  $em->getRepository('AppBundle:KpiCapture')->getKpiTopBoutiqueNative($month, $year, "Global", "DESC", $this->container);
+			}
+			else{
+				if( in_array( $session->get('kpi_boutique_filtre'), array( "Elisa Piano", "Mathieu Guillemet", "Stéphanie Nguyen", "Lucas Madranges", "Marie Raphaelle L'Huillier" ) )){
+					$topAA 		=  $em->getRepository('AppBundle:KpiTrigger')->getKpiTopBoutiqueNative($month, $year, "AA", 	"DESC", $this->container, 'RM', $session->get('kpi_boutique_filtre'));		
+					$topWP 		=  $em->getRepository('AppBundle:KpiTrigger')->getKpiTopBoutiqueNative($month, $year, "WP", 	"DESC", $this->container, 'RM', $session->get('kpi_boutique_filtre'));
+					$topWB 		=  $em->getRepository('AppBundle:KpiTrigger')->getKpiTopBoutiqueNative($month, $year, "WB", 	"DESC", $this->container, 'RM', $session->get('kpi_boutique_filtre'));
+					$topGlobal 	=  $em->getRepository('AppBundle:KpiCapture')->getKpiTopBoutiqueNative($month, $year, "Global", "DESC", $this->container, 'RM', $session->get('kpi_boutique_filtre'));
+				}
+				else{
+					$topAA 		=  $em->getRepository('AppBundle:KpiTrigger')->getKpiTopBoutiqueNative($month, $year, "AA", 	"DESC", $this->container, 'BTQ', $session->get('kpi_boutique_filtre'));		
+					$topWP 		=  $em->getRepository('AppBundle:KpiTrigger')->getKpiTopBoutiqueNative($month, $year, "WP", 	"DESC", $this->container, 'BTQ', $session->get('kpi_boutique_filtre'));
+					$topWB 		=  $em->getRepository('AppBundle:KpiTrigger')->getKpiTopBoutiqueNative($month, $year, "WB", 	"DESC", $this->container, 'BTQ', $session->get('kpi_boutique_filtre'));
+					$topGlobal 	=  $em->getRepository('AppBundle:KpiCapture')->getKpiTopBoutiqueNative($month, $year, "Global", "DESC", $this->container, 'BTQ', $session->get('kpi_boutique_filtre'));	
+				}
+			}
+		}
+		elseif ( $user->getRole() == 'ROLE_RETAIL_MANAGER' ) {
+			if ($session->get('kpi_boutique_filtre') == null) {
+					$topAA 		=  $em->getRepository('AppBundle:KpiTrigger')->getKpiTopBoutiqueNative($month, $year, "AA", 	"DESC", $this->container, 'RM', $user->getLibelle());		
+					$topWP 		=  $em->getRepository('AppBundle:KpiTrigger')->getKpiTopBoutiqueNative($month, $year, "WP", 	"DESC", $this->container, 'RM', $user->getLibelle());
+					$topWB 		=  $em->getRepository('AppBundle:KpiTrigger')->getKpiTopBoutiqueNative($month, $year, "WB", 	"DESC", $this->container, 'RM', $user->getLibelle());
+					$topGlobal 	=  $em->getRepository('AppBundle:KpiCapture')->getKpiTopBoutiqueNative($month, $year, "Global", "DESC", $this->container, 'RM', $user->getLibelle());
+			}
+			else{
+				if( in_array( $session->get('kpi_boutique_filtre'), array( "Elisa Piano", "Mathieu Guillemet", "Stéphanie Nguyen", "Lucas Madranges", "Marie Raphaelle L'Huillier" ) )){
+					$topAA 		=  $em->getRepository('AppBundle:KpiTrigger')->getKpiTopBoutiqueNative($month, $year, "AA", 	"DESC", $this->container, 'RM', $session->get('kpi_boutique_filtre'));		
+					$topWP 		=  $em->getRepository('AppBundle:KpiTrigger')->getKpiTopBoutiqueNative($month, $year, "WP", 	"DESC", $this->container, 'RM', $session->get('kpi_boutique_filtre'));
+					$topWB 		=  $em->getRepository('AppBundle:KpiTrigger')->getKpiTopBoutiqueNative($month, $year, "WB", 	"DESC", $this->container, 'RM', $session->get('kpi_boutique_filtre'));
+					$topGlobal 	=  $em->getRepository('AppBundle:KpiCapture')->getKpiTopBoutiqueNative($month, $year, "Global", "DESC", $this->container, 'RM', $session->get('kpi_boutique_filtre'));
+				}
+				else{
+					$topAA 		=  $em->getRepository('AppBundle:KpiTrigger')->getKpiTopBoutiqueNative($month, $year, "AA", 	"DESC", $this->container, 'BTQ', $session->get('kpi_boutique_filtre'));		
+					$topWP 		=  $em->getRepository('AppBundle:KpiTrigger')->getKpiTopBoutiqueNative($month, $year, "WP", 	"DESC", $this->container, 'BTQ', $session->get('kpi_boutique_filtre'));
+					$topWB 		=  $em->getRepository('AppBundle:KpiTrigger')->getKpiTopBoutiqueNative($month, $year, "WB", 	"DESC", $this->container, 'BTQ', $session->get('kpi_boutique_filtre'));
+					$topGlobal 	=  $em->getRepository('AppBundle:KpiCapture')->getKpiTopBoutiqueNative($month, $year, "Global", "DESC", $this->container, 'BTQ', $session->get('kpi_boutique_filtre'));
+				}
+			}
+		}
+		else {
+			if ($session->get('kpi_boutique_filtre') == null) {
+				$topAA 		=  $em->getRepository('AppBundle:KpiTrigger')->getKpiTopBoutiqueNative($month, $year, "AA", 	"DESC", $this->container, 'DR', $firstboutique->getLibelle());		
+				$topWP 		=  $em->getRepository('AppBundle:KpiTrigger')->getKpiTopBoutiqueNative($month, $year, "WP", 	"DESC", $this->container, 'DR', $firstboutique->getLibelle());
+				$topWB 		=  $em->getRepository('AppBundle:KpiTrigger')->getKpiTopBoutiqueNative($month, $year, "WB", 	"DESC", $this->container, 'DR', $firstboutique->getLibelle());
+				$topGlobal 	=  $em->getRepository('AppBundle:KpiCapture')->getKpiTopBoutiqueNative($month, $year, "Global", "DESC", $this->container, 'DR', $firstboutique->getLibelle());
+			}
+			else{
+				$topAA 		=  $em->getRepository('AppBundle:KpiTrigger')->getKpiTopBoutiqueNative($month, $year, "AA", 	"DESC", $this->container, 'BTQ', $session->get('kpi_boutique_filtre'));		
+				$topWP 		=  $em->getRepository('AppBundle:KpiTrigger')->getKpiTopBoutiqueNative($month, $year, "WP", 	"DESC", $this->container, 'BTQ', $session->get('kpi_boutique_filtre'));
+				$topWB 		=  $em->getRepository('AppBundle:KpiTrigger')->getKpiTopBoutiqueNative($month, $year, "WB", 	"DESC", $this->container, 'BTQ', $session->get('kpi_boutique_filtre'));
+				$topGlobal 	=  $em->getRepository('AppBundle:KpiCapture')->getKpiTopBoutiqueNative($month, $year, "Global", "DESC", $this->container, 'BTQ', $session->get('kpi_boutique_filtre'));
+			}
+		}
+		
+		if($session->get('kpi_boutique_filtre') != null && $request->getMethod() == 'GET'){
+        	$form->get('boutique')->setData($em->getRepository('ApplicationSonataUserBundle:User')->findOneBy(array('libelle' => $session->get('kpi_boutique_filtre'))));
+        	$form->get('year')->setData( $session->get('kpi_month_filtre') );
+        	$form->get('month')->setData( $session->get('kpi_year_filtre') );
+        }
+		
 
 		return $this->render('AppBundle:Kpi:topBoutique.html.twig', array(
-        	'user'	=> $user,
-        	'topAA' => $topAA,
-        	'topWP' => $topWP,
-        	'topWB' => $topWB,
-        	'bottomAA' => $bottomAA,
-        	'bottomWP' => $bottomWP,
-        	'bottomWB' => $bottomWB,
-        	'month' => $month,
-        	'year' => $year
+        	'user'		=> $user,
+        	'topAA' 	=> $topAA,
+        	'topWP' 	=> $topWP,
+        	'topWB' 	=> $topWB,
+        	'topGlobal'	=> $topGlobal,
+        	'month' 	=> $month,
+        	'year' 		=> $year,
+        	'form'      => $form->createView(),
         	)
         );
 	}
