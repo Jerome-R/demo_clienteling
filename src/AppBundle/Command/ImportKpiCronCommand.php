@@ -52,8 +52,8 @@ class ImportKpiCronCommand extends ContainerAwareCommand
 		$output->writeln("Configuration du separateur");
 		$import->setSeparator($input->getArgument('separator'));
 
-		//$output->writeln("Import des Kpi Capture 1/2");
-		//$import->importKpiCaptureCSVFile($input, $output, $filename1);
+		$output->writeln("Import des Kpi Capture 1/2");
+		$import->importKpiCaptureCSVFile($input, $output, $filename1);
 		$output->writeln("Import des Kpi Trigger 2/2");
 		$import->importKpiTriggerCSVFile($input, $output, $filename2);
 

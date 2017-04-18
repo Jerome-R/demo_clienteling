@@ -44,7 +44,7 @@
 				<p class="small">{% if recipient.dataRecipient.codevendeur is defined %}{{ recipient.dataRecipient.codevendeur|lower }}{% endif %}</p>
 			</div>
 			<div class="data col-md-9 col-xs-7">
-				<h2>
+				<h2 style="text-transform:capitalize;">
 					<a class="black" href="{{ path( 'app_campaign_client', { 'campaign_id' : campaign.id, 'client_id' : recipient.client.id } ) }}">
 						{{ recipient.client.civilite }} {{ recipient.client.getFullName()|length > 20 ?  recipient.client.getFullName()|slice(0, 20) ~ '...' :  recipient.client.getFullName() }}
 					</a>

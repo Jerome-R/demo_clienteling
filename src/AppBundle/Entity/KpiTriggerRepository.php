@@ -126,7 +126,7 @@ class KpiTriggerRepository extends EntityRepository
 			->getResult();
 	}
 
-	public function getKpiTopBoutiqueNative($month, $year, $trigger, $order, $container){
+	public function getKpiTopBoutiqueNative($month, $year, $trigger, $order, $container, $niveau = null, $libelle = null){
 		
 		if($month < 12 ){
 			$monthp1 = $month + 1 ;
@@ -143,21 +143,77 @@ class KpiTriggerRepository extends EntityRepository
 		switch ($trigger) {
 			case 'AA':
 				//$rsm->addFieldResult('k', 'pctCliContactTriggerAA', 'pct_cli_contact_trigger_AA');
-				$sql = 'SELECT k.pct_cli_contact_trigger_AA as pct, GROUP_CONCAT(k.point_vente_desc) as list FROM app_kpi_trigger k WHERE k.nb_cli_tocontact_trigger_AA > 0 AND (k.date BETWEEN "'. $year.'-'.$month.'-01'.'" AND "'. $yearp1.'-'.$monthp1.'-01'.'") AND k.niveau = "BTQ" AND k.user_id IS NOT NULL GROUP BY k.pct_cli_contact_trigger_AA ORDER BY pct_cli_contact_trigger_AA '.$order.' LIMIT 5';
+				$sql = 'SELECT k.pct_cli_contact_trigger_AA as pct, GROUP_CONCAT(k.point_vente_desc) as list 
+						FROM app_kpi_trigger k 
+						LEFT JOIN fos_user_user u on k.point_vente_desc = u.libelle
+						WHERE k.nb_cli_tocontact_trigger_AA > 0
+						AND (k.date BETWEEN "'. $year.'-'.$month.'-01'.'"
+						AND "'. $yearp1.'-'.$monthp1.'-01'.'") AND k.niveau = "BTQ" AND k.user_id IS NOT NULL';
+				
+				if($niveau == "RM"){
+					$sql .= ' AND u.retail_manager = "'.$libelle.'"';
+				}
+				elseif($niveau == "DR"){
+					$sql .= ' AND u.directeur = "'.$libelle.'"';
+				}
+				elseif($niveau == "BTQ"){
+					$sql .= ' AND k.point_vente_desc = "'.$libelle.'"';
+				}
+
+				$sql .= ' GROUP BY k.pct_cli_contact_trigger_AA
+						  ORDER BY pct_cli_contact_trigger_AA '.$order;
 				break;
 			case 'WP':
 				//$rsm->addFieldResult('k', 'pctCliContactTriggerWP', 'pct_cli_contact_trigger_WP');
-				$sql = 'SELECT k.pct_cli_contact_trigger_WP as pct, GROUP_CONCAT(k.point_vente_desc) as list FROM app_kpi_trigger k WHERE k.nb_cli_tocontact_trigger_WP > 0 AND (k.date BETWEEN "'. $year.'-'.$month.'-01'.'" AND "'. $yearp1.'-'.$monthp1.'-01'.'") AND k.niveau = "BTQ" AND k.user_id IS NOT NULL GROUP BY k.pct_cli_contact_trigger_WP ORDER BY pct_cli_contact_trigger_WP '.$order.' LIMIT 5';
+				$sql = 'SELECT k.pct_cli_contact_trigger_WP as pct, GROUP_CONCAT(k.point_vente_desc) as list 
+						FROM app_kpi_trigger k 
+						LEFT JOIN fos_user_user u on k.point_vente_desc = u.libelle
+						WHERE k.nb_cli_tocontact_trigger_WP > 0
+						AND (k.date BETWEEN "'. $year.'-'.$month.'-01'.'"
+						AND "'. $yearp1.'-'.$monthp1.'-01'.'") AND k.niveau = "BTQ" AND k.user_id IS NOT NULL';
+				
+				if($niveau == "RM"){
+					$sql .= ' AND u.retail_manager = "'.$libelle.'"';
+				}
+				elseif($niveau == "DR"){
+					$sql .= ' AND u.directeur = "'.$libelle.'"';
+				}
+				elseif($niveau == "BTQ"){
+					$sql .= ' AND k.point_vente_desc = "'.$libelle.'"';
+				}
+
+				$sql .= ' GROUP BY k.pct_cli_contact_trigger_WP
+						  ORDER BY pct_cli_contact_trigger_WP '.$order;
 				break;
 			case 'WB':
 				//$rsm->addFieldResult('k', 'pctCliContactTriggerWB', 'pct_cli_contact_trigger_WB');
-				$sql = 'SELECT k.pct_cli_contact_trigger_WB as pct, GROUP_CONCAT(k.point_vente_desc) as list FROM app_kpi_trigger k WHERE k.nb_cli_tocontact_trigger_WB > 0 AND (k.date BETWEEN "'. $year.'-'.$month.'-01'.'" AND "'. $yearp1.'-'.$monthp1.'-01'.'") AND k.niveau = "BTQ" AND k.user_id IS NOT NULL GROUP BY k.pct_cli_contact_trigger_WB ORDER BY pct_cli_contact_trigger_WB '.$order.' LIMIT 5';
+				$sql = 'SELECT k.pct_cli_contact_trigger_WB as pct, GROUP_CONCAT(k.point_vente_desc) as list 
+						FROM app_kpi_trigger k 
+						LEFT JOIN fos_user_user u on k.point_vente_desc = u.libelle
+						WHERE k.nb_cli_tocontact_trigger_WB > 0
+						AND (k.date BETWEEN "'. $year.'-'.$month.'-01'.'"
+						AND "'. $yearp1.'-'.$monthp1.'-01'.'") AND k.niveau = "BTQ" AND k.user_id IS NOT NULL';
+				
+				if($niveau == "RM"){
+					$sql .= ' AND u.retail_manager = "'.$libelle.'"';
+				}
+				elseif($niveau == "DR"){
+					$sql .= ' AND u.directeur = "'.$libelle.'"';
+				}
+				elseif($niveau == "BTQ"){
+					$sql .= ' AND k.point_vente_desc = "'.$libelle.'"';
+				}
+
+				$sql .= ' GROUP BY k.pct_cli_contact_trigger_WB
+						  ORDER BY pct_cli_contact_trigger_WB '.$order;
 				break;
 			
 			default:
 				# code...
 				break;
 		}
+
+
 
 
         $stmt = $pdo->prepare($sql);

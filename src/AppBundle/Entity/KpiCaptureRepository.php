@@ -177,4 +177,115 @@ class KpiCaptureRepository extends EntityRepository
 			->getQuery()
 			->getOneOrNullResult();
 	}
+
+	public function getKpiTopBoutiqueNative($month, $year, $canal, $order, $container, $niveau = null, $libelle = null){
+		
+		if($month < 12 ){
+			$monthp1 = $month + 1 ;
+			$yearp1 = $year;
+		}
+		else{
+			$monthp1 = "01" ;
+			$yearp1 = $year + 1;
+		}
+
+		$pdo = $container->get('app.pdo_connect');
+        $pdo = $pdo->initPdoClienteling();       
+		
+		switch ($canal) {
+			case 'Email':
+				$sql = 'SELECT k.pct_cli_email_valid_m as pct, GROUP_CONCAT(k.point_vente_desc) as list 
+						FROM app_kpi_capture k
+						LEFT JOIN fos_user_user u on k.point_vente_desc = u.libelle
+						WHERE (k.date BETWEEN "'. $year.'-'.$month.'-01'.'" AND "'. $yearp1.'-'.$monthp1.'-01'.'")
+						AND k.niveau = "BTQ"
+						AND k.user_id IS NOT NULL';
+
+				if($niveau == "RM"){
+					$sql .= ' AND u.retail_manager = "'.$libelle.'"';
+				}
+				elseif($niveau == "DR"){
+					$sql .= ' AND u.directeur = "'.$libelle.'"';
+				}
+				elseif($niveau == "BTQ"){
+					$sql .= ' AND u.store = "'.$libelle.'"';
+				}
+
+				$sql .=	' GROUP BY k.pct_cli_email_valid_m
+						  ORDER BY pct_cli_email_valid_m '.$order;
+				break;
+			case 'Mail':
+				$sql = 'SELECT k.pct_cli_mail_valid_m as pct, GROUP_CONCAT(k.point_vente_desc) as list 
+						FROM app_kpi_capture k
+						LEFT JOIN fos_user_user u on k.point_vente_desc = u.libelle
+						WHERE (k.date BETWEEN "'. $year.'-'.$month.'-01'.'" AND "'. $yearp1.'-'.$monthp1.'-01'.'")
+						AND k.niveau = "BTQ"
+						AND k.user_id IS NOT NULL';
+
+				if($niveau == "RM"){
+					$sql .= ' AND u.retail_manager = "'.$libelle.'"';
+				}
+				elseif($niveau == "DR"){
+					$sql .= ' AND u.directeur = "'.$libelle.'"';
+				}
+				elseif($niveau == "BTQ"){
+					$sql .= ' AND k.point_vente_desc = "'.$libelle.'"';
+				}
+
+				$sql .=	' GROUP BY k.pct_cli_mail_valid_m
+						  ORDER BY pct_cli_mail_valid_m '.$order;
+				break;
+			case 'Phone':
+				$sql = 'SELECT k.pct_cli_tel_valid_m as pct, GROUP_CONCAT(k.point_vente_desc) as list 
+						FROM app_kpi_capture k
+						LEFT JOIN fos_user_user u on k.point_vente_desc = u.libelle
+						WHERE (k.date BETWEEN "'. $year.'-'.$month.'-01'.'" AND "'. $yearp1.'-'.$monthp1.'-01'.'")
+						AND k.niveau = "BTQ"
+						AND k.user_id IS NOT NULL';
+
+				if($niveau == "RM"){
+					$sql .= ' AND u.retail_manager = "'.$libelle.'"';
+				}
+				elseif($niveau == "DR"){
+					$sql .= ' AND u.directeur = "'.$libelle.'"';
+				}
+				elseif($niveau == "BTQ"){
+					$sql .= ' AND k.point_vente_desc = "'.$libelle.'"';
+				}
+
+				$sql .=	' GROUP BY k.pct_cli_tel_valid_m
+						  ORDER BY pct_cli_tel_valid_m '.$order;
+				break;
+			
+			default:
+				$sql = 'SELECT k.pct_cli_coord_valid_m as pct, GROUP_CONCAT(k.point_vente_desc) as list 
+						FROM app_kpi_capture k
+						LEFT JOIN fos_user_user u on k.point_vente_desc = u.libelle
+						WHERE (k.date BETWEEN "'. $year.'-'.$month.'-01'.'" AND "'. $yearp1.'-'.$monthp1.'-01'.'") 
+						AND k.niveau = "BTQ"
+						AND k.user_id IS NOT NULL';
+
+				if($niveau == "RM"){
+					$sql .= ' AND u.retail_manager = "'.$libelle.'"';
+				}
+				elseif($niveau == "DR"){
+					$sql .= ' AND u.directeur = "'.$libelle.'"';
+				}
+				elseif($niveau == "BTQ"){
+					$sql .= ' AND k.point_vente_desc = "'.$libelle.'"';
+				}
+
+				$sql .=	' GROUP BY k.pct_cli_coord_valid_m
+						  ORDER BY pct_cli_coord_valid_m '.$order;
+				break;
+		}
+
+
+        $stmt = $pdo->prepare($sql);
+        
+
+		$stmt->execute();
+
+		return $result = $stmt->fetchAll(\PDO::FETCH_ASSOC);
+	}
 }
