@@ -286,6 +286,8 @@ class KpiCaptureRepository extends EntityRepository
 
 		$stmt->execute();
 
+		//var_dump($sql); die();
+
 		return $result = $stmt->fetchAll(\PDO::FETCH_ASSOC);
 	}
 }
