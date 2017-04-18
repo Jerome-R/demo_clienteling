@@ -589,7 +589,7 @@ class KpiController extends Controller
 					$kpiTriggersMonthVDR = null;
 				}
 				else{
-					if( in_array( $session->get('kpi_boutique_filtre'), array( "Elisa Piano", "Mathieu Guillemet", "Stéphanie Nguyen", "Lucas Madranges", "Marie Raphaelle L'Huillier" ) )){
+					if( in_array( $session->get('kpi_boutique_filtre'), array( "IDF", "Sud Est", "Sud Ouest", "Nord Est", "Nord Ouest" ) )){
 						$kpiTriggersMonth = $em->getRepository('AppBundle:KpiTrigger')->getKpiTriggerOfMonthRM($date1, $date2, $session->get('kpi_boutique_filtre'));
 						$kpiTriggersMonthVDR = $em->getRepository('AppBundle:KpiTrigger')->getKpiTriggerOfMonthVDR($date1, $date2, $session->get('kpi_boutique_filtre'));
 					}
@@ -605,7 +605,7 @@ class KpiController extends Controller
 					$kpiTriggersMonthVDR = null;
 				}
 				else{
-					if( in_array( $session->get('kpi_boutique_filtre'), array( "Elisa Piano", "Mathieu Guillemet", "Stéphanie Nguyen", "Lucas Madranges", "Marie Raphaelle L'Huillier" ) )){
+					if( in_array( $session->get('kpi_boutique_filtre'), array( "IDF", "Sud Est", "Sud Ouest", "Nord Est", "Nord Ouest" ) )){
 						$kpiTriggersMonth = $em->getRepository('AppBundle:KpiTrigger')->getKpiTriggerOfMonthRM($date1, $date2, $session->get('kpi_boutique_filtre'));
 						$kpiTriggersMonthVDR = $em->getRepository('AppBundle:KpiTrigger')->getKpiTriggerOfMonthVDR($date1, $date2, $session->get('kpi_boutique_filtre'));
 					}
@@ -633,7 +633,7 @@ class KpiController extends Controller
 					$kpiTriggersMonthVDR = null;
 				}
 				else{
-					if( in_array( $session->get('kpi_boutique_filtre'), array( "Elisa Piano", "Mathieu Guillemet", "Stéphanie Nguyen", "Lucas Madranges", "Marie Raphaelle L'Huillier" ) )){
+					if( in_array( $session->get('kpi_boutique_filtre'), array( "IDF", "Sud Est", "Sud Ouest", "Nord Est", "Nord Ouest" ) )){
 						$kpiTriggersMonth = $em->getRepository('AppBundle:KpiTrigger')->getKpiTriggerOfMonthRM($date1, $date2, $session->get('kpi_boutique_filtre'));
 						$kpiTriggersMonthVDR = $em->getRepository('AppBundle:KpiTrigger')->getKpiTriggerOfMonthVDR($date1, $date2, $session->get('kpi_boutique_filtre'));
 					}
@@ -649,7 +649,7 @@ class KpiController extends Controller
 					$kpiTriggersMonthVDR = null;
 				}
 				else{
-					if( in_array( $session->get('kpi_boutique_filtre'), array( "Elisa Piano", "Mathieu Guillemet", "Stéphanie Nguyen", "Lucas Madranges", "Marie Raphaelle L'Huillier" ) )){
+					if( in_array( $session->get('kpi_boutique_filtre'), array( "IDF", "Sud Est", "Sud Ouest", "Nord Est", "Nord Ouest" ) )){
 						$kpiTriggersMonth = $em->getRepository('AppBundle:KpiTrigger')->getKpiTriggerOfMonthRM($date1, $date2, $session->get('kpi_boutique_filtre'));
 						$kpiTriggersMonthVDR = $em->getRepository('AppBundle:KpiTrigger')->getKpiTriggerOfMonthVDR($date1, $date2, $session->get('kpi_boutique_filtre'));
 					}
@@ -812,7 +812,7 @@ class KpiController extends Controller
 				$topGlobal 	=  $em->getRepository('AppBundle:KpiCapture')->getKpiTopBoutiqueNative($month, $year, "Global", "DESC", $this->container);
 			}
 			else{
-				if( in_array( $session->get('kpi_boutique_filtre'), array( "Elisa Piano", "Mathieu Guillemet", "Stéphanie Nguyen", "Lucas Madranges", "Marie Raphaelle L'Huillier" ) )){
+				if( in_array( $session->get('kpi_boutique_filtre'), array( "IDF", "Sud Est", "Sud Ouest", "Nord Est", "Nord Ouest" ) )){
 					$topAA 		=  $em->getRepository('AppBundle:KpiTrigger')->getKpiTopBoutiqueNative($month, $year, "AA", 	"DESC", $this->container, 'RM', $session->get('kpi_boutique_filtre'));		
 					$topWP 		=  $em->getRepository('AppBundle:KpiTrigger')->getKpiTopBoutiqueNative($month, $year, "WP", 	"DESC", $this->container, 'RM', $session->get('kpi_boutique_filtre'));
 					$topWB 		=  $em->getRepository('AppBundle:KpiTrigger')->getKpiTopBoutiqueNative($month, $year, "WB", 	"DESC", $this->container, 'RM', $session->get('kpi_boutique_filtre'));
@@ -834,7 +834,7 @@ class KpiController extends Controller
 					$topGlobal 	=  $em->getRepository('AppBundle:KpiCapture')->getKpiTopBoutiqueNative($month, $year, "Global", "DESC", $this->container, 'RM', $user->getLibelle());
 			}
 			else{
-				if( in_array( $session->get('kpi_boutique_filtre'), array( "Elisa Piano", "Mathieu Guillemet", "Stéphanie Nguyen", "Lucas Madranges", "Marie Raphaelle L'Huillier" ) )){
+				if( in_array( $session->get('kpi_boutique_filtre'), array( "IDF", "Sud Est", "Sud Ouest", "Nord Est", "Nord Ouest" ) )){
 					$topAA 		=  $em->getRepository('AppBundle:KpiTrigger')->getKpiTopBoutiqueNative($month, $year, "AA", 	"DESC", $this->container, 'RM', $session->get('kpi_boutique_filtre'));		
 					$topWP 		=  $em->getRepository('AppBundle:KpiTrigger')->getKpiTopBoutiqueNative($month, $year, "WP", 	"DESC", $this->container, 'RM', $session->get('kpi_boutique_filtre'));
 					$topWB 		=  $em->getRepository('AppBundle:KpiTrigger')->getKpiTopBoutiqueNative($month, $year, "WB", 	"DESC", $this->container, 'RM', $session->get('kpi_boutique_filtre'));
