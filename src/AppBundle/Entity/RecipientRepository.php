@@ -447,6 +447,7 @@ class RecipientRepository extends \Doctrine\ORM\EntityRepository
 			$qb->setParameter(':codevendeur', '%'.$codevendeur.'%');
 		}
 
+
 		return $qb
 			->getQuery();
 			//->getResult();

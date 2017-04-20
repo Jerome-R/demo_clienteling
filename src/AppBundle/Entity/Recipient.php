@@ -610,12 +610,11 @@ class Recipient
         $client     = $this->client;
         $campaign   = $this->campaign;
 
-        //var_dump($this);die();
 
         switch ( $this->getCanal() )
         {
             case 'Email' :
-                if ( $client->getOptoutEmail()  == 1 || $this->optoutAutre == 1 || $this->optoutNonPertinent == 1 || $client->getIsEmailValide() == 0 )
+                if ( $this->optoutAutre == 1 || $this->optoutNonPertinent == 1 )
                 {
                     $this->setOptin(0);
                 }
@@ -631,7 +630,7 @@ class Recipient
                 }
             break;
             case 'Mail' :
-                if ( $client->getOptoutMail()  == 1 || $this->optoutAutre == 1 || $this->optoutNonPertinent == 1 || $client->getIsAdresseValide() == 0 )
+                if ( $this->optoutAutre == 1 || $this->optoutNonPertinent == 1 )
                 {
                     $this->setOptin(0);
                 }
@@ -647,7 +646,7 @@ class Recipient
                 }
             break;
             case 'Phone' :
-                if ( $client->getOptoutTelephone()  == 1 || $this->optoutAutre == 1 || $this->optoutNonPertinent == 1 || $client->getIsTelValide() == 0 )
+                if ( $this->optoutAutre == 1 || $this->optoutNonPertinent == 1 )
                 {
                     $this->setOptin(0);
                 }
@@ -663,7 +662,7 @@ class Recipient
                 }
             break;
             case 'SMS' :
-                if ( $client->getOptoutSMS()  == 1 || $this->optoutAutre == 1 || $this->optoutNonPertinent == 1 || $client->getIsTelValide() == 0 )
+                if ( $this->optoutAutre == 1 || $this->optoutNonPertinent == 1 )
                 {
                     $this->setOptin(0);
                 }
@@ -678,7 +677,7 @@ class Recipient
                         $this->setOptin(1);
                 }
             break;
-        }        
+        }
 
         return;
     } 

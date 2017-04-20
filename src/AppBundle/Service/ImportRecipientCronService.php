@@ -122,8 +122,8 @@ class ImportRecipientCronService
         }
 
         
-        $sql = "INSERT INTO app_client ( user_id_trigger, ".$header." ) 
-                VALUES ( ( SELECT u.id FROM `fos_user_user` u WHERE u.libelle = :libelle_boutique_achat ), ".$values.")
+        $sql = "INSERT INTO app_client ( user_id_trigger, ".$header.", is_email_valide, is_tel_valide, is_adresse_valide ) 
+                VALUES ( ( SELECT u.id FROM `fos_user_user` u WHERE u.libelle = :libelle_boutique_achat ), ".$values.", 1, 1, 1)
                 ON DUPLICATE KEY UPDATE user_id_trigger = ( SELECT u.id FROM `fos_user_user` u WHERE u.libelle = :libelle_boutique_achat ),".$update."";
 
 
