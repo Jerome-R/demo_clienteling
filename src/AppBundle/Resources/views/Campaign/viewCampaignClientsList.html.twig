@@ -10,6 +10,18 @@
 {% endblock %}
 
 {% block content %}	
+
+	{% for label, flashes in app.session.flashbag.all %}
+	    {% for flash in flashes %}
+	    	{% if label == "notice" %}{% set label = "success" %}{% endif %}
+	        <div class="alert alert-{{ label }} alert-dismissable">
+	            {{ flash }}
+	        </div>
+	        <div class="spacer"></div>
+	    {% endfor %}
+	{% endfor %}
+	<div class="spacer"></div>
+	
 	{% block clientsFilter %}
 		{% include 'AppBundle:Commons:clientsFilter.html.twig' %}
 
@@ -25,16 +37,6 @@
 	    	{{ knp_pagination_render(recipients) }}
 	    </div>
 	</div>
-
-
-
-	{% for label, flashes in app.session.flashbag.all %}
-	    {% for flash in flashes %}
-	        <div class="bg-{{ label }}">
-	            {{ flash }}
-	        </div>
-	    {% endfor %}
-	{% endfor %}
 
 	<div id="clientsList">
 		{% for recipient in recipients %}

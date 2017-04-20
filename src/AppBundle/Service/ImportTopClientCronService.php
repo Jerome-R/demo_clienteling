@@ -116,8 +116,8 @@ class ImportTopClientCronService
         }
 
         
-        $sql = "INSERT INTO app_client ( user_id_topclient, ".$header.", local,is_topclient ) 
-                VALUES ( ( SELECT u.id FROM `fos_user_user` u WHERE u.libelle = :libelle_boutique_rattachement_topclient ), ".$values.", 't',1)
+        $sql = "INSERT INTO app_client ( user_id_topclient, ".$header.", local,is_topclient, is_email_valide, is_tel_valide, is_adresse_valide ) 
+                VALUES ( ( SELECT u.id FROM `fos_user_user` u WHERE u.libelle = :libelle_boutique_rattachement_topclient ), ".$values.", 't',1,1,1,1)
                 ON DUPLICATE KEY UPDATE user_id_topclient = ( SELECT u.id FROM `fos_user_user` u WHERE u.libelle = :libelle_boutique_rattachement_topclient ),".$update.", local = 't',is_topclient = 1";
         
         $i = 0;
@@ -211,8 +211,8 @@ class ImportTopClientCronService
         }
 
         
-        $sql = "INSERT INTO app_client ( user_id_topclient, ".$header.", is_topclient ) 
-                VALUES ( ( SELECT u.id FROM `fos_user_user` u WHERE u.libelle = :libelle_boutique_rattachement_topclient ), ".$values.", 1)
+        $sql = "INSERT INTO app_client ( user_id_topclient, ".$header.", is_topclient, is_email_valide, is_tel_valide, is_adresse_valide ) 
+                VALUES ( ( SELECT u.id FROM `fos_user_user` u WHERE u.libelle = :libelle_boutique_rattachement_topclient ), ".$values.", 1,1,1,1)
                 ON DUPLICATE KEY UPDATE user_id_topclient = ( SELECT u.id FROM `fos_user_user` u WHERE u.libelle = :libelle_boutique_rattachement_topclient ),".$update.", is_topclient = 1";
 
         //colonnes du la requete $sql à mettre à jour

@@ -60,165 +60,35 @@ class SendEmailType extends AbstractType
             {
                 $eshop = 0;
             }
-            //if( in_array($store, array("Eric Tomat","Marine Le Roux","Agnès Tharaud","Christophe Mayer"," Dominique Cuel","Marianne Romestain", "admin")) )
+            //if ( in_array($store, array('Bruxelles Louise', 'Inno Rue Neuve', 'Inno Woluwe'))) {
+            $choicesAA = array(
+                    //'Sélectionner le modèle de votre choix' => '',
+                    "Anniversaire d'Achat - FR" => '0',
+                    "Anniversaire d'Achat - EN" => '1'
+                    );
+            $choicesCP = array(
+                    "Invitation Evènement Claravista - FR" => '2'
+                    );
 
-            if ($eshop == 1)
-            {
-                //if ( in_array($store, array('Bruxelles Louise', 'Inno Rue Neuve', 'Inno Woluwe'))) {
-                $choicesAA = array(
-                        //'Sélectionner le modèle de votre choix' => '',
-                        "E-Commerce - Anniversaire d'Achat - FR" => '9',
-                        "E-Commerce - Anniversaire d'Achat - EN" => '10',
-                        "E-Commerce - Anniversaire d'Achat - NL" => '11',
-                        );
-                $choicesWP = array(
-                        "E-Commerce - Remerciement nouveau client - FR" => '12',
-                        "E-Commerce - Remerciement nouveau client - EN" => '13',
-                        "E-Commerce - Remerciement nouveau client - NL" => '14',
-                        );
-                $choicesWB = array(
-                        "E-Commerce - Remerciement déjà client - FR" => '15',  
-                        "E-Commerce - Remerciement déjà client - EN" => '16',
-                        "E-Commerce - Remerciement déjà client - NL" => '17',
-                        );
-
-                switch($this->campaignId){
-                    case "Trigger_AA_Boutique_1_E":
-                        $choices = $choicesAA;
-                    break;
-                    case "Trigger_WP_Boutique_1_E":
-                        $choices = $choicesWP;
-                    break;
-                    case "Trigger_WB_Boutique_1_E":
-                        $choices = $choicesWB;
-                    break;
-                    case "Trigger_AA_Boutique_1_P":
-                        $choices = $choicesAA;
-                    break;
-                    case "Trigger_WP_Boutique_1_P":
-                        $choices = $choicesWP;
-                    break;
-                    case "Trigger_WB_Boutique_1_P":
-                        $choices = $choicesWB;
-                    break;
-                    default:
-                        $choices = array(
-                        "E-Commerce - Anniversaire d'Achat - FR" => '9',
-                        "E-Commerce - Anniversaire d'Achat - EN" => '10',
-                        "E-Commerce - Anniversaire d'Achat - NL" => '11',
-                        "E-Commerce - Remerciement nouveau client - FR" => '12',
-                        "E-Commerce - Remerciement nouveau client - EN" => '13',
-                        "E-Commerce - Remerciement nouveau client - NL" => '14',
-                        "E-Commerce - Remerciement déjà client - FR" => '15',  
-                        "E-Commerce - Remerciement déjà client - EN" => '16',
-                        "E-Commerce - Remerciement déjà client - NL" => '17',
-                        );
-                    break;
-                }
-            }
-            elseif ($eshop == 2)
-            {
-                $choices = array(
+            switch($this->campaignId){
+                case "trigger_A_E":
+                    $choices = $choicesAA;
+                break;
+                case "trigger_D_P":
+                    $choices = $choicesAA;
+                break;
+                case "trigger_C_P":
+                    $choices = $choicesCP;
+                break;
+                default:
+                    $choices = array(
                     "Anniversaire d'Achat - FR" => '0',
                     "Anniversaire d'Achat - EN" => '1',
-                    "Anniversaire d'Achat - NL" => '2',
-                    "Remerciement nouveau client - FR" => '3',
-                    "Remerciement nouveau client - EN" => '4',
-                    "Remerciement nouveau client - NL" => '5',
-                    "Remerciement déjà client - FR" => '6',
-                    "Remerciement déjà client - EN" => '7',
-                    "Remerciement déjà client - NL" => '8',
-                    "E-Commerce - Anniversaire d'Achat - FR" => '9',
-                    "E-Commerce - Anniversaire d'Achat - EN" => '10',
-                    "E-Commerce - Anniversaire d'Achat - NL" => '11',
-                    "E-Commerce - Remerciement nouveau client - FR" => '12',
-                    "E-Commerce - Remerciement nouveau client - EN" => '13',
-                    "E-Commerce - Remerciement nouveau client - NL" => '14',
-                    "E-Commerce - Remerciement déjà client - FR" => '15',  
-                    "E-Commerce - Remerciement déjà client - EN" => '16',
-                    "E-Commerce - Remerciement déjà client - NL" => '17',
+                    "Invitation Evènement Claravista - FR" => '2'
                     );
-            }
-            else
-            {
-                if ( in_array($store, array('Bruxelles Louise', 'Inno Rue Neuve', 'Inno Woluwe'))) {
-                    $choicesAA = array(
-                            //'Sélectionner le modèle de votre choix' => '',
-                            "Anniversaire d'Achat - FR" => '0',
-                            "Anniversaire d'Achat - EN" => '1',
-                            "Anniversaire d'Achat - NL" => '2',
-                            );
-                    $choicesWP = array(
-                            "Remerciement nouveau client - FR" => '3',
-                            "Remerciement nouveau client - EN" => '4',
-                            "Remerciement nouveau client - NL" => '5',
-                            );
-                    $choicesWB = array(
-                            "Remerciement déjà client - FR" => '6',
-                            "Remerciement déjà client - EN" => '7',
-                            "Remerciement déjà client - NL" => '8',
-                            );
-                }
-                else{
-                    $choicesAA = array(
-                            //'Sélectionner le modèle de votre choix' => '',
-                            "Anniversaire d'Achat - FR" => '0',
-                            "Anniversaire d'Achat - EN" => '1',
-                            );
-                    $choicesWP = array(
-                            "Remerciement nouveau client - FR" => '3',
-                            "Remerciement nouveau client - EN" => '4',
-                            );
-                    $choicesWB = array(
-                            "Remerciement déjà client - FR" => '6',
-                            "Remerciement déjà client - EN" => '7',
-                            );
+                break;
                 }
 
-                switch($this->campaignId){
-                    case "Trigger_AA_Boutique_1_E":
-                        $choices = $choicesAA;
-                    break;
-                    case "Trigger_WP_Boutique_1_E":
-                        $choices = $choicesWP;
-                    break;
-                    case "Trigger_WB_Boutique_1_E":
-                        $choices = $choicesWB;
-                    break;
-                    case "Trigger_AA_Boutique_1_P":
-                        $choices = $choicesAA;
-                    break;
-                    case "Trigger_WP_Boutique_1_P":
-                        $choices = $choicesWP;
-                    break;
-                    case "Trigger_WB_Boutique_1_P":
-                        $choices = $choicesWB;
-                    break;
-                    default:
-                        $choices = array(
-                        //'Sélectionner le modèle de votre choix' => '',
-                        "Anniversaire d'Achat - FR" => '0',
-                        "Anniversaire d'Achat - EN" => '1',
-                        "Anniversaire d'Achat - NL" => '2',
-                        "Remerciement nouveau client - FR" => '3',
-                        "Remerciement nouveau client - EN" => '4',
-                        "Remerciement nouveau client - NL" => '5',
-                        "Remerciement déjà client - FR" => '6',
-                        "Remerciement déjà client - EN" => '7',
-                        "Remerciement déjà client - NL" => '8',
-                        "E-Commerce - Anniversaire d'Achat - FR" => '9',
-                        "E-Commerce - Anniversaire d'Achat - EN" => '10',
-                        "E-Commerce - Anniversaire d'Achat - NL" => '11',
-                        "E-Commerce - Remerciement nouveau client - FR" => '12',
-                        "E-Commerce - Remerciement nouveau client - EN" => '13',
-                        "E-Commerce - Remerciement nouveau client - NL" => '14',
-                        "E-Commerce - Remerciement déjà client - FR" => '15',  
-                        "E-Commerce - Remerciement déjà client - EN" => '16',
-                        "E-Commerce - Remerciement déjà client - NL" => '17',
-                        );
-                    break;
-                }
-            }
 
 
             //get fields value for custom queries

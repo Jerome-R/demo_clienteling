@@ -408,6 +408,7 @@ class CampaignController extends Controller
         $form       =  $this->createForm(new ExcludeClientFromCampaignType(), $recipient);
         $formTwo    =  $this->createForm(new RecipientCommentType(), $recipient);
         $formThree  =  $this->createForm(new ChangeChannelRecipientType($recipient->getClient()), $recipient);
+        $formSix    =  $this->createForm(new ChangeChannelRecipientType($recipient->getClient()), $recipient);
         $formFour   =  $this->createForm(new RecipientValidateContactType(), $recipient);
         $formFive   =  $this->createForm(new ValidationLaterType());
 
@@ -416,6 +417,7 @@ class CampaignController extends Controller
         $formThree->handleRequest($request);
         $formFour->handleRequest($request);
         $formFive->handleRequest($request);
+        $formSix->handleRequest($request);
 
         if ( $form->isSubmitted() && $form->isValid() ) {
             $em = $this->getDoctrine()->getManager();
@@ -427,7 +429,7 @@ class CampaignController extends Controller
             
             $em->flush();
 
-            $request->getSession()->getFlashBag()->add('notice', 'Client updated.');
+            $request->getSession()->getFlashBag()->add('notice', 'Client mis à jour.');
 
             return $this->redirect($this->generateUrl('app_campaign_clients_list', array('campaign_id' => $recipient->getCampaign()->getId())));
         }
@@ -437,26 +439,58 @@ class CampaignController extends Controller
 
             $em->flush();
 
-            $request->getSession()->getFlashBag()->add('notice', 'Comment added for client.');
+            $request->getSession()->getFlashBag()->add('notice', 'Commentaire enregistré.');
 
             //return $this->redirect($this->generateUrl('app_campaign_clients_list', array('campaign_id' => $recipient->getCampaign()->getId())));
         }
         if ( $formThree->isSubmitted() && $formThree->isValid() ) {
             $em = $this->getDoctrine()->getManager();
-            
-            //persist inutile, Doctrine connait l'entité
-            $em->flush();
-            $request->getSession()->getFlashBag()->add('notice', 'Recipient Channel changed to: ' . $recipient->getCanal() . '.');            
+
+            if($recipient->getCampaign()->getType() == "adHoc"){
+                $recipient->setContactedAt(new \DateTime());
+
+                $em->flush();
+                $request->getSession()->getFlashBag()->add('notice', 'Client adHoc validé: ' . $recipient->getCanal() . '.'); 
+
+                return $this->redirect($this->generateUrl('app_campaign_clients_list', array('campaign_id' => $recipient->getCampaign()->getId())));  
+            }
+            else{
+                $em->flush();
+                $request->getSession()->getFlashBag()->add('notice', 'Canal du client modifié : ' . $recipient->getCanal() . '.');   
+            }         
         }
         if ( $formFour->isSubmitted() && $formFour->isValid() ) {
             $em = $this->getDoctrine()->getManager();
             $recipient->setContactedAt(new \DateTime());
-            $client->setLastContact(new \DateTime());
+
+            $campaingTracking = $em->getRepository('AppBundle:Tracking')->findOneBy( array( "campaign" => $recipient->getCampaign() ) );
+            
+            if($campaingTracking == null){
+                $campaingTracking = new campaingTracking();
+                $campaingTracking->setCampaign( $recipient->getCampaign() );
+
+                $em->persist($campaingTracking);
+            }
+
+            switch($recipient->getCanal()){
+                case "Email":
+                    $campaingTracking->increaseEmailsSent();
+                break;
+                case "Mail":
+                    $campaingTracking->increaseMailsSent();
+                break;
+                case "Phone":
+                    $campaingTracking->increasePhoneCalls();
+                break;
+                case "SMS":
+                    $campaingTracking->increaseSmsSent();
+                break;
+            }
 
             //persist inutile, Doctrine connait l'entité
             $em->flush();
 
-            $request->getSession()->getFlashBag()->add('notice', 'Contact validated.');
+            $request->getSession()->getFlashBag()->add('notice', 'Cible validée.');
 
             return $this->redirect($this->generateUrl('app_campaign_clients_list', array('campaign_id' => $recipient->getCampaign()->getId())));
         }
@@ -467,7 +501,7 @@ class CampaignController extends Controller
             
             //persist inutile, Doctrine connait l'entité
             $em->flush();
-            $request->getSession()->getFlashBag()->add('notice', 'Contact Later: ' . $recipient->getCanal() . '.');
+            $request->getSession()->getFlashBag()->add('notice', 'Contacter plus tard : ' . $recipient->getCanal() . '.');
 
             return $this->redirect($this->generateUrl('app_campaign_clients_list', array('campaign_id' => $recipient->getCampaign()->getId())));        
         }
@@ -482,6 +516,7 @@ class CampaignController extends Controller
             'formThree' => $formThree->createView(),
             'formFour'  => $formFour->createView(),
             'formFive'  => $formFive->createView(),
+            'formSix'   => $formSix->createView(),
             )
         );
     }
@@ -715,14 +750,14 @@ class CampaignController extends Controller
             $mailer->registerPlugin(new \Swift_Plugins_LoggerPlugin($logger));
 
             //Récupératiuon des liens
-            $linksEm = $em->getRepository("AppBundle:Link")->findBy(array('campaign' => $recipient->getCampaign(), 'lang' => $session->get('email_language')));
+            /*$linksEm = $em->getRepository("AppBundle:Link")->findBy(array('campaign' => $recipient->getCampaign(), 'lang' => $session->get('email_language')));
             $linksId = array();
             $loop = 1;
 
             foreach ($linksEm as $key => $link) {
                 $linksId[$loop] = $link->getId();
                 $loop++;
-            }
+            }*/
             
             //Setup message
             $message = \Swift_Message::newInstance()
@@ -798,7 +833,6 @@ class CampaignController extends Controller
 
                 $recipient->setContactedAt($now);
                 $recipient->setLanguage($language);
-                $client->setLastContact($now);
 
                 //si l'envoie est un succes et qu'on est admin alors on met à jour le flag d'envoie d'email pour ce recipient
                 if($user->getLibelle() != "admin"){

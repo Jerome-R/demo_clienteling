@@ -375,9 +375,9 @@ class Client
         $this->userTrigger              = null;
         $this->userTopclient            = null;
         $this->createdAt                = new \DateTime();
-        $this->isTelValide              = 0;
-        $this->isAdresseValide          = 0;
-        $this->isEmailValide            = 0;
+        $this->isTelValide              = 1;
+        $this->isAdresseValide          = 1;
+        $this->isEmailValide            = 1;
         $this->optoutEmail              = 0;
         $this->optoutMail               = 0;
         $this->optoutTelephone          = 0;
