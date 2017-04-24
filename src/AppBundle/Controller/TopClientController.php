@@ -67,7 +67,7 @@ class TopClientController extends Controller
             $page = 1;
 
         //Set SQL query for export
-        $sql = "SELECT tc.nom, tc.prenom, tc.email,tc.libelle_boutique_rattachement_topclient,tc.telephone1,tc.telephone2,tc.portable1,tc.portable2,tc.adresse1,tc.adresse2,tc.code_postal,tc.ville,tc.pays,tc.segment,tc.ca_3_ans,tc.ca_12_mois,tc.ca_histo,tc.prix_max_article_histo,tc.frequence_3_ans,tc.frequence_12_mois,tc.panier_moyen_histo,tc.date_1erachat,tc.date_dernier_achat FROM app_client AS tc ";
+        $sql = "SELECT tc.nom, tc.prenom, tc.email,tc.libelle_boutique_rattachement_topclient,tc.telephone1,tc.telephone2,tc.adresse1,tc.adresse2,tc.code_postal,tc.ville,tc.pays,tc.segment,tc.ca_3_ans,tc.ca_12_mois,tc.ca_histo,tc.prix_max_article_histo,tc.frequence_3_ans,tc.frequence_12_mois,tc.panier_moyen_histo,tc.date_1erachat,tc.date_dernier_achat FROM app_client AS tc ";
 
         //Init var
         $vars = $clientFilterService->initVars($user, $request);
@@ -307,7 +307,7 @@ class TopClientController extends Controller
         if ($form2->isSubmitted()) {
             //Creation du fichier CSV et du header
             $handle     = fopen('php://memory', 'r+');
-            $header     = array('Nom ','Prénom','Email', 'Libelle Boutique de Rattachement','Téléphone 1','Téléphone 2','Portable 1','Portable 2','Adresse','Complément','Code postal','Ville','Pays','Segment','CA 3 ans','Ca 12 mois','CA Histo','Prix max','Fréquence 3 ans','Fréquence 12 mois','Panier Moyen ','Date premier achat ','Date dernier achat');            
+            $header     = array('Nom ','Prénom','Email', 'Libelle Boutique de Rattachement','Téléphone 1','Téléphone 2','Adresse','Complément','Code postal','Ville','Pays','Segment','CA 3 ans','Ca 12 mois','CA Histo','Prix max','Fréquence 3 ans','Fréquence 12 mois','Panier Moyen ','Date premier achat ','Date dernier achat');            
 
             //Creation de l'entête du fichier pour être lisible dans Exel
             fputs($handle, $bom =( chr(0xEF) . chr(0xBB) . chr(0xBF) ));
@@ -327,8 +327,6 @@ class TopClientController extends Controller
                 $row["code_postal"] = '="'.$row["code_postal"].'"';
                 $row["telephone1"] = '="'.$row["telephone1"].'"';
                 $row["telephone2"] = '="'.$row["telephone2"].'"';
-                $row["portable1"]  = '="'.$row["portable1"].'"';
-                $row["portable2"]  = '="'.$row["portable2"].'"';
                 fputcsv($handle, $row, ';');
             }
 
@@ -338,7 +336,7 @@ class TopClientController extends Controller
             fclose($handle);
 
             $export = new ExportCsv();
-            $export->setUser($user->getLibelle());
+            $export->setUser($user->getId());
             $export->setCreatedAt(new \DateTime());
             $export->setRequest($session->get('topcliente_sql'));
 
