@@ -766,7 +766,7 @@ class CampaignController extends Controller
                 //->setSender( array($user->getEmail() => "Jerome sender") )
                 //->setFrom( array( $libelleBoutiqueRattachementEmail => $signature) )
                 //->setSender( array( $libelleBoutiqueRattachementEmail => $signature) )
-                ->setFrom( array( "j.rabahi@claravista.fr" => $signature) )
+                ->setFrom( array( "j.rabahi@claravista.fr" => "Claravista") )
                 //->setSender( array( "boutique.lancel@actions-pdv-l.fr" => $signature) )
                 ->setReplyTo($libelleBoutiqueRattachementEmail)
                 ->setTo($dest)

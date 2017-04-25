@@ -82,7 +82,7 @@
 					CA 12 mois : {% if recipient.client.ca12Mois %}{{ recipient.client.ca12Mois }} €{% else %}<span class="small">n/a</span>{% endif %} | CA 3 ans : {% if recipient.client.ca3ans %}{{ recipient.client.ca3ans }} €{% else %}<span class="small">n/a</span>{% endif %} | Prix max dépensé : {% if recipient.client.pmaxArticleHisto %}{{ recipient.client.pmaxArticleHisto }} €{% else %}<span class="small">n/a</span>{% endif %}
 					<br />
 					{% if recipient.campaign.idCampaignName != "Adhoc_ChampsElysées" %}
-						<strong>Informations produit {% if recipient.campaign.idCampaignName in ['Trigger_AA_Boutique_1_P','Trigger_AA_Boutique_1_E'] %}acheté il y a un an {% endif %}:</strong><br />						
+						<strong>Informations produit {% if recipient.campaign.idCampaignName in ['Trigger_AA_Boutique_1_P','Trigger_AA_Boutique_1_E'] %}acheté il y a un an {% endif %}:</strong> Montre H/F - Bijou<br />						
 					{% endif %}
 
 			 		{% if recipient.comment != "" %} 

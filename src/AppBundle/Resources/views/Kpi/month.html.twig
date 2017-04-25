@@ -20,6 +20,10 @@
 
 			<div class="inside col-xs-12 col-md-4">
 				<h3 class="text-uppercase text-center gris">Identification des clients</h3>
+
+				<figure class="col-xs-12">
+					<div id="chartContainer0" class="col-xs-12" style="height: 194px;"></div>
+				</figure>
 				
 				<div class="spacer"></div>
 				<div class="col-xs-12">
@@ -242,6 +246,46 @@
     });
 
 	window.onload = function () {
+		var chart = new CanvasJS.Chart("chartContainer0",
+		{
+			colorSet: "set8",
+			animationEnabled: true,
+			toolTip:{  
+				enabled: true
+			},
+			data: [
+			{
+				startAngle: -90, 
+				indexLabelPlacement: "outside", 
+				indexLabelFontColor: "black",
+				//indexLabelFontColor: "white",
+				indexLabelFontWeight: "bold",
+				indexLabelFontSize: 14,
+				explodeOnClick: false,
+				highlightEnabled: false,
+
+				type: "pie",
+				dataPoints: [
+					{  y: 40, 
+						indexLabel: 	"40%",
+						toolTipContent: "40 transactions",
+						exploded: false},
+					{  y: 50, 
+						indexLabel: 	"50%",
+						toolTipContent: "50 transactions",
+						exploded: false},
+					{  y: 10, 
+						indexLabel: 	"10%",
+						toolTipContent: "10 transactions",
+						exploded: true},
+
+				]
+			}
+			]
+
+		});
+
+		chart.render();
 		var chart = new CanvasJS.Chart("chartContainer1",
 		{
 			colorSet: "set6",
