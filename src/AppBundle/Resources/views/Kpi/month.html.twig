@@ -30,6 +30,12 @@
 					<p class="col-xs-12 text-center text-uppercase"><br />
 						<strong>{{ kpiCurrentMonth.nbTransTotM|number_format(0, ',', ' ') }} Transactions enregistrées<br />Sur le mois {{ getMonthWording(month, "de") }} {{ kpiCurrentMonth.date|date("Y") }}</strong>
 					</p>
+					<h5 class="gris">Transactions :</h5>
+					<p class="small col-xs-12">
+						<i class="fa fa-square fa-lg blue" aria-hidden="true"></i> Reliées à une fiche client - locaux<br />
+						<i  class="fa fa-square fa-lg orange" aria-hidden="true"></i> Reliées à une fiche client - non locaux<br />				
+						<i class="fa fa-square fa-lg gray2" aria-hidden="true"></i> Non reliées à une fiche client
+					</p>
 				</div>
 
 			</div>
