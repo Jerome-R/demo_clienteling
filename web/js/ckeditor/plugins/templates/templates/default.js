@@ -5,7 +5,7 @@ strVar_AA_FR += "Chère Madame / Cher Monsieur<br \/>";
 strVar_AA_FR += "&nbsp;<br \/>";
 strVar_AA_FR += "Cela fait déjà un an que nous avons eu le plaisir de vous accompagner pour l’acquisition de votre montre Claravista.<br\/>";
 strVar_AA_FR += "&nbsp;<br \/>";
-strVar_AA_FR += "Nous serions ravis de vous accueillir à nouveau. Nous pourrions à cette occasion réaliser gracieusement, <strong>un soin d’entretien<\/strong>*.<br\/>";
+strVar_AA_FR += "Nous serions ravis de vous accueillir à nouveau. Nous pourrions à cette occasion réaliser gracieusement, <strong>un contrôle d'étenchéité<\/strong>*.<br\/>";
 strVar_AA_FR += "&nbsp;<br \/>";
 strVar_AA_FR += "Très cordialement,";
 
