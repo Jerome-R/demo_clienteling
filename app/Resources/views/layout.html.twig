@@ -49,7 +49,7 @@
     >
     <div id="wrapper" class="container">        
         <header class="nav-wrap">
-            <nav class="main-menu {% if app.request.attributes.get('_route') in ['app_top_client_index','app_top_client_view','app_top_client_sortant'] %}orange{% endif %}{% if app.request.attributes.get('_route') in [ 'app_kpi_month_locaux','app_kpi_month_nlocaux','app_kpi_ytd_locaux','app_kpi_ytd_nlocaux', 'app_kpi_trigger', 'app_kpi_top_boutique'] %}gris{% endif %}">
+            <nav class="main-menu gris">
                 <div class="container">
                     <ul class="nav navbar-nav">
                         {% block imgNav %}{% endblock %}

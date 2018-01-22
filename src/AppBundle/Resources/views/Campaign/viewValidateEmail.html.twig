@@ -26,7 +26,7 @@
 
 			{{ form_start(form, {'attr': {'class': 'form-horizontal'}}) }}
 
-				{{ form_widget(form.submit, {'attr': {'class': 'btn big-green-btn pull-right', 'onclick': 'return confirm("Confirmer l\'envoi ?")'}, 'label': 'Envoyer'}) }}
+				{{ form_widget(form.submit, {'attr': {'class': 'btn big-action-gray-btn pull-right', 'onclick': 'return confirm("Confirmer l\'envoi ?")'}, 'label': 'Envoyer'}) }}
 				
 				<a class='btn big-gray-btn pull-right' style='margin-right: 5px; width: 170px; margin-top: 30px;' href="{{ path('app_campaign_send_email', { 'recipient_id' : recipient.id }) }}">Retour</a>
 				

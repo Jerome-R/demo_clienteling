@@ -18,7 +18,7 @@
 
 	<div class="client-block col-md-offset-1 col-md-10 col-xs-12">
 		
-		<h3 class="green">Coordonnées du client</h3>
+		<h3 class="">Coordonnées du client</h3>
 
 		<!--div class="col-xs-3 field">
 			<ul class="list-group">
@@ -150,16 +150,16 @@
 			{% if recipient.contactedAt == null %}
 				{% if recipient.campaign.type == "trigger" %}
 					{% if recipient.canal == "Email" %}
-						<a href="{{ path("app_campaign_send_email",  { 'recipient_id' : recipient.id }) }}" class="btn big-action-btn">{{"Send the email"|trans}}</a>
+						<a href="{{ path("app_campaign_send_email",  { 'recipient_id' : recipient.id }) }}" class="btn big-action-gray-btn">{{"Send the email"|trans}}</a>
 					{% else %}
 						{% if recipient.canal == "Mail" %}
 							{{ form_start(formFour) }}
-								{{ form_widget(formFour.submit, {'attr': {'class': 'btn big-action-btn', 'onclick': 'return confirm("Confirmer ?");' }, 'label' : 'Envoyer le courrier'|trans}) }}
+								{{ form_widget(formFour.submit, {'attr': {'class': 'btn big-action-gray-btn', 'onclick': 'return confirm("Confirmer ?");' }, 'label' : 'Envoyer le courrier'|trans}) }}
 								{{ form_rest(formFour) }}
 							{{ form_end(formFour) }}
 						{% elseif recipient.canal == "Phone" %}
 							{{ form_start(formFour) }}
-								{{ form_widget(formFour.submit, {'attr': {'class': 'btn big-action-btn', 'onclick': 'return confirm("Confirmer ?");' }, 'label' : 'Contacter par téléphone'|trans}) }}
+								{{ form_widget(formFour.submit, {'attr': {'class': 'btn big-action-gray-btn', 'onclick': 'return confirm("Confirmer ?");' }, 'label' : 'Contacter par téléphone'|trans}) }}
 								{{ form_rest(formFour) }}
 							{{ form_end(formFour) }}
 						{% endif %}
@@ -182,7 +182,7 @@
 				<div class="btn big-gray-btn">Client contacté !</div>
 			{% endif %}
 				<a class="btn big-gray-btn" data-toggle="modal" style="font-size:14px;" data-target="#myModalTwo">Ne souhaite pas être contacté</a>
-				<a class="btn big-green-btn hidden-print" style="font-size:14px;" onclick="window.print();"><i class="fa fa-print" aria-hidden="true"></i> Imprimer la fiche</a>
+				<a class="btn big-action-gray-btn hidden-print" style="font-size:14px;" onclick="window.print();"><i class="fa fa-print" aria-hidden="true"></i> Imprimer la fiche</a>
 		</div> 
 
 		<div class="spacer"></div>
@@ -191,9 +191,9 @@
 
 		{% if recipient.dataRecipient.skuDesc is defined %}
 			{% if recipient.campaign.idCampaignName == "Trigger_AA_Boutique_1_P" or recipient.campaign.idCampaignName == "Trigger_AA_Boutique_1_E" %}
-				<h3 class="green">Produit acheté il y a un an</h3>
+				<h3 class="">Produit acheté il y a un an</h3>
 			{% else %}
-				<h3 class="green">Produit acheté</h3>
+				<h3 class="">Produit acheté</h3>
 			{% endif %}
 
 			<div class="col-xs-12 data">
@@ -208,7 +208,7 @@
 		
 		{% endif %}
 
-		<h3 class="green">Profil du client</h3>
+		<h3 class="">Profil du client</h3>
 
 		<div class="col-xs-12 data">
 			<ul class="list-group col-xs-6">
@@ -230,7 +230,7 @@
 
 		<hr>
 
-		<h3 class="green">Laisser un commentaire</h3>
+		<h3 class="">Laisser un commentaire</h3>
 
 		{{ form_start(formTwo, {'attr': {'class': ''}}) }}
 			{{ form_errors(formTwo) }}
@@ -239,7 +239,7 @@
 					{{ form_widget(formTwo.comment, {'attr': {'class': 'form-control'}}) }}
 				</div>
 			</div>
-			{{ form_widget(formTwo.submit, {'attr': {'class': 'btn big-green-btn pull-right hidden-print', 'style': 'width:200px;margin-top:30px;'}, 'label': 'Valider le commentaire'}) }}
+			{{ form_widget(formTwo.submit, {'attr': {'class': 'btn big-action-gray-btn pull-right hidden-print', 'style': 'width:200px;margin-top:30px;'}, 'label': 'Valider le commentaire'}) }}
 
 			
 			<a class='btn big-gray-btn pull-right hidden-print' style='margin-right: 5px; width: 170px; margin-top: 30px;' href="{{ path( 'app_campaign_clients_list', { 'campaign_id' : campaign.id } ) }}">Retour</a>

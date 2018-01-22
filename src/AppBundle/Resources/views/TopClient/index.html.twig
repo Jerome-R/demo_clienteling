@@ -19,10 +19,10 @@
 					{{ form_widget(form2.clients) }}
 					
 					<div class="form-group col-md-12 col-xs-8 pull-right">
-						{{ form_widget(form2.submit, {'attr': {'class': 'btn big-action-orange-btn'}, 'label' : 'Exporter en CSV (Excel)'|trans}) }}
+						{{ form_widget(form2.submit, {'attr': {'class': 'btn big-action-gray-btn'}, 'label' : 'Exporter en CSV (Excel)'|trans}) }}
 					</div>
 					<div class="form-group col-md-12 col-xs-8 pull-right">
-						<a class="btn big-action-orange-btn" style="font-size:16px;" id="displayAllBtn" data="hidden">Afficher tous les détails</a>
+						<a class="btn big-action-gray-btn" style="font-size:16px;" id="displayAllBtn" data="hidden">Afficher tous les détails</a>
 					</div>
 
 				{{ form_end(form2) }}
@@ -43,7 +43,7 @@
 		{% for topClient in topClients %}
 			<div class="campaign-block-list col-md-offset-1 col-md-10  col-xs-12" code="{{ topClient.codeVendeur|lower }}" local="{{ topClient.local }}">
 				<div class="channel col-md-1 col-xs-2">
-					<span class="glyphicon glyphicon-user orange" style="font-size:34px; color: #d35400;" aria-hidden="true"></span>
+					<span class="glyphicon glyphicon-user " style="font-size:34px; color: #2c3e50;" aria-hidden="true"></span>
 					<p class="small hidden">{{ topClient.codeVendeur }}</p>
 				</div>
 				<div class="data col-md-6 col-xs-4">
@@ -142,7 +142,7 @@
 					{% endif %#}
 				</div>
 				<div class="action pull-right col-md-2 col-xs-3 hidden-print">
-					<a href="{{ path('app_top_client_view', { 'top_client_id': topClient.id } ) }}" class="btn btn-action-orange pull right">{{"Select"|trans}}</a>
+					<a href="{{ path('app_top_client_view', { 'top_client_id': topClient.id } ) }}" class="btn big-action-gray-btn pull right">{{"Select"|trans}}</a>
 				</div>
 
 				<div class="spacer"></div>
@@ -165,7 +165,7 @@
 
 		{% if topClients|length == 0 %}
 			<div class="campaign-block-list col-md-offset-1 col-md-10 col-xs-12 text-center">
-				<h3 class="orange">Aucun résultat ne correspond aux critères sélectionnés.</h3>
+				<h3 class="gray">Aucun résultat ne correspond aux critères sélectionnés.</h3>
 			</div>
 		{% endif %}
 
