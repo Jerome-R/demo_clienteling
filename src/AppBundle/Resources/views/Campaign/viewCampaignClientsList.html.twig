@@ -27,7 +27,7 @@
 
 		<div class="col-md-4  col-xs-4 hidden-print">
 			<div class="spacer" style="height:20px;"></div>
-			<a class="btn big-action-btn" id="displayAllBtn" style="font-size:16px;" class="details" data="hidden">Afficher tous les détails</a>
+			<a class="btn big-action-gray-btn" id="displayAllBtn" style="font-size:16px;" class="details" data="hidden">Afficher tous les détails</a>
 			<a class='btn big-gray-btn pull-right' style='margin-right: 5px; width: 170px; margin-top: 30px;' href="{{ path('app_campaigns_index') }}">Retour</a>
 		</div>	
 	{% endblock %}
@@ -42,7 +42,7 @@
 		{% for recipient in recipients %}
 			<div class="campaign-block-list col-md-offset-1 col-md-10  col-xs-12" code="{% if recipient.dataRecipient.codevendeur is defined %}{{ recipient.dataRecipient.codevendeur|lower }}{% endif %}" local="{% if recipient.client.local is defined %}{{ recipient.client.local }}{% endif %}">
 			<div class="channel col-md-1 col-xs-2">
-				<span class="glyphicon glyphicon-user green" style="font-size:34px; color: #16a085;" aria-hidden="true"></span>
+				<span class="glyphicon glyphicon-user" style="font-size:34px; color: #2c3e50;" aria-hidden="true"></span>
 				<p class="small">{% if recipient.dataRecipient.codevendeur is defined %}{{ recipient.dataRecipient.codevendeur|lower }}{% endif %}</p>
 			</div>
 			<div class="data col-md-9 col-xs-7">
@@ -69,7 +69,7 @@
 			</div>
 			<div class="action pull-right col-md-2 col-xs-3">
 				{% if recipient.contactedAt == null %}
-					<a href="{{ path( 'app_campaign_client', { 'campaign_id' : campaign.id, 'client_id' : recipient.client.id } ) }}" class="btn btn-action pull right hidden-print">{{"Select"|trans}}</a>
+					<a href="{{ path( 'app_campaign_client', { 'campaign_id' : campaign.id, 'client_id' : recipient.client.id } ) }}" class="btn big-action-gray-btn pull right hidden-print">{{"Select"|trans}}</a>
 				{% endif %}
 			</div>
 
