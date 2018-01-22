@@ -42,11 +42,7 @@
     {% endblock %}
 </head>
 
-<body 
-    {% if app.request.get('_route') in ['fos_user_security_login','sonata_user_admin_security_login','fos_user_resetting_request','fos_user_resetting_send_email','fos_user_resetting_reset', 'fos_user_resetting_check_email']  %}
-        class="green"
-    {% endif %}
-    >
+<body>
     <div id="wrapper" class="container">        
         <header class="nav-wrap">
             <nav class="main-menu gris">
