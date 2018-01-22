@@ -21,30 +21,30 @@
 
 		<div class="col-xs-12 kpi-box">
 			<div class="inside col-xs-12">
-				<h3 class="text-uppercase gris text-center">Contactabilité des {{ kpiCurrentYear.nbCliActifsYtd|number_format(0, ',', ' ') }} Clients actifs<br/>au global et par canal</h3>
+				<h3 class="text-uppercase  text-center">Contactabilité des {{ kpiCurrentYear.nbCliActifsYtd|number_format(0, ',', ' ') }} Clients actifs<br/>au global et par canal</h3>
 
 				{% if  kpiCurrentYear.nbTransTotYtd > 0 %}
 					<div class="col-xs-12 col-md-9">
 						<figure class="col-xs-3">
-							<h4 class="text-center bg-white gris text-uppercase">Par global</h4>
+							<h4 class="text-center bg-white  text-uppercase">Par global</h4>
 							<div id="chartContainer1" style="height: 150px;"></div>
 						</figure>
 						<figure class="col-xs-3">
-							<h4 class="text-center bg-white gris text-uppercase">Par email</h4>
+							<h4 class="text-center bg-white  text-uppercase">Par email</h4>
 							<div id="chartContainer2" style="height: 150px;"></div>
 						</figure>
 						<figure class="col-xs-3">
-							<h4 class="text-center bg-white gris text-uppercase">Par téléphone</h4>
+							<h4 class="text-center bg-white  text-uppercase">Par téléphone</h4>
 							<div id="chartContainer3" style="height: 150px;"></div>
 						</figure>
 						<figure class="col-xs-3">
-							<h4 class="text-center bg-white gris text-uppercase">Par courrier</h4>
+							<h4 class="text-center bg-white  text-uppercase">Par courrier</h4>
 							<div id="chartContainer4" style="height: 150px;"></div>
 						</figure>
 					</div>
 					<div class="col-xs-12 col-md-3">
 						<figure class="col-xs-12">
-							<h4 class="text-center bg-white gris" style="height:55px;">Données non-valides sur le total des données collectées</h4>
+							<h4 class="text-center bg-white " style="height:55px;">Données non-valides sur le total des données collectées</h4>
 							<div id="chartContainer5" style="height: 150px; box-sizing: border-box;padding-top:35px;">
 								{% set data_nv = ( (( kpiCurrentYear.nbCliEmailNonvalidYtd + kpiCurrentYear.nbCliTelNonvalidYtd + kpiCurrentYear.nbCliAddNonvalidYtd) / (kpiCurrentYear.nbCliEmailNonvalidYtd + kpiCurrentYear.nbCliTelNonvalidYtd + kpiCurrentYear.nbCliAddNonvalidYtd + 
 									kpiCurrentYear.nbCliEmailValidYtd + kpiCurrentYear.nbCliTelValidYtd + kpiCurrentYear.nbCliAddValidYtd)) * 100 )|number_format('0','.','') %}
@@ -61,7 +61,7 @@
 					</div>
 
 					<div class="col-xs-12 col-md-4" style="padding:0;margin:0;">				
-						<h5 class="gris">Légendes :</h5>
+						<h5 class="">Légendes :</h5>
 						<p class="small col-xs-12">
 							<i class="fa fa-square fa-lg blue" aria-hidden="true"></i> Clients contactables : données valides et optin<br />
 							<i class="fa fa-square fa-lg orange" aria-hidden="true"></i> Clients optin mais données non renseignées<br />
@@ -71,7 +71,7 @@
 					</div>
 
 					<div class="col-xs-12 col-md-8">
-						<h5 class="gris">Clés de lecture :</h5>
+						<h5 class="">Clés de lecture :</h5>
 						<p class="small col-xs-12">
 							Sur les {{ kpiCurrentYear.nbCliYtd|number_format("0",",", " ") }} clients actifs et identifiés
 							{% if month != "01" %}entre Janvier et {{ getMonthWording(month, "") }}
@@ -140,7 +140,7 @@
 		<div class="col-xs-12 kpi-box">
 			
 			<div class="inside col-xs-12">
-				<h3 class="text-uppercase text-center gris">{{ kpiCurrentYear.nbCliActifsYtd|number_format(0, ',', ' ') }} Clients actifs<br />{% if month != "01" %}de Janvier {{ getMonthWording(month, "à") }}{% else %}En Janvier{% endif %} {{ dateYear }} dont</h3>
+				<h3 class="text-uppercase text-center ">{{ kpiCurrentYear.nbCliActifsYtd|number_format(0, ',', ' ') }} Clients actifs<br />{% if month != "01" %}de Janvier {{ getMonthWording(month, "à") }}{% else %}En Janvier{% endif %} {{ dateYear }} dont</h3>
 				
 				<div class="col-xs-6">
 					<h3 class="text-uppercase" style="color: #E8810C;"><i class="fa fa-square fa-lg " aria-hidden="true"></i> 
