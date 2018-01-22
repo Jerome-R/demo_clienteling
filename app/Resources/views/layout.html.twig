@@ -21,7 +21,7 @@
 
     {% block stylesheets %}
         {# On charge le CSS de bootstrap depuis le site directement #}
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css?v=20170222" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css?v=20180122" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
 
         {#% stylesheets
             filter="cssrewrite,compass"
@@ -29,13 +29,13 @@
             "sass/main.scss"
         %#}
             <!--link rel="stylesheet" href="{{ asset_url }}"-->
-            <link rel="stylesheet" href="{{ asset('web/css/font-awesome.min.css') }}?v=20170222">
-            <link rel="stylesheet" href="{{ asset('web/css/all.css') }}?v=20170222">
-            <link rel="stylesheet" href="{{ asset('web/css/jquery.multiselect.css') }}?v=20170222">
+            <link rel="stylesheet" href="{{ asset('web/css/font-awesome.min.css') }}?v=20180122">
+            <link rel="stylesheet" href="{{ asset('web/css/all.css') }}?v=20180122">
+            <link rel="stylesheet" href="{{ asset('web/css/jquery.multiselect.css') }}?v=20180122">
             <link rel="stylesheet" type="text/css" href="{{ asset('web/css/datatables.min.css') }}"/>
         {#% endstylesheets %#}
 
-        <script src="{{ asset('web/js/ckeditor/ckeditor.js') }}?v=20170222"></script>
+        <script src="{{ asset('web/js/ckeditor/ckeditor.js') }}?v=20180122"></script>
         <script type="text/javascript">
             CKEDITOR.timestamp='ABCD';
         </script>                
@@ -131,11 +131,11 @@
 
     {% block javascripts %}
         {# Ajoutez ces lignes JavaScript si vous comptez vous servir des fonctionnalités du bootstrap Twitter #}
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js?v=20170222"></script>
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js?v=20170222" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
-        <script src="{{ asset('web/js/canvasJs/canvasjs.min.js') }}?v=20170222"></script>
-        <script src="{{ asset('web/js/jquery.multiselect.js') }}?v=20170222"></script>
-        <script src="{{ asset('web/js/gauge/gauge.js') }}?v=20170222"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js?v=20180122"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js?v=20180122" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+        <script src="{{ asset('web/js/canvasJs/canvasjs.min.js') }}?v=20180122"></script>
+        <script src="{{ asset('web/js/jquery.multiselect.js') }}?v=20180122"></script>
+        <script src="{{ asset('web/js/gauge/gauge.js') }}?v=20180122"></script>
     
         <script>
           (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
